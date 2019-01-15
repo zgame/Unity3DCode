@@ -19,6 +19,7 @@ using XLua;
 // 4.  调试模式说明， 开启调试模式， lua文件不需要打asset bundle， 其他文件因为涉及到依赖关系，所以还是需要build asset bundle，而且需要点击copy to streamingAssetsPath， 从streamingAssetsPath读文件
 //------------------------------------------------------------------------------------------------------------
 
+//[LuaCallCSharp]
 public class ReadBundles
 {
     public static Dictionary<string, AssetBundle>LoadAssetBundleDictionary = new Dictionary<string, AssetBundle>(); // 已经加载的bundle文件，防止重复加载用的
@@ -30,12 +31,8 @@ public class ReadBundles
         luaenv = new LuaEnv();
         luaenv.AddLoader(CustomLoader);
 
-        var myLuaBundle = GetAssetBundle("canvas");
-        GameObject prefab = myLuaBundle.LoadAsset<GameObject>("assets/assetpackage/UI/prefab/canvas.prefab");
-        GameObject.Instantiate(prefab);
-        luaenv.DoString("require 'Lua/test1'");
+        luaenv.DoString("require 'Lua/main'");
     }
-
 
     // lua文件的加载器
     public static byte[] CustomLoader(ref string luaFileName)
@@ -55,7 +52,7 @@ public class ReadBundles
         {
             // 调试模式， 直接读文件了，不用bundle
             var url = Application.dataPath + "/assetpackage/" + luaFileName + ".lua.txt";
-            Debug.Log("" + url);
+//            Debug.Log("" + url);
             fileText = File.ReadAllText(url);
         }
 
@@ -70,42 +67,37 @@ public class ReadBundles
         {
             return LoadAssetBundleDictionary[bundlename]; // 已经加载就返回
         }
+        // 没有加载过就加载
+        AssetBundle myLoadedAssetBundle;
+        if (DebugMode)
+            myLoadedAssetBundle =AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/" +bundlename); // 调试模式开启，读取streamingAssetsPath    
         else
+            myLoadedAssetBundle =AssetBundle.LoadFromFile(Application.persistentDataPath + "/" +bundlename); // 正式模式，读取Application.persistentDataPath
+
+        if (myLoadedAssetBundle == null)
         {
-            // 没有加载过就加载
-            AssetBundle myLoadedAssetBundle;
-            if (DebugMode)
-                myLoadedAssetBundle =AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/" +bundlename); // 调试模式开启，读取streamingAssetsPath    
-            else
-                myLoadedAssetBundle =AssetBundle.LoadFromFile(Application.persistentDataPath + "/" +bundlename); // 正式模式，读取Application.persistentDataPath
-
-
-            if (myLoadedAssetBundle == null)
-            {
-                Debug.Log("加载本地 AssetBundle 出错了! " + bundlename);
-                return null;
-            }
-
-            LoadAssetBundleDictionary[bundlename] = myLoadedAssetBundle;
-            return myLoadedAssetBundle;
+            Debug.Log("加载本地 AssetBundle 出错了! " + bundlename);
+            return null;
         }
+        LoadAssetBundleDictionary[bundlename] = myLoadedAssetBundle;    // 加载之后把已加载的bundle文件记录一下
+        return myLoadedAssetBundle;
     }
 
+    public static string getsss()
+    {
+        return "ssssssss";
+    }
 
-    // 从网络下载bundle文件
-//    IEnumerator DownloadAssetBundleFileLua()
-//    {
-//        string uri = BundleServerUrl + "lua";        
-//        UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(uri, 0);
-//        yield return request.Send();
-//        bundleLua = DownloadHandlerAssetBundle.GetContent(request);
-//        Debug.Log(bundleLua.GetAllAssetNames()[0]);
-//        
-//        
-//        TextAsset prefab = bundleLua.LoadAsset<TextAsset>("assets/assetpackage/lua/test2.lua.txt");
-//        Debug.Log(prefab.text);
-//        var obj = GameObject.Find("Canvas1");
-//        var txt = obj.GetComponentInChildren<UnityEngine.UI.Text>();
-//        txt.text = prefab.text;
-//    }
+    public static void LoadGameObject(string fileName, string prefabName, string parentDir, bool instantiate)
+    {
+        var myLuaBundle = GetAssetBundle(fileName);
+        GameObject prefab = myLuaBundle.LoadAsset<GameObject>(prefabName);
+        if (!instantiate)
+            return;
+        var obj = GameObject.Instantiate(prefab, GameObject.Find(parentDir).gameObject.transform, true);
+        obj.GetComponent<RectTransform>().offsetMin = new Vector2(0.0f, 0.0f);
+        obj.GetComponent<RectTransform>().offsetMax = new Vector2(0.0f, 0.0f);
+
+    }
+
 }

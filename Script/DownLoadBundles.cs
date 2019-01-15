@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using AssetBundles;
 using UnityEditor;
 //using Microsoft.Win32.SafeHandles;
@@ -23,12 +24,15 @@ public class DownLoadBundles : MonoBehaviour
 {
     private static string BundleServerUrl = "http://118.89.188.193:8080/zswt/Android/";        // 版本服务器的web地址
     private static string BundleVersionFileName = "BundleVersion.txt";
+    private static string GUIDownLoadBundleFilePanel = "MainCanvas/DownLoadBundleFilePanel";        // UI prefab 路径
+    
     private static string BundleVersionUrlPath = BundleServerUrl + BundleVersionFileName;        // 网络保存路径
     private string LocalBundlePath;                        // 本地保存路径
     private string LocalVersionPath;                     // version本地保存的目录
     private string webBundleVersionFileTxt;                     // 保存网络上下载的最新的Version文件内容
     private List<string> downloadList = new List<string>();        // 需要更新的列表
-    
+    private float progress;                    //进度
+    private float progressStep;                    //进度增量
     
     void Awake()
     {
@@ -107,16 +111,19 @@ public class DownLoadBundles : MonoBehaviour
     {
         if (list.Count > 0)
         {
+            progressStep = 100f / list.Count * 0.01f;        // 根据文件的数量来决定进度条每个step的度
             StartCoroutine(downLoadAndSaveAssetBundle(BundleServerUrl, "Android"));
             StartCoroutine(downLoadAndSaveAssetBundle(BundleServerUrl, "Android.manifest"));
             foreach (var fileName in list)
             {
-                StartCoroutine(downLoadAndSaveAssetBundle(BundleServerUrl, fileName));
+                StartCoroutine(downLoadAndSaveAssetBundle(BundleServerUrl, fileName));  
             }
         }
         else
         {
             // 不需要更新，直接进入游戏
+            progressStep = 1;
+            SetDownLoadSliderShow();    //显示100%
             ReadBundles.Start();
         }
         
@@ -125,17 +132,21 @@ public class DownLoadBundles : MonoBehaviour
     //----------2 .下载bundle并缓存到本地  -------------
     IEnumerator downLoadAndSaveAssetBundle(string url,string fileName)    
     {
-//        Debug.Log(fileName+"开始下载");
+        Debug.Log(fileName+"开始下载");
         WWW w = new WWW(url+fileName);
         yield return w;
         if (w.isDone)
         {
-//            Debug.Log(fileName+"下载完成");
+            Debug.Log(fileName+"下载完成");
             byte[] model = w.bytes;
             int length = model.Length;
             Stream sw;            //文件流信息
-            FileInfo t = new FileInfo(LocalBundlePath + "/" + fileName);
-            sw = !t.Exists ? t.Create() : t.OpenWrite();
+            
+            // 判断一下文件夹是否存在
+            var localPath = LocalBundlePath + "/" + fileName;
+            CheckDirIsExist(localPath);        // 这里增加一个判断，如果没有目录，那么先创建目录
+            FileInfo t = new FileInfo(localPath);
+            sw = !t.Exists ? t.Create() : t.OpenWrite();    // 判断本地是否有该文件
             sw.Write(model, 0, length);
             sw.Close();//关闭流  
             sw.Dispose(); //销毁流
@@ -143,10 +154,13 @@ public class DownLoadBundles : MonoBehaviour
             // 判断所有文件是否都下载完成
             if (downloadList.Contains(fileName))
             {
-                downloadList.Remove(fileName);
+                SetDownLoadSliderShow();    // 显示进度条
+                downloadList.Remove(fileName);    // 更新列表移除已经完成的文件
                 if (downloadList.Count == 0)
                 {
                     Debug.Log("----------全部下载完成，更新本地version文件------------");
+                    progress = 1;            // 进度条满 100%
+                    SetDownLoadSliderShow();    
                     SaveVersionFileToLocal();
                     // 开始进入游戏
                     ReadBundles.Start();
@@ -154,6 +168,18 @@ public class DownLoadBundles : MonoBehaviour
             }
         }
     }
+
+    // 2. 这是一个辅助函数，用来判断目录是否存在的，不存在就创建先， 不然会报没有该目录的错误
+    public void CheckDirIsExist(string localPath)
+    {
+        var pathDir = Path.GetDirectoryName(localPath);
+        if (!Directory.Exists(pathDir))
+        {
+            Directory.CreateDirectory(pathDir);            
+            Debug.Log(pathDir + "  目录被创建了");
+        }
+    }
+    
 
     // 3 . 将最新的Version文件更新到本地
     public void SaveVersionFileToLocal()
@@ -166,6 +192,14 @@ public class DownLoadBundles : MonoBehaviour
         str.Dispose(); //文件流释放
         Debug.Log("保存Version文件到本地成功");
     }
-   
+
+    public void SetDownLoadSliderShow()
+    {
+        progress += progressStep;
+        var obj = GameObject.Find(GUIDownLoadBundleFilePanel);
+        var slider = obj.GetComponentInChildren<UnityEngine.UI.Slider>();
+        slider.value = progress;
+//        Debug.Log("progress "+progress);
+    }
     
 }
