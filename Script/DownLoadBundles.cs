@@ -13,8 +13,10 @@ using XLua;
 
 //-------------------------------------------------------------------------------------------------
 // 网络下载bundle文件，缓存到本地， 包含版本控制
-// 1. 下载BundleVersion.txt文件， 跟本地文件进行比对
-// 2. 有需要更新的，就
+// 1. 下载BundleVersion.txt文件， 跟本地文件进行比对，整理出需要下载更新的文件列表
+// 2. 有需要更新的，就下载，保存到本地
+// 3. 全部下载完成之后， 把BundleVersion.txt文件也更新成最新版本
+// 4. 然后开始游戏，加载这些资源文件
 //-------------------------------------------------------------------------------------------------
 
 public class DownLoadBundles : MonoBehaviour
@@ -28,227 +30,20 @@ public class DownLoadBundles : MonoBehaviour
     private List<string> downloadList = new List<string>();        // 需要更新的列表
     
     
-    public static AssetBundle bundleLua;    // lua bundle 文件
-    LuaEnv luaenv = null;    
-    
-    const string variantSceneAssetBundle = "canvas";
-    const string variantSceneName = "canvas";
-
-    // The following are used only if app slicing is not enabled.
-    private string[] activeVariants;
-    private bool bundlesLoaded;             // used to remove the loading buttons
-
     void Awake()
     {
         LocalBundlePath = Application.persistentDataPath;                // 本地保存路径
         LocalVersionPath = LocalBundlePath + "/" + BundleVersionFileName;     // version本地保存的目录
-    
-        activeVariants = new string[1];
-        bundlesLoaded = false;
-        
-        luaenv = new LuaEnv();
-        luaenv.AddLoader(CustomLoader);
-    }
-
-  
-    
-    
-    IEnumerator Start()
-    {
-        
-        Debug.Log("开始加载网络Version文件");
-        yield return StartCoroutine(VersionFileDownLoadAndCheck());
-        
-//        Debug.Log("开始加载本地文件");
-//        yield return StartCoroutine(DownloadAssetBundleFileLua());  // 加载lua bundle文件
-
-
-        
-//        yield return StartCoroutine(Initialize());
-        // Load level.
-//        yield return StartCoroutine(InitializeLevelAsync(variantSceneName, true));
-//        yield return StartCoroutine(InstantiateGameObjectAsync(variantSceneAssetBundle,variantSceneName));
-//        yield return StartCoroutine(InstantiateTextAsync("lua","test2.lua"));
-
-//        luaenv.DoString("require 'Lua/test1'");
-    }
-    
-
-    // Initialize the downloading URL.
-    // eg. Development server / iOS ODR / web URL
-    void InitializeSourceURL()
-    {
-        // If ODR is available and enabled, then use it and let Xcode handle download requests.
-        #if ENABLE_IOS_ON_DEMAND_RESOURCES
-        if (UnityEngine.iOS.OnDemandResources.enabled)
-        {
-            AssetBundleManager.overrideBaseDownloadingURL += OverrideDownloadingURLForLocalBundles;
-            AssetBundleManager.SetSourceAssetBundleURL("odr://");
-            return;
-        }
-        #endif
-        #if DEVELOPMENT_BUILD || UNITY_EDITOR
-        // With this code, when in-editor or using a development builds: Always use the AssetBundle Server
-        // (This is very dependent on the production workflow of the project.
-        //      Another approach would be to make this configurable in the standalone player.)
-        AssetBundleManager.SetDevelopmentAssetBundleServer();
-        return;
-        #else
-        // Use the following code if AssetBundles are embedded in the project for example via StreamingAssets folder etc:
-        AssetBundleManager.SetSourceAssetBundleURL(Application.dataPath + "/");
-        // Or customize the URL based on your deployment or configuration
-        //AssetBundleManager.SetSourceAssetBundleURL("http://www.MyWebsite/MyAssetBundles");
-        return;
-        #endif
-    }
-
-    // Initialize the downloading url and AssetBundleManifest object.
-    protected IEnumerator Initialize()
-    {
-        // Don't destroy the game object as we base on it to run the loading script.
-        DontDestroyOnLoad(gameObject);
-
-        InitializeSourceURL();
-
-        // Initialize AssetBundleManifest which loads the AssetBundleManifest object.
-        var request = AssetBundleManager.Initialize();
-
-        if (request != null)
-            yield return StartCoroutine(request);
-    }
-
-    protected IEnumerator InitializeLevelAsync(string levelName, bool isAdditive)
-    {
-        // This is simply to get the elapsed time for this phase of AssetLoading.
-        float startTime = Time.realtimeSinceStartup;
-
-        // Load level from assetBundle.
-        AssetBundleLoadOperation request = AssetBundleManager.LoadLevelAsync(variantSceneAssetBundle, levelName, isAdditive);
-        if (request == null)
-            yield break;
-
-        yield return StartCoroutine(request);
-
-        // Calculate and display the elapsed time.
-        float elapsedTime = Time.realtimeSinceStartup - startTime;
-        Debug.Log("Finished loading scene " + levelName + " in " + elapsedTime + " seconds");
-    }
-    
-    protected IEnumerator InstantiateGameObjectAsync(string assetBundleName, string assetName)
-    {
-//        var obj = GameObject.Find("Canvas1");
-//        var txt = obj.GetComponentInChildren<UnityEngine.UI.Text>();
-//        txt.text = "加载bundle";
-        
-        // This is simply to get the elapsed time for this phase of AssetLoading.
-        float startTime = Time.realtimeSinceStartup;
-
-        // Load asset from assetBundle.
-        AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync(assetBundleName, assetName, typeof(GameObject));
-        if (request == null)
-        {
-//            txt.text = "LoadAssetAsync request == null";
-            Debug.LogError("Failed AssetBundleLoadAssetOperation on " + assetName + " from the AssetBundle " + assetBundleName + ".");
-            yield break;
-        }
-//        txt.text = "yield return StartCoroutine(request)";
-        yield return StartCoroutine(request);
-
-        // Get the Asset.
-        GameObject prefab = request.GetAsset<GameObject>();
-
-        // Instantiate the Asset, or log an error.
-        if (prefab != null)
-        {
-//            txt.text = "Instantiate(prefab)";
-            GameObject.Instantiate(prefab);
-        }
-        else
-        {
-//            txt.text = "prefab  == null";
-            Debug.LogError("Failed to GetAsset from request");
-        }
-
-        // Calculate and display the elapsed time.
-        float elapsedTime = Time.realtimeSinceStartup - startTime;
-        Debug.Log(assetName + (prefab == null ? " was not" : " was") + " loaded successfully in " + elapsedTime + " seconds");
-    }
-    
-    protected IEnumerator InstantiateTextAsync(string assetBundleName, string assetName)
-    {
-        // This is simply to get the elapsed time for this phase of AssetLoading.
-        float startTime = Time.realtimeSinceStartup;
-
-        // Load asset from assetBundle.
-        AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync(assetBundleName, assetName, typeof(TextAsset));
-        if (request == null)
-        {
-            Debug.LogError("Failed AssetBundleLoadAssetOperation on " + assetName + " from the AssetBundle " + assetBundleName + ".");
-            yield break;
-        }
-        yield return StartCoroutine(request);
-
-        // Get the Asset.
-        TextAsset prefab = request.GetAsset<TextAsset>();
-//        Debug.Log("-----------InstantiateTextAsync   lua file -------------:"+  prefab.text);       
-        
-        // Instantiate the Asset, or log an error.
-        if (prefab != null)
-        {
-          
-//            GameObject.Instantiate(prefab);
-//            luaenv = new LuaEnv();
-//            luaenv.AddLoader(prefab.bytes);
-//            luaenv.DoString(prefab.text);
-//            luaenv.AddLoader(CustomLoader);
-
-          
-        }
-        else
-            Debug.LogError("Failed to GetAsset from request");
-
-        // Calculate and display the elapsed time.
-        float elapsedTime = Time.realtimeSinceStartup - startTime;
-        Debug.Log(assetName + (prefab == null ? " was not" : " was") + " loaded successfully in " + elapsedTime + " seconds");
-    }
-
-    public static byte[] CustomLoader(ref string filepath)
-    {
-        var str = LoadFromFile(filepath);
-        str = "print('ssssssssss')";
-        return System.Text.Encoding.Default.GetBytes ( str );
-
     }
    
-    public static string LoadFromFile(string assetName) {
-        
-        TextAsset prefab = bundleLua.LoadAsset<TextAsset>("assets/assetpackage/lua/test2.lua.txt");
-        Debug.Log(prefab.text);
-        
-        return prefab.text;
-    }
-
-
-    // 从网络下载bundle文件
-    IEnumerator DownloadAssetBundleFileLua()
+    IEnumerator Start()
     {
-        string uri = BundleServerUrl + "lua";        
-        UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(uri, 0);
-        yield return request.Send();
-        bundleLua = DownloadHandlerAssetBundle.GetContent(request);
-        Debug.Log(bundleLua.GetAllAssetNames()[0]);
-        
-        
-        TextAsset prefab = bundleLua.LoadAsset<TextAsset>("assets/assetpackage/lua/test2.lua.txt");
-        Debug.Log(prefab.text);
-        var obj = GameObject.Find("Canvas1");
-        var txt = obj.GetComponentInChildren<UnityEngine.UI.Text>();
-        txt.text = prefab.text;
+//        Debug.Log("开始加载网络Version文件");
+        yield return StartCoroutine(VersionFileDownLoadAndCheck());
     }
-    
     
     //---------------------------------------------------------------------------------
-    // 先下载version文件，然后跟本地文件进行比对
+    // 1. 先下载version文件，然后跟本地文件进行比对
     //---------------------------------------------------------------------------------
     public IEnumerator VersionFileDownLoadAndCheck()
     {
@@ -307,7 +102,7 @@ public class DownLoadBundles : MonoBehaviour
         }
     }
 
-    // -----------按照更新列表开始下载bundle文件----------------
+    // -----------2. 按照更新列表开始下载bundle文件----------------
     public void DownLoadBundleFiles(List<string> list)
     {
         if (list.Count > 0)
@@ -322,19 +117,20 @@ public class DownLoadBundles : MonoBehaviour
         else
         {
             // 不需要更新，直接进入游戏
+            ReadBundles.Start();
         }
         
     }
     
-    //----------下载bundle并缓存到本地  -------------
+    //----------2 .下载bundle并缓存到本地  -------------
     IEnumerator downLoadAndSaveAssetBundle(string url,string fileName)    
     {
-        Debug.Log(fileName+"开始下载");
+//        Debug.Log(fileName+"开始下载");
         WWW w = new WWW(url+fileName);
         yield return w;
         if (w.isDone)
         {
-            Debug.Log(fileName+"下载完成");
+//            Debug.Log(fileName+"下载完成");
             byte[] model = w.bytes;
             int length = model.Length;
             Stream sw;            //文件流信息
@@ -353,13 +149,13 @@ public class DownLoadBundles : MonoBehaviour
                     Debug.Log("----------全部下载完成，更新本地version文件------------");
                     SaveVersionFileToLocal();
                     // 开始进入游戏
-                    
+                    ReadBundles.Start();
                 }
             }
         }
     }
 
-    // 将最新的Version文件更新到本地
+    // 3 . 将最新的Version文件更新到本地
     public void SaveVersionFileToLocal()
     {
         // 全部下载完成，更新本地version文件
@@ -373,11 +169,3 @@ public class DownLoadBundles : MonoBehaviour
    
     
 }
-
-
-
-//            var obj = GameObject.Find("Canvas1");
-//            var txt = obj.GetComponentInChildren<UnityEngine.UI.Text>();
-//            txt.text = wwwlogin.text;
-
-    
