@@ -1,0 +1,19 @@
+
+
+function LoadBundleFilePanel(lastUI)
+    -- 加载界面prefab
+    local loadingPanel = CSLoadAndInstantiatePrefab("UI/game/LoadBundleFilePanel","game/LoadBundleFilePanel");
+    local slider = loadingPanel:GetComponentInChildren(typeof(CS.UnityEngine.UI.Slider))     -- 进度条
+
+    CS.UnityEngine.GameObject.Destroy (lastUI)       -- 销毁上一个界面
+    -- 开始加载游戏资源
+    
+    slider.value = 1
+    
+    -- 开启主界面
+    StartMainUI(loadingPanel)  
+end
+
+
+
+

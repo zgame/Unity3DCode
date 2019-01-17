@@ -1,0 +1,4 @@
+
+
+AssetUIPath = "Assets/AssetPackage/UI/prefab/"     -- asset UI  
+

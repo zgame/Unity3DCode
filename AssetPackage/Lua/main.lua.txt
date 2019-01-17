@@ -1,4 +1,4 @@
 
 
-require("Lua/EnterGame")
+require("Lua/mainGame")
 

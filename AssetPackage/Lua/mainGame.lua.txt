@@ -1,0 +1,18 @@
+
+
+-- 加载全局变量
+require("Lua/mainGlobal")
+
+-- 加载全局通用函数
+require("Lua/LuaCallCS")
+require("Lua/UI/Common/ScrollView")
+
+
+-- 加载游戏逻辑
+require("Lua/UI/Game/EnterGame")
+require("Lua/UI/Game/LoadBundleFilePanel")
+require("Lua/UI/Game/MainUI")
+
+
+-- 进入游戏
+StartGame()

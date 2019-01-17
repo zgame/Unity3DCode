@@ -1,0 +1,68 @@
+
+
+MainUI = {}
+
+MainUI.mainUI    -- 主界面句柄
+local scrollViewBase -- scrollView的句柄
+local scrollViewItemBase -- scrollView 子元素的句柄
+
+
+-- 绑定按钮事件控制
+local function ButtonEventBattle()
+    print("战斗")
+    ButtonEventTeam()
+end
+local function ButtonEventTeam()
+    print("team")
+end
+local function ButtonEventCharacter()
+    print("角色")
+end
+local function ButtonEventScrollViewElement(index)
+    print("scroll view"..index)
+end
+
+-- 批量生成元素
+local function createScrollViewItems(count)
+    if count >0 then
+        scrollViewItemBase:SetActive(true)
+        for i = 1, count-1 do
+            print("生成其他子元素")
+            local elementItem = CS.UnityEngine.GameObject.Instantiate(scrollViewItemBase,scrollViewBase.transform,true)     -- 再生成一个子元素
+            elementItem.name = "item"..i+1
+            CSGetComponentInChildrenButtonEventCall(elementItem,  function()ButtonEventScrollViewElement(i+1)end)
+        end
+        scrollViewItemBase.name = "item"..1
+        CSGetComponentInChildrenButtonEventCall(scrollViewItemBase, function()ButtonEventScrollViewElement(1)end)
+    else
+        scrollViewItemBase:SetActive(false)
+    end
+    
+end
+
+
+
+
+-- 开始主界面
+function StartMainUI(lastUI)
+    -- 加载界面prefab
+    mainUI = CSLoadAndInstantiatePrefab("UI/game/MainUI","game/MainUI");
+    scrollViewBase = CSFindGameObject('MainCanvas/MainUI/Scroll View/Viewport/Content')
+    scrollViewItemBase = CSFindGameObject('MainCanvas/MainUI/Scroll View/Viewport/Content/Panel')
+
+    --local scrollViewItemBase2 = CS.UnityEngine.GameObject.Instantiate(scrollViewItemBase,scrollViewBase.transform,true)     -- 再生成一个子元素
+    --CSGetComponentInChildrenButtonEventCall(scrollViewItemBase, ButtonEventCharacter)
+    --createScrollViewItems
+    createScrollViewItems(0)
+    
+    
+    CS.UnityEngine.GameObject.Destroy (lastUI)       -- 销毁加载界面
+    
+  
+    -- 主界面上面的按钮
+    CSFindGameObjectButtonEventCall( "MainUI/StartBattle" ,ButtonEventBattle)          -- 第二种方式，用名字找
+    CSFindGameObjectButtonEventCall( "MainUI/Team" ,ButtonEventTeam)          -- 第二种方式，用名字找
+    CSFindGameObjectButtonEventCall( "MainUI/Character" ,ButtonEventCharacter)          -- 第二种方式，用名字找
+
+
+end

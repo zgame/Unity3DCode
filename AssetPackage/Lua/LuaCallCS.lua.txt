@@ -1,0 +1,47 @@
+
+-------------------------------------game object--------------------------------------------------
+-- 加载并创建 UI prefab
+function CSLoadAndInstantiatePrefab(bundleName, prefabName)
+    -- 这里要注意一下： 
+    -- 第一个参数是bundle manifest里面bundle的名字（一般有目录）
+    -- 第二个参数是asset 里面的目录
+    return CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetUIPath.. prefabName ..".prefab","MainCanvas",true);    
+end
+
+function CSFindGameObject(name)
+    local obj = CS.UnityEngine.GameObject.Find(name)
+    if obj==nil then
+        print("找不到  ".. name.. "  注意路径必须完全一致，大小写敏感")
+    end
+    return obj
+end
+
+--------------------------------------按钮事件绑定和解绑--------------------------------------------------
+
+-- 找到子目录下面的按钮，绑定事件
+function CSGetComponentInChildrenButtonEventCall(prefab, func)
+    prefab:GetComponentInChildren(typeof(CS.UnityEngine.UI.Button)).onClick:AddListener(func)
+end
+function CSGetComponentInChildrenButtonEventCallRemove(prefab, func)
+    prefab:GetComponentInChildren(typeof(CS.UnityEngine.UI.Button)).onClick:RemoveListener(func)
+end
+
+-- 找到子目录下面的按钮，绑定事件
+function CSFindGameObjectButtonEventCall(prefabName, func)
+    local prefab = CS.UnityEngine.GameObject.Find(prefabName)
+    if prefab ~= nil then
+        prefab:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:AddListener(func)
+    else
+        print(prefabName.."is null")
+    end
+end
+function CSFindGameObjectButtonEventCallRemove(prefabName, func)
+    local prefab = CS.UnityEngine.GameObject.Find(prefabName)
+    if prefab ~= nil then
+        prefab:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:RemoveListener(func)
+    else
+        print(prefabName.."is null")
+    end
+end
+
+--------------------------------------  --------------------------------------------------
