@@ -220,7 +220,7 @@ public class DownLoadBundles : MonoBehaviour
         progress = 1;
         progressStep = 1;
         SetDownLoadSliderShow();    //显示100%
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.01f);
         
         ReadBundles.Start();
     }

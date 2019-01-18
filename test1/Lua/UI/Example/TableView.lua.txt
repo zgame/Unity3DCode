@@ -1,0 +1,42 @@
+
+local UI    -- 当前界面句柄
+local LastUI    -- 上一个界面句柄
+local scrollViewItemBase -- scrollView 子元素的句柄
+local scrollViewItems = {}     -- 子元素列表
+
+
+-- 绑定按钮事件控制
+local function ButtonEventBack()
+    print("返回")
+    -- 返回到上一个菜单
+    CSShowGameObject(LastUI)
+    CSHideGameObject(UI)
+end
+
+local function ButtonEventScrollViewElement(index)
+    print("scroll view" .. index)
+    local itemPrefab = scrollViewItems[index]
+    print(itemPrefab.name)
+end
+
+
+
+-- 开始界面
+function ShowTableView(lastUI)
+    LastUI = lastUI
+    if UI == nil then
+        -- 加载界面prefab
+        UI = CSLoadAndInstantiatePrefab("UI/Prefab/Example", "Example/TableView");
+        -- 找到子元素的样本
+        scrollViewItemBase = CSFindGameObject('MainCanvas/TableView/Scroll View/Viewport/Content/Panel')
+
+        -- 按照样本生成出一定数量的子元素
+        CSCreateScrollViewItemList(scrollViewItemBase, ButtonEventScrollViewElement, 40, scrollViewItems)
+        -- 主界面上面的按钮事件绑定
+        CSFindGameObjectByParentButtonEventCall("Back",UI, ButtonEventBack)          -- 用名字找按钮，绑定事件
+    else
+        CSShowGameObject(UI)
+    end
+    -- 关闭上一个界面
+    CSHideGameObject(LastUI)
+end

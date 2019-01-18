@@ -1,29 +1,24 @@
 
-local enterGamePanel    -- 进入游戏的界面句柄
 
--- 关闭下载界面
-local function destroyDownLoadUI()
-    -- 然后销毁掉download界面
-    local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')
-    --DownLoadBundleFilePanelObject:SetActive(false)        -- 隐藏
-    CS.UnityEngine.GameObject.Destroy (DownLoadBundleFilePanelObject)       -- 销毁
-end
+local enterGameUI    -- 进入游戏的界面句柄
 
 -- 绑定按钮事件控制
 local function ButtonEvent()
     print("进入游戏，加载游戏资源")
-    CSGetComponentInChildrenButtonEventCallRemove(enterGamePanel, ButtonEvent)             --解除事件绑定
-    LoadBundleFilePanel(enterGamePanel)
+    --CSGetComponentInChildrenButtonEventCallRemove(enterGameUI, ButtonEvent)             --解除事件绑定
+    LoadBundleFilePanel(enterGameUI)   -- 进入加载界面
 end
 
 -- 开始游戏
 function StartGame()
     -- 加载界面prefab
-    enterGamePanel = CSLoadAndInstantiatePrefab("UI/game/EnterGame","game/EnterGame");
+    enterGameUI = CSLoadAndInstantiatePrefab("UI/Prefab/Game","Game/EnterGame");
 
-     CSGetComponentInChildrenButtonEventCall(enterGamePanel, ButtonEvent)                                         -- 第一种方式，用类型找，适合只有一个按钮的情况
-    --FindGameObjectButtonEventCall( "EnterGame/Button" ,ButtonEvent)          -- 第二种方式，用名字找
-
-    destroyDownLoadUI()--关闭下载界面
+    CSGetComponentInChildrenButtonEventCall(enterGameUI, ButtonEvent)                                         -- 用组件类型找按钮，绑定事件，适合只有一个按钮的情况
+    
+    --关闭下载界面, 销毁掉download界面
+    local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')
+    --DownLoadBundleFilePanelObject:SetActive(false)        -- 隐藏
+    CSDestroyGameObject(DownLoadBundleFilePanelObject)       -- 销毁
 end
 

@@ -1,0 +1,39 @@
+
+local UI
+local LastUI
+
+
+
+-- 绑定按钮事件控制
+local function ButtonEventCancel()
+    print("cancel")
+    -- 返回到上一个菜单
+    --CSHideGameObject(UI)
+    CSDestroyGameObject(UI)
+end
+
+
+-- 绑定按钮事件控制
+local function ButtonEventOK()
+    print("ok")
+    -- 返回到上一个菜单
+    CSHideGameObject(UI)
+end
+
+
+
+-- 开始界面
+function ShowMessageBoxOKCancel(lastUI)
+    LastUI = lastUI
+    --if UI == nil then
+        -- 加载界面prefab
+        UI = CSLoadAndInstantiatePrefab("UI/Prefab/Common", "Common/MessageBoxOKCancel");
+
+        -- 主界面上面的按钮事件绑定
+        CSFindGameObjectByParentButtonEventCall("Panel/Cancel", UI, ButtonEventCancel)          -- 用名字找按钮，绑定事件
+        CSFindGameObjectByParentButtonEventCall("Panel/OK", UI, ButtonEventOK)          -- 用名字找按钮，绑定事件
+    --else
+    --    CSShowGameObject(UI)
+    --end
+
+end

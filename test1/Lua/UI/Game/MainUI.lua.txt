@@ -1,84 +1,55 @@
 
 
-MainUI = {}
+local mainUI   -- 主界面句柄
 
-MainUI.mainUI = nil   -- 主界面句柄
-MainUI.scrollViewPrefab = nil-- scrollView的句柄
-MainUI.scrollViewItemBase  = nil-- scrollView 子元素的句柄
-MainUI.scrollViewItems = {}     -- 子元素列表
-
--- 绑定按钮事件控制
-function MainUI.ButtonEventBattle()
-    print("战斗0")
-    MainUI.CreateScrollViewItemList(0)
+--------------绑定按钮事件控制------------------
+local function ButtonEventScrollView1()
+    print("scroll view 1")
+    ShowScrollView1(mainUI)
 end
-function MainUI.ButtonEventTeam()
-    print("team5")
-    MainUI.CreateScrollViewItemList(5)
+local function ButtonEventScrollView2()
+    print("scroll view 2")
+    ShowScrollView2(mainUI)
 end
-function MainUI.ButtonEventCharacter()
-    print("角色1")
-    MainUI.CreateScrollViewItemList(1)
+local function ButtonEventCharacterScrollView3()
+    print("scroll view 3")
+    ShowScrollView3(mainUI)
 end
-function MainUI.ButtonEventScrollViewElement(index)
-    print("scroll view"..index)
+local function ButtonEventTableView()
+    print("table view ")
+    ShowTableView(mainUI)
 end
-
--- 批量生成元素
-function MainUI.CreateScrollViewItemList(scrollViewItemBase, callBackFunc, count , parent)
-    if count >0 then
-        scrollViewItemBase:SetActive(true)
-        MainUI.AddItemsListAndEventCall(1, scrollViewItemBase,callBackFunc,MainUI.scrollViewItems)
-        
-        for i = 2, count do     --从第二个开始生成，第一个位置是给复制的样本留着的
-            print("生成其他子元素")
-            local elementItem = CS.UnityEngine.GameObject.Instantiate(scrollViewItemBase, parent.transform,true)     -- 再生成一个子元素
-            --elementItem.name = "item"..i
-            --table.insert(MainUI.scrollViewItems, i,elementItem)
-            --CSGetComponentInChildrenButtonEventCall(elementItem,  function()MainUI.ButtonEventScrollViewElement(i)end)
-            MainUI.AddItemsListAndEventCall(i, elementItem,callBackFunc,MainUI.scrollViewItems)
-        end
-
-        
-        --MainUI.scrollViewItemBase.name = "item"..1
-        --table.insert(MainUI.scrollViewItems, 1,MainUI.scrollViewItemBase)
-        --CSGetComponentInChildrenButtonEventCall(MainUI.scrollViewItemBase, function()MainUI.ButtonEventScrollViewElement(1)end)
-    else
-        scrollViewItemBase:SetActive(false)
-    end
+local function ButtonEventScrollViewHorizontal()
+    print("ScrollViewHorizontal ")
+    ShowScrollViewHorizontal(mainUI)
 end
-
--- 添加子元素到总列表，并绑定事件回调
-function MainUI.AddItemsListAndEventCall(index,itemPrefab,func,itemsList)
-    itemPrefab.name = "item"..index
-    table.insert(itemsList, index,itemPrefab)
-    CSGetComponentInChildrenButtonEventCall(itemPrefab, function()func(index)end)
+local function ButtonEventMessageBoxOKCancel()
+    print("MessageBoxOKCancel ")
+    ShowMessageBoxOKCancel(mainUI)
 end
+------------------------------------------------
 
-
+-- 显示当前界面
+function ShowMainUI(lastUI)
+    CSShowGameObject(mainUI)
+    CSHideGameObject(lastUI)
+end
 
 
 -- 开始主界面
 function StartMainUI(lastUI)
     -- 加载界面prefab
-    MainUI.mainUI = CSLoadAndInstantiatePrefab("UI/game/MainUI","game/MainUI");
-    MainUI.scrollViewBase = CSFindGameObject('MainCanvas/MainUI/Scroll View/Viewport/Content')
-    MainUI.scrollViewItemBase = CSFindGameObject('MainCanvas/MainUI/Scroll View/Viewport/Content/Panel')
+    mainUI = CSLoadAndInstantiatePrefab("UI/Prefab/Game","Game/MainUI");
 
-    --local scrollViewItemBase2 = CS.UnityEngine.GameObject.Instantiate(scrollViewItemBase,scrollViewBase.transform,true)     -- 再生成一个子元素
-    --CSGetComponentInChildrenButtonEventCall(scrollViewItemBase, ButtonEventCharacter)
-    --createScrollViewItems
-    MainUI.CreateScrollViewItemList(MainUI.scrollViewItemBase,MainUI.ButtonEventScrollViewElement,0,MainUI.scrollViewBase)
-    
-    
     -- 关闭上一个界面
-    CS.UnityEngine.GameObject.Destroy (lastUI)       -- 销毁加载界面
+    CSDestroyGameObject(lastUI)       -- 销毁加载界面
     
-  
-    -- 主界面上面的按钮
-    CSFindGameObjectButtonEventCall( "MainUI/StartBattle" ,MainUI.ButtonEventBattle)          -- 第二种方式，用名字找
-    CSFindGameObjectButtonEventCall( "MainUI/Team" ,MainUI.ButtonEventTeam)          -- 第二种方式，用名字找
-    CSFindGameObjectButtonEventCall( "MainUI/Character" ,MainUI.ButtonEventCharacter)          -- 第二种方式，用名字找
-
+    -- 主界面上面的按钮事件绑定
+    CSFindGameObjectByParentButtonEventCall( "ScrollView1",mainUI , ButtonEventScrollView1)           -- 用名字找按钮，绑定事件
+    CSFindGameObjectByParentButtonEventCall( "ScrollView2" , mainUI, ButtonEventScrollView2)                    -- 用名字找按钮，绑定事件
+    CSFindGameObjectByParentButtonEventCall( "ScrollView3" ,mainUI, ButtonEventCharacterScrollView3)          -- 用名字找按钮，绑定事件
+    CSFindGameObjectByParentButtonEventCall( "TableView" ,mainUI,ButtonEventTableView)          -- 用名字找按钮，绑定事件
+    CSFindGameObjectByParentButtonEventCall( "ScrollViewHorizontal" ,mainUI,ButtonEventScrollViewHorizontal)          -- 用名字找按钮，绑定事件
+    CSFindGameObjectByParentButtonEventCall( "MessageBoxOKCancel" ,mainUI,ButtonEventMessageBoxOKCancel)          -- 用名字找按钮，绑定事件
 
 end

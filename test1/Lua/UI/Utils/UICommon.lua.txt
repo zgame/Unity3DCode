@@ -1,0 +1,109 @@
+
+-------------------------------------物体的加载，查找，显示，隐藏--------------------------------------------------
+-- 加载并创建 UI prefab
+function CSLoadAndInstantiatePrefab(bundleName, prefabName)
+    -- 这里要注意一下： 
+    -- 第一个参数是bundle manifest里面bundle的名字（一般有目录）
+    -- 第二个参数是asset 里面的目录
+    return CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetUIPath.. prefabName ..".prefab","MainCanvas",true);    
+end
+
+-- 查找物体
+function CSFindGameObject(name)
+    local obj = CS.UnityEngine.GameObject.Find(name)
+    if obj==nil then
+        print("找不到  ".. name.. "  注意路径必须完全一致，大小写敏感")
+    end
+    return obj
+end
+-- 销毁物体
+function CSDestroyGameObject(obj)
+    CS.UnityEngine.GameObject.Destroy (obj)
+end
+
+-- 隐藏界面物体
+function CSHideGameObject(obj)
+    obj:SetActive(false)
+end
+--  显示界面物体
+function CSShowGameObject(obj)
+    obj:SetActive(true)
+end
+--------------------------------------单一按钮事件绑定和解绑，提供2种方式--------------------------------------------------
+
+-- 按照 组件 查找按钮，绑定事件
+function CSGetComponentInChildrenButtonEventCall(prefab, func)
+    prefab:GetComponentInChildren(typeof(CS.UnityEngine.UI.Button)).onClick:AddListener(func)
+end
+function CSGetComponentInChildrenButtonEventCallRemove(prefab, func)
+    prefab:GetComponentInChildren(typeof(CS.UnityEngine.UI.Button)).onClick:RemoveListener(func)
+end
+
+-- 按照 目录 查找按钮，绑定事件
+function CSFindGameObjectButtonEventCall(prefabName, func)
+    local prefab = CS.UnityEngine.GameObject.Find(prefabName)
+    prefab:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:AddListener(func)
+end
+function CSFindGameObjectByParentButtonEventCall(prefabName, patent, func)
+    local prefab = patent.transform:Find(prefabName)
+    prefab:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:AddListener(func)
+end
+function CSFindGameObjectButtonEventCallRemove(prefabName, func)
+    local prefab = CS.UnityEngine.GameObject.Find(prefabName)
+    prefab:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:RemoveListener(func)
+end
+
+--------------------------------------  ScrollView 生成和事件绑定  --------------------------------------------------
+
+-- 批量生成元素， 这里为了编辑UI方便，代码就麻烦一点，需要判断一下是不是第一个样本， 第一个位置是用来复制的
+--                               子元素样本  单一按钮回调函数,多按钮为nil      数量    所有item prefab总表   多按钮回调设置（key是按钮路径，value是回调函数）
+function CSCreateScrollViewItemList(scrollViewItemBase, callBackFunc, count, itemPrefabList, MultipleButtonList)
+    -- 首先如果列表不空，那么需要清理干净 --
+    for i = 2, #itemPrefabList do
+        CSDestroyGameObject(itemPrefabList[i])
+        itemPrefabList[i]=nil
+    end
+    
+    -- 开始生成物体，并添加到总体列表中方便以后用 --
+    if count > 0 then
+        -- 首先把第一个元素设置好
+        scrollViewItemBase:SetActive(true)
+        itemPrefabList[1] = scrollViewItemBase
+        -- 然后开始设置后面的元素,生成其他子元素
+        for i = 2, count do
+            --从第二个开始生成，第一个位置是给复制的样本留着的
+            local elementItem = CS.UnityEngine.GameObject.Instantiate(scrollViewItemBase, scrollViewItemBase.transform.parent.transform, true)     -- 再生成一个子元素
+            itemPrefabList[i] = elementItem
+        end
+    else
+        -- 空列表
+        itemPrefabList = {}
+        scrollViewItemBase:SetActive(false)     -- 如果是空的列表，那么样本也隐藏起来吧
+    end
+    
+    -- 统一一下命名 --
+    for index,item in pairs(itemPrefabList) do
+        item.name = "item"..index                -- 统一一下命名， 方便查看和排错
+    end
+    
+    -- 开始绑定按钮事件 --
+    if count >0 then
+        if MultipleButtonList == nil then
+            -- 只有单一按钮的情况
+            for index,item in pairs(itemPrefabList) do
+                CSGetComponentInChildrenButtonEventCall(item, function()callBackFunc(index)end)   -- 绑定事件回调函数
+            end
+        else
+            -- 下面是对应多个按钮的情况，可以绑定多个按钮事件回调
+            for path,func in pairs(MultipleButtonList)do
+                print("path"..path)
+                for index,item in pairs(itemPrefabList) do
+                    CSFindGameObjectByParentButtonEventCall(path,item,function()func(index)end)
+                end
+            end
+        end
+    end
+end
+
+
+-----------------------------------------------------------------------------------------------------------------------

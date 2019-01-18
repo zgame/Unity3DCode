@@ -1,4 +1,4 @@
 
 
-AssetUIPath = "Assets/AssetPackage/UI/prefab/"     -- asset UI  
+AssetUIPath = "Assets/AssetPackage/UI/Prefab/"     -- asset UI  
 

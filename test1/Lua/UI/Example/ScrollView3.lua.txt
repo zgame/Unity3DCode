@@ -1,0 +1,57 @@
+
+local UI    -- 当前界面句柄
+local LastUI    -- 上一个界面句柄
+local scrollViewItemBase -- scrollView 子元素的句柄
+local scrollViewItems = {}     -- 子元素列表
+
+
+-- 绑定按钮事件控制
+local function ButtonEventBack()
+    print("返回")
+    -- 返回到上一个菜单
+    CSShowGameObject(LastUI)
+    CSHideGameObject(UI)
+end
+
+-- 绑定item上面的按钮事件
+local function ButtonEventScrollViewElement1(index)
+    print("scroll view button 1         " .. index)
+    local itemPrefab = scrollViewItems[index]
+    print(itemPrefab.name)
+end
+local function ButtonEventScrollViewElement2(index)
+    print("scroll view button 2      " .. index)
+    local itemPrefab = scrollViewItems[index]
+    print(itemPrefab.name)
+end
+local function ButtonEventScrollViewElement3(index)
+    print("scroll view button 3      " .. index)
+    local itemPrefab = scrollViewItems[index]
+    print(itemPrefab.name)
+end
+
+
+
+-- 开始界面
+function ShowScrollView3(lastUI)
+    LastUI = lastUI
+    if UI == nil then
+        -- 加载界面prefab
+        UI = CSLoadAndInstantiatePrefab("UI/Prefab/Example", "Example/ScrollView3Button");
+        -- 找到子元素的样本
+        scrollViewItemBase = CSFindGameObject('MainCanvas/ScrollView3Button/Scroll View/Viewport/Content/Panel')
+        
+        -- 按照样本生成出一定数量的子元素
+        local eventList ={}
+        eventList["Button1"] = ButtonEventScrollViewElement1       -- 按照固定的格式，定义多个按钮的路径和绑定的回调
+        eventList["Button2"] = ButtonEventScrollViewElement2       -- 按照固定的格式，定义多个按钮的路径和绑定的回调
+        eventList["Button3"] = ButtonEventScrollViewElement3       -- 按照固定的格式，定义多个按钮的路径和绑定的回调
+        CSCreateScrollViewItemList(scrollViewItemBase, nil, 4, scrollViewItems, eventList)
+        -- 主界面上面的按钮事件绑定
+        CSFindGameObjectByParentButtonEventCall("Back",UI, ButtonEventBack)          -- 用名字找按钮，绑定事件
+    else
+        CSShowGameObject(UI)
+    end
+    -- 关闭上一个界面
+    CSHideGameObject(LastUI)
+end

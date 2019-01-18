@@ -1,18 +1,28 @@
 
 
+-- 注意： require 其实是调用了自定义的加载器， 必须是全路径
+
 -- 加载全局变量
 require("Lua/mainGlobal")
 
 -- 加载全局通用函数
-require("Lua/LuaCallCS")
-require("Lua/UI/Common/ScrollView")
+require("Lua/UI/Utils/UICommon")
 
+-- 通用UI
+require("Lua/UI/Common/MessageBoxOKCancel")
 
 -- 加载游戏逻辑
 require("Lua/UI/Game/EnterGame")
 require("Lua/UI/Game/LoadBundleFilePanel")
 require("Lua/UI/Game/MainUI")
 
+
+-- UI 例子
+require("Lua/UI/Example/ScrollView1")
+require("Lua/UI/Example/ScrollView2")
+require("Lua/UI/Example/ScrollView3")
+require("Lua/UI/Example/ScrollViewHorizontal")
+require("Lua/UI/Example/TableView")
 
 -- 进入游戏
 StartGame()
