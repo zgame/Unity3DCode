@@ -1,4 +1,6 @@
 
+--- 没用
+
 CSScrollViewItem = {}
 
 function CSScrollViewItem:New(index,prefab,clickEvent)

@@ -25,6 +25,7 @@ public class DownLoadBundles : MonoBehaviour
     private static string BundleServerUrl = "http://118.89.188.193:8080/zswt/Android/";        // 版本服务器的web地址
     private static string BundleVersionFileName = "BundleVersion.txt";
     private static string GUIDownLoadBundleFilePanel = "MainCanvas/DownLoadBundleFilePanel";        // UI prefab 路径
+    public static string PhonePlatform = "Android";        // 手机平台，全局bundle的名字
     
     private static string BundleVersionUrlPath = BundleServerUrl + BundleVersionFileName;        // 网络保存路径
     private string LocalBundlePath;                        // 本地保存路径
@@ -34,16 +35,21 @@ public class DownLoadBundles : MonoBehaviour
     private float progress;                    //进度
     private float progressStep;                    //进度增量
     
+    
     void Awake()
     {
+#if UNITY_IPHONE  
+        PhonePlatform = "IOS";                // 按照平台进行判断
+#else
+        PhonePlatform = "Android";                // 按照平台进行判断
+#endif
         LocalBundlePath = Application.persistentDataPath;                // 本地保存路径
-        LocalVersionPath = LocalBundlePath + "/" + BundleVersionFileName;     // version本地保存的目录
+        LocalVersionPath =  Path.Combine( LocalBundlePath , BundleVersionFileName);     // version本地保存的目录
     }
    
     IEnumerator Start()
     {
-//        Debug.Log("开始加载网络Version文件");
-        yield return StartCoroutine(VersionFileDownLoadAndCheck());
+        yield return StartCoroutine(VersionFileDownLoadAndCheck());//开始加载网络Version文件
     }
     
     //---------------------------------------------------------------------------------
@@ -105,15 +111,17 @@ public class DownLoadBundles : MonoBehaviour
             Debug.Log("无法连接版本服务器，请检查网络!");
         }
     }
-
+    //-------------------------------------------------------------------------------------
     // -----------2. 按照更新列表开始下载bundle文件----------------
+    //-------------------------------------------------------------------------------------
     public void DownLoadBundleFiles(List<string> list)
     {
         if (list.Count > 0)
         {
+            // 有需要更新的，显示更新界面
             progressStep = 100f / list.Count * 0.01f;        // 根据文件的数量来决定进度条每个step的度
-            StartCoroutine(downLoadAndSaveAssetBundle(BundleServerUrl, "Android"));
-            StartCoroutine(downLoadAndSaveAssetBundle(BundleServerUrl, "Android.manifest"));
+            StartCoroutine(downLoadAndSaveAssetBundle(BundleServerUrl, PhonePlatform));
+            StartCoroutine(downLoadAndSaveAssetBundle(BundleServerUrl, PhonePlatform+".manifest"));
             foreach (var fileName in list)
             {
                 StartCoroutine(downLoadAndSaveAssetBundle(BundleServerUrl, fileName));  
@@ -122,14 +130,13 @@ public class DownLoadBundles : MonoBehaviour
         else
         {
             // 不需要更新，直接进入游戏
-            progressStep = 1;
-            SetDownLoadSliderShow();    //显示100%
-            ReadBundles.Start();
+            StartCoroutine(DoNext());
         }
         
     }
-    
+    //-------------------------------------------------------------------------------------
     //----------2 .下载bundle并缓存到本地  -------------
+    //-------------------------------------------------------------------------------------
     IEnumerator downLoadAndSaveAssetBundle(string url,string fileName)    
     {
         Debug.Log(fileName+"开始下载");
@@ -143,7 +150,7 @@ public class DownLoadBundles : MonoBehaviour
             Stream sw;            //文件流信息
             
             // 判断一下文件夹是否存在
-            var localPath = LocalBundlePath + "/" + fileName;
+            var localPath = System.IO.Path.Combine(LocalBundlePath , fileName);
             CheckDirIsExist(localPath);        // 这里增加一个判断，如果没有目录，那么先创建目录
             FileInfo t = new FileInfo(localPath);
             sw = !t.Exists ? t.Create() : t.OpenWrite();    // 判断本地是否有该文件
@@ -159,11 +166,9 @@ public class DownLoadBundles : MonoBehaviour
                 if (downloadList.Count == 0)
                 {
                     Debug.Log("----------全部下载完成，更新本地version文件------------");
-                    progress = 1;            // 进度条满 100%
-                    SetDownLoadSliderShow();    
                     SaveVersionFileToLocal();
                     // 开始进入游戏
-                    ReadBundles.Start();
+                    StartCoroutine(DoNext());
                 }
             }
         }
@@ -180,8 +185,9 @@ public class DownLoadBundles : MonoBehaviour
         }
     }
     
-
+    //-------------------------------------------------------------------------------------
     // 3 . 将最新的Version文件更新到本地
+    //-------------------------------------------------------------------------------------
     public void SaveVersionFileToLocal()
     {
         // 全部下载完成，更新本地version文件
@@ -193,13 +199,47 @@ public class DownLoadBundles : MonoBehaviour
         Debug.Log("保存Version文件到本地成功");
     }
 
+    //-------------------------------------------------------------------------------------
+    // 显示进度条进度
+    //-------------------------------------------------------------------------------------
     public void SetDownLoadSliderShow()
     {
         progress += progressStep;
         var obj = GameObject.Find(GUIDownLoadBundleFilePanel);
+        if (!obj) return;
         var slider = obj.GetComponentInChildren<UnityEngine.UI.Slider>();
         slider.value = progress;
-//        Debug.Log("progress "+progress);
+//        Debug.Log("progress " + progress);
+    }
+    //-------------------------------------------------------------------------------------
+    // 下载完成进入游戏
+    //-------------------------------------------------------------------------------------
+    IEnumerator DoNext()
+    {
+        // 开始进入游戏
+        progress = 1;
+        progressStep = 1;
+        SetDownLoadSliderShow();    //显示100%
+        yield return new WaitForSeconds(0.1f);
+        
+        ReadBundles.Start();
+    }
+    
+    
+    void Update()
+    {
+        if (ReadBundles.luaenv != null)
+        {
+            ReadBundles.luaenv.Tick();
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (ReadBundles.luaenv != null)
+        {
+//            ReadBundles.luaenv.Dispose();
+        }
     }
     
 }
