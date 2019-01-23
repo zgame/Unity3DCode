@@ -38,7 +38,7 @@ public class ReadBundles
         // 创建Lua环境
         luaenv = new LuaEnv();
         luaenv.AddLoader(CustomLoader);
-        luaenv.DoString("require 'Lua/main'");
+        luaenv.DoString(@"require 'Lua/main'");
     }
     //----------------------------------------------------------------
     // lua文件的加载器

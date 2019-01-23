@@ -9,7 +9,7 @@ local function ButtonEventCancel()
     print("cancel")
     -- 返回到上一个菜单
     --CSHideGameObject(UI)
-    CSDestroyGameObject(UI)
+    CSDestroyGameObject(UI)     -- 这里只能销毁不能隐藏，为了保证每次打开新message box窗口都是在最上面才行
 end
 
 
@@ -17,7 +17,7 @@ end
 local function ButtonEventOK()
     print("ok")
     -- 返回到上一个菜单
-    CSHideGameObject(UI)
+    CSDestroyGameObject(UI)
 end
 
 

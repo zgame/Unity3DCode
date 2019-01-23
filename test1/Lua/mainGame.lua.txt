@@ -1,5 +1,4 @@
 
-
 -- 注意： require 其实是调用了自定义的加载器， 必须是全路径
 
 -- 加载全局变量
@@ -7,6 +6,7 @@ require("Lua/mainGlobal")
 
 -- 加载全局通用函数
 require("Lua/UI/Utils/UICommon")
+cs_coroutine = (require 'Lua/XLua/cs_coroutine')
 
 -- 通用UI
 require("Lua/UI/Common/MessageBoxOKCancel")

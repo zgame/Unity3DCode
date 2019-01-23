@@ -1,0 +1,88 @@
+--local socket = require("socket")
+--cs_coroutine = (require 'Lua/XLua/cs_coroutine')
+--
+--
+--local host = "127.0.0.1"
+--local port = 8123
+--local sock
+--local recvt, sendt, status
+--
+--function ConnectToServer()
+--    sock = socket.connect(host, port)
+--    if sock == nil then
+--        print("无法连接服务器")
+--        return 
+--    end
+--    sock:settimeout(0)
+--    SendMsgToServer(1)
+--    --ReceiveMsgFromServer()
+--    
+--    --cs_coroutine.start(ReceiveMsgFromServer())
+--    coroutine.create(ReceiveMsgFromServer())   -- 创建协程处理网络消息
+--    SendMsgToServer(2)
+--end
+--
+--
+--function ReceiveMsgFromServer()
+--    while true do
+--        recvt, sendt, status = socket.select({sock}, nil, 1)
+--        print("select")
+--        while #recvt > 0 do
+--            local response, receive_status = sock:receive()
+--            if receive_status ~= "closed" then
+--                if response then
+--                    print(response)
+--                    --recvt, sendt, status = socket.select({sock}, nil, 1)
+--                end
+--            else
+--                print("网络已经中断")
+--                return 
+--            end
+--        end
+--        print("run")
+--        --coroutine.yield(CS.UnityEngine.WaitForSeconds(0.2))     -- 这里用协程暂停0.2秒
+--    end
+--end
+--
+--function SendMsgToServer(msg)
+--    sock:send("hello unity  " .. msg.."\n")
+--end
+--
+--ConnectToServer()
+----------------------------------------------------------------------------------
+--require("Lua/Common/LuaUtil")
+--
+--local hallSocket = CS.Networks.HjTcpNetwork()
+--
+--local function OnConnect(self, sender, result, msg)
+--    print(result)
+--    if result < 0 then
+--        print("Connect err : "..msg)
+--        return
+--    end
+--
+--    hallSocket:SendMessage("sssssssssssss")
+--end
+--
+--local function OnClose(self, sender, result, msg)
+--    print(result)
+--    if result < 0 then
+--        print("Close err : "..msg)
+--        return
+--    end
+--end
+--
+--local function OnReceivePackage(bytes)
+--    print(bytes)
+--end
+--
+--
+--hallSocket.ReceivePkgHandle = Bind(nil, OnReceivePackage)
+----hallSocket.ReceivePkgHandle = OnReceivePackage
+--hallSocket.OnConnect = Bind(nil, OnConnect)
+--hallSocket.OnClosed = Bind(nil, OnClose)
+--hallSocket:SetHostPort("127.0.0.1", 8123)
+--hallSocket:Connect()
+--
+--print(hallSocket:IsConnect())
+print("ffffffffff")

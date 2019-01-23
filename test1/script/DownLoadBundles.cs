@@ -93,7 +93,7 @@ public class DownLoadBundles : MonoBehaviour
                         var localVersion = ((Dictionary<string, object>) localList[webBundleName])["Version"];    // 本地版本号
                         if (webVersion.Equals(localVersion))
                         {
-                            Debug.Log(webBundleName + " 不需要更新" );
+//                            Debug.Log(webBundleName + " 不需要更新" );
                             continue; // 跳过循环，下一个
                         }
                     }
