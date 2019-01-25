@@ -1,0 +1,7 @@
+
+
+MyPb = require "pb" -- 载入 pb.dll
+
+assert(MyPb.loadfile "Assets/AssetPackage/Lua/Net/LuaProtocol/addressbook.txt") -- 载入刚才编译的pb文件
+assert(MyPb.loadfile "Assets/AssetPackage/Lua/Net/LuaProtocol/CMD_Game.txt") -- 载入刚才编译的pb文件
+assert(MyPb.loadfile "Assets/AssetPackage/Lua/Net/LuaProtocol/CMD_GameServer.txt") -- 载入刚才编译的pb文件

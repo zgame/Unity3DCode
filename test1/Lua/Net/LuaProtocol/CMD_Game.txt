@@ -1,0 +1,216 @@
+
+⁄)
+CMD_Game.protoCMD"¬
+tagUserInfo
+	nick_name (RnickName
+user_id (RuserId
+game_id (RgameId
+	vip_level (RvipLevel
+level (Rlevel
+chair_id (RchairId
+table_id (RtableId
+score (Rscore
+lottery	 (Rlottery'
+bullet_mulriple
+ (RbulletMulriple2
+used_skills (2.CMD.tagUsedSkillR
+usedSkills
+	cannon_id (RcannonId
+face_id (RfaceId
+exp (Rexp
+diamond (Rdiamond
+bullet (Rbullet
+
+cannon_num (R	cannonNum#
+account_level (RaccountLevel
+
+login_type (R	loginType
+face_url (RfaceUrl
+arena_score (R
+arenaScore
+sitelv (Rsitelv0
+achievement_title_id (RachievementTitleId$
+bullet_skin_id (RbulletSkinId"
+buffs (2.CMD.tagBuffRbuffs
+	secsitelv (R	secsitelv#
+monster_upper (RmonsterUpper"è
+tagUsedSkill
+skill_id (RskillId
+time (Rtime
+cd (Rcd
+used (Rused
+total (Rtotal
+addSec (RaddSec"ú
+tagRewardPoolOption(
+detail_cost_type (RdetailCostType*
+detail_cost_value (RdetailCostValue/
+player_min_stay_time (RplayerMinStayTime"[
+tagBuff
+buff_id (RbuffId
+duration (Rduration
+	add_ratio (RaddRatio"ö
+CMD_S_ENTER_SCENE(
+is_special_scene (RisSpecialScene;
+special_sceene_waited_time (RspecialSceeneWaitedTime
+
+tick_count (R	tickCount8
+exchange_ratio_userscore (RexchangeRatioUserscore8
+exchange_ratio_fishscore (RexchangeRatioFishscore%
+exchange_count (RexchangeCount.
+min_bullet_multiple (RminBulletMultiple.
+max_bullet_multiple (RmaxBulletMultiple
+scene_id	 (RsceneId
+
+pause_time
+ (R	pauseTime1
+table_users (2.CMD.tagUserInfoR
+tableUsers
+
+bonus_fish (R	bonusFish
+
+buttle_num (R	buttleNum$
+alms_get_count (RalmsGetCount
+
+scene_type (R	sceneType?
+rewardpool_opt (2.CMD.tagRewardPoolOptionRrewardpoolOpt
+table_id (RtableId
+	is_master (RisMaster
+	game_time (RgameTime"H
+CMD_S_OTHER_ENTER_SCENE-
+	user_info (2.CMD.tagUserInfoRuserInfo"´
+tagSceneFish
+uid (Ruid
+kind_id (RkindId
+path_id (RpathId
+
+path_index (R	pathIndex
+tag (Rtag
+speed (Rspeed
+offset_x (RoffsetX
+offset_y (RoffsetY
+boat_id	 (RboatId
+alive_state
+ (R
+aliveState 
+is_form_fish (R
+isFormFish"F
+CMD_S_SCENE_FISH2
+scene_fishs (2.CMD.tagSceneFishR
+sceneFishs"@
+CMD_S_DISTRIBUTE_FISH'
+fishs (2.CMD.tagSceneFishRfishs"€
+CMD_C_USER_FIRE
+
+tick_count (R	tickCount
+angle (Rangle 
+lock_fish_id (R
+lockFishId'
+bullet_mulriple (RbulletMulriple$
+bullet_temp_id (RbulletTempId
+
+bullet_num (R	bulletNum!
+is_broadcast (RisBroadcast
+	is_double (RisDouble
+sf_skill_id	 (R	sfSkillId#
+monster_upper
+ (RmonsterUpper"‘
+CMD_S_USER_FIRE
+chair_id (RchairId
+	bullet_id (RbulletId
+angle (Rangle#
+bullet_double (RbulletDouble'
+bullet_mulriple (RbulletMulriple 
+lock_fish_id (R
+lockFishId$
+bullet_temp_id (RbulletTempId 
+bind_user_id (R
+bindUserId
+
+bullet_num	 (R	bulletNum
+
+curr_score
+ (R	currScore
+	curr_time (RcurrTime
+sf_skill_id (R	sfSkillId
+
+cost_score (R	costScore!
+curr_daimond (RcurrDaimond"h
+CMD_C_USE_SKILL
+skill_id (RskillId
+	target_id (RtargetId
+
+is_trigger (R	isTrigger"ç
+CMD_S_USE_SKILL
+chair_id (RchairId
+skill_id (RskillId
+used (Rused
+total (Rtotal
+
+score_cost (R	scoreCost!
+skill_status (RskillStatus 
+bind_user_id (R
+bindUserId
+	target_id (RtargetId
+add_secs	 (RaddSecs"¨
+CMD_C_CATCH_FISH
+fish_uid (RfishUid
+	bullet_id (RbulletId$
+bullet_temp_id (RbulletTempId
+chair_id (RchairId
+weakness_id (R
+weaknessId"Æ
+tagSceneBullet
+chair_id (RchairId
+	bullet_id (RbulletId
+pos_x (RposX
+pos_y (RposY
+angle (Rangle
+
+tick_count (R	tickCount'
+bullet_mulriple (RbulletMulriple
+	is_double (RisDouble 
+lock_fish_id	 (R
+lockFishId
+
+bullet_num
+ (R	bulletNum"A
+tagDropItem
+item_id (RitemId
+item_num (RitemNum"ø
+tagCatchFish
+fish_uid (RfishUid
+	fish_kind (RfishKind
+
+fish_score (R	fishScore!
+fish_lottery (RfishLottery
+diamond (Rdiamond#
+bullet_double (RbulletDouble"
+link_fish_uid (RlinkFishUid
+	dead_sign (RdeadSign
+skill_id	 (RskillId#
+fish_mulriple (RfishMulriple.
+fish_original_score (RfishOriginalScore/
+
+drop_items (2.CMD.tagDropItemR	dropItems&
+fish_score_show (RfishScoreShow
+buff_id (RbuffId
+	buff_time (RbuffTime
+buff_add (RbuffAdd
+	crit_rate (RcritRate"º
+CMD_S_CATCH_FISH
+chair_id (RchairId
+	fish_type (RfishType+
+bullet (2.CMD.tagSceneBulletRbullet
+
+curr_score (R	currScore!
+curr_lottery (RcurrLottery!
+curr_diamond (RcurrDiamond
+	curr_time (RcurrTime2
+catch_fishs (2.CMD.tagCatchFishR
+catchFishs
+add_exp	 (RaddExp
+skill_id
+ (RskillId
+is_crit (RisCrit
+buff_id (RbuffId'
+treasure_effect (RtreasureEffect

@@ -2,3 +2,9 @@
 
 AssetUIPath = "Assets/AssetPackage/UI/Prefab/"     -- asset UI  
 
+MyToken = 1     -- 给服务器发的token
+MyUserId = nil   -- 我的uid
+
+
+MyPlayer = Player:New(User:New())
+MyUser = MyPlayer.User

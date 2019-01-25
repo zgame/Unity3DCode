@@ -1,24 +1,51 @@
 
+MyEnterGameUI = nil    -- 进入游戏的界面句柄
+MySocket = CS.SocketClient()
 
-local enterGameUI    -- 进入游戏的界面句柄
+CanEnterGame = false   
+
+
+-- 提示框回调
+local function ReConnect()
+    print("再次尝试连接服务器")
+    MySocket:SendConnect("172.16.140.131",8123)
+end
+
 
 -- 绑定按钮事件控制
 local function ButtonEvent()
-    print("进入游戏，加载游戏资源")
-    --CSGetComponentInChildrenButtonEventCallRemove(enterGameUI, ButtonEvent)             --解除事件绑定
-    LoadBundleFilePanel(enterGameUI)   -- 进入加载界面
+    if MySocket:IsConnceted() then
+        print("发送登录请求")
+        SendLoginGSGuest()
+        --LuaNetWorkSend(MDM_GR_LOGON, SUB_GR_LOGON_USERID,1,nil)  
+        
+      
+    else
+        print("无法连接服务器")
+        ShowMessageBoxOKCancel("无法连接服务器", ReConnect)
+    end
 end
 
 -- 开始游戏
 function StartGame()
+    -- 连接服务器
+    MySocket:SendConnect("172.16.140.131",8123)
+    
     -- 加载界面prefab
-    enterGameUI = CSLoadAndInstantiatePrefab("UI/Prefab/Game","Game/EnterGame");
+    MyEnterGameUI = CSLoadAndInstantiatePrefab("UI/Prefab/Game","Game/EnterGame");
 
-    CSGetComponentInChildrenButtonEventCall(enterGameUI, ButtonEvent)                                         -- 用组件类型找按钮，绑定事件，适合只有一个按钮的情况
+    CSGetComponentInChildrenButtonEventCall(MyEnterGameUI, ButtonEvent)                                         -- 用组件类型找按钮，绑定事件，适合只有一个按钮的情况
     
     --关闭下载界面, 销毁掉download界面
     local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')
     --DownLoadBundleFilePanelObject:SetActive(false)        -- 隐藏
     CSDestroyGameObject(DownLoadBundleFilePanelObject)       -- 销毁
+end
+
+-- 进入下一个界面
+function EnterGameNext()
+    print("进入游戏，加载游戏资源")
+    CSGetComponentInChildrenButtonEventCallRemove(MyEnterGameUI, ButtonEvent)             --解除事件绑定
+    LoadBundleFilePanel(MyEnterGameUI)   -- 进入加载界面
 end
 

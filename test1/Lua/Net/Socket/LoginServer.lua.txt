@@ -1,0 +1,23 @@
+
+
+
+-- 发送登录服务器请求
+function SendLoginGSGuest()
+    local CMD_GR_LogonUserID = {
+        machine_id = "Alice",           -- 用 mac 地址登录
+    }
+
+    -- 序列化成二进制数据
+    local sendCmd = assert(MyPb.encode("CMD.CMD_GR_LogonUserID", CMD_GR_LogonUserID))
+    LuaNetWorkSend(MDM_GR_LOGON, SUB_GR_LOGON_USERID, MyToken, sendCmd)
+end
+
+
+
+-- 服务器返回登录服务器成功，下发uid
+function SendLoginGSGuestSuccess(buf)
+    local msg = assert(MyPb.decode("CMD.CMD_GR_LogonSuccess", buf)) 
+    print(MySerpent.block(msg))
+    local uid = msg.user_right
+    print("--------登录成功---UID:",uid)
+end

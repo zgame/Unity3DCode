@@ -1,12 +1,33 @@
 
 -- 注意： require 其实是调用了自定义的加载器， 必须是全路径
 
--- 加载全局变量
-require("Lua/mainGlobal")
+
+-- 加载全局常亮
+require("Lua/Const/protocol_cs")
+require("Lua/Const/protocol_gs")
+require("Lua/Const/protocol_ls")
+
+-- 加载数据定义
+
+require("Lua/Model/Player")
+require("Lua/Model/User")
+
 
 -- 加载全局通用函数
 require("Lua/UI/Utils/UICommon")
+require("Lua/mainLoop")
 cs_coroutine = (require 'Lua/XLua/cs_coroutine')
+MySerpent = require("Lua/Common/serpent")
+
+
+-- 加载protobuf
+require("Lua/Net/Socket/LoadProtocol")
+
+-- 加载网络处理
+require("Lua/Net/Socket/LoginServer")
+require("Lua/Net/Socket/GameEnter")
+require("Lua/Net/Socket/network")
+
 
 -- 通用UI
 require("Lua/UI/Common/MessageBoxOKCancel")
@@ -23,6 +44,10 @@ require("Lua/UI/Example/ScrollView2")
 require("Lua/UI/Example/ScrollView3")
 require("Lua/UI/Example/ScrollViewHorizontal")
 require("Lua/UI/Example/TableView")
+
+
+-- 加载全局变量
+require("Lua/mainGlobal")
 
 -- 进入游戏
 StartGame()

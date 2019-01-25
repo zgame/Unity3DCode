@@ -1,0 +1,39 @@
+
+¯
+CMD_GameServer.protoCMD"Ý
+CMD_GR_LogonUserID#
+plaza_version (RplazaVersion#
+frame_version (RframeVersion'
+process_version (RprocessVersion
+client_type (R
+clientType
+user_id (RuserId
+password (Rpassword
+
+machine_id (R	machineId
+kind_id (RkindId
+ip_addr	 (RipAddr!
+ditch_number
+ (RditchNumber
+device_type (R
+deviceType!
+packet_index (RpacketIndex
+
+is_android (R	isAndroid'
+cannon_mulriple (RcannonMulriple"½
+CMD_GR_LogonSuccess
+
+user_right (R	userRight!
+master_right (RmasterRight
+	new_guide (RnewGuide
+	server_id (RserverId*
+cannon_num_switch (RcannonNumSwitch"m
+CMD_GR_LogonFailure
+
+error_code (R	errorCode
+	server_id (RserverId
+describe (Rdescribe"‚
+CMD_GF_GameOption!
+allow_lookon (RallowLookon#
+frame_version (RframeVersion%
+client_version (RclientVersion

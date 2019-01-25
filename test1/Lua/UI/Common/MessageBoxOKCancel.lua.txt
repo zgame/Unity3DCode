@@ -1,7 +1,7 @@
 
 local UI
-local LastUI
-
+--local LastUI
+local okCallBack
 
 
 -- 绑定按钮事件控制
@@ -16,6 +16,12 @@ end
 -- 绑定按钮事件控制
 local function ButtonEventOK()
     print("ok")
+    -- call back
+    if okCallBack ~= nil then
+        okCallBack()    
+    end
+    
+    
     -- 返回到上一个菜单
     CSDestroyGameObject(UI)
 end
@@ -23,12 +29,18 @@ end
 
 
 -- 开始界面
-function ShowMessageBoxOKCancel(lastUI)
-    LastUI = lastUI
+function ShowMessageBoxOKCancel(msg,callBack)
+    --LastUI = lastUI
     --if UI == nil then
+    okCallBack = callBack
         -- 加载界面prefab
         UI = CSLoadAndInstantiatePrefab("UI/Prefab/Common", "Common/MessageBoxOKCancel");
 
+    local txt = UI.transform:Find("Panel/Text")
+    txt:GetComponent(typeof(CS.UnityEngine.UI.Text)).text = msg
+    
+    --UI:GetComponentInChildren(typeof(CS.UnityEngine.UI.Button)).onClick:RemoveListener(func)
+    
         -- 主界面上面的按钮事件绑定
         CSFindGameObjectByParentButtonEventCall("Panel/Cancel", UI, ButtonEventCancel)          -- 用名字找按钮，绑定事件
         CSFindGameObjectByParentButtonEventCall("Panel/OK", UI, ButtonEventOK)          -- 用名字找按钮，绑定事件

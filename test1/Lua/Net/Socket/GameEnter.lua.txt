@@ -1,0 +1,25 @@
+
+
+
+-- 登录完成
+function SendEnterScene(buf)
+    --local sendCmd = CMD_GameServer_pb.CMD_GF_GameOption()
+    --LuaNetWorkSendToUser(userId, MDM_GF_FRAME, SUB_GF_GAME_OPTION ,sendCmd,nil)
+
+    local msg = assert(MyPb.decode("CMD.tagUserInfo", buf))
+    print(MySerpent.block(msg))
+    local uid = msg.nick_name
+    print("--------登录成功---nick_name:",uid)
+    
+    MyUser.NickName = msg.nick_name
+    MyUser.Score = msg.score
+    MyUser.Exp = msg.exp
+    
+    
+   
+
+    --EnterGameNext()
+    CanEnterGame = true     -- 通知主线程进入场景
+    
+    
+end

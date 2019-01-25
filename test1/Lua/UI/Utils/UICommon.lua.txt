@@ -8,6 +8,16 @@ function CSLoadAndInstantiatePrefab(bundleName, prefabName)
     return CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetUIPath.. prefabName ..".prefab","MainCanvas",true);    
 end
 
+-- 只是做加载，并不生成，用在loading
+function CSLoadNotInstantiatePrefab(bundleName, prefabName)
+    -- 这里要注意一下： 
+    -- 第一个参数是bundle manifest里面bundle的名字（一般有目录）
+    -- 第二个参数是asset 里面的目录
+    return CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetUIPath.. prefabName ..".prefab","MainCanvas",false);
+end
+
+
+
 -- 查找物体
 function CSFindGameObject(name)
     local obj = CS.UnityEngine.GameObject.Find(name)
@@ -44,6 +54,7 @@ function CSFindGameObjectButtonEventCall(prefabName, func)
     local prefab = CS.UnityEngine.GameObject.Find(prefabName)
     prefab:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:AddListener(func)
 end
+-- 有父物体，查找子物体
 function CSFindGameObjectByParentButtonEventCall(prefabName, patent, func)
     local prefab = patent.transform:Find(prefabName)
     prefab:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:AddListener(func)

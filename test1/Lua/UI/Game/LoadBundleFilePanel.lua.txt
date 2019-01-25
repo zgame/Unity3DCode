@@ -5,13 +5,14 @@ function LoadBundleFilePanel(lastUI)
     local slider = loadingUI:GetComponentInChildren(typeof(CS.UnityEngine.UI.Slider))     -- 进度条
 
     CSDestroyGameObject(lastUI)       -- 销毁上一个界面
+    
     -- 开始加载游戏资源
     slider.value = 0.2
 
-    CS.ReadBundles.LoadAndInstantiateGameObject("UI/Prefab/Example", "Example/ScrollView1Button.prefab", "MainCanvas", false);
+    CSLoadNotInstantiatePrefab("UI/Prefab/Example",  "Example/ScrollView1Button");
     slider.value = 0.5
 
-    CS.ReadBundles.LoadAndInstantiateGameObject("UI/Prefab/Common", "Common/MessageBoxOKCancel.prefab", "MainCanvas", false);
+    CSLoadNotInstantiatePrefab("UI/Prefab/Common",  "Common/MessageBoxOKCancel");
     slider.value = 1
 
   

@@ -19,7 +19,9 @@ using XLua;
 // 4.  调试模式说明， 开启调试模式， lua文件不需要打asset bundle， 其他文件因为涉及到依赖关系，所以还是需要build asset bundle，而且需要点击copy to streamingAssetsPath， 从streamingAssetsPath读文件
 //------------------------------------------------------------------------------------------------------------
 
-//[LuaCallCSharp]
+//#define THREAD_SAFE 
+
+[LuaCallCSharp]
 public class ReadBundles
 {
     private static string AssetPackagePath = "Assets/AssetPackage/";    //lua 默认的asset路径
@@ -35,9 +37,19 @@ public class ReadBundles
         var AndroidManifest = GetAssetBundle(DownLoadBundles.PhonePlatform);
         GlobalManifest = AndroidManifest.LoadAsset<AssetBundleManifest>("AssetBundleManifest");    // 该写法是固定的
         
+      
+        
         // 创建Lua环境
         luaenv = new LuaEnv();
         luaenv.AddLoader(CustomLoader);
+//        luaenv.AddBuildin("pb", XLua.LuaDLL.Lua.LoadPb);                    // protocol buffer 库
+//        luaenv.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);        //  rapid json  库3
+
+        luaenv.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
+        luaenv.AddBuildin("lpeg", XLua.LuaDLL.Lua.LoadLpeg);
+        luaenv.AddBuildin("pb", XLua.LuaDLL.Lua.LoadLuaProfobuf);
+        luaenv.AddBuildin("ffi", XLua.LuaDLL.Lua.LoadFFI);
+        
         luaenv.DoString(@"require 'Lua/main'");
     }
     //----------------------------------------------------------------
@@ -105,6 +117,7 @@ public class ReadBundles
         }
     }
     
+//    [LuaCallCSharp]
     //----------------------------------------------------- load game object ------------------------------------------------------
     // lua 调用该函数加载game object        加载物体名称         路径             父物体         是否instantiate
     public static GameObject LoadAndInstantiateGameObject(string bundleFileName, string assetPrefabPath, string parentDir, bool instantiate)
@@ -133,7 +146,7 @@ public class ReadBundles
             foreach (var dependeciesFile in dependenciesList)
             {
                 // 按照依赖列表，提前加载依赖
-                Debug.Log(bundleFileName + " 需要依赖：" + dependeciesFile);
+//                Debug.Log(bundleFileName + " 需要依赖：" + dependeciesFile);
                 GetAssetBundle(dependeciesFile);
             }
         }

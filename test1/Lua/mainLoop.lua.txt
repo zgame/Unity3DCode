@@ -1,0 +1,17 @@
+
+
+-- 绑定一个控件到场景上
+
+local gameobject = CS.UnityEngine.GameObject('MainLoop_Runner')
+CS.UnityEngine.Object.DontDestroyOnLoad(gameobject)
+gameobject:AddComponent(typeof(CS.MainLoop_Runner))
+
+
+function MainLoop()
+    --print("mian loop")
+    -- 当网络收到数据包之后，开始进入游戏主界面， 因为网络线程是另外的线程，不能操作主线程， 所以用通知的方式来触发
+    if CanEnterGame then        
+        EnterGameNext()
+        CanEnterGame = false
+    end
+end
