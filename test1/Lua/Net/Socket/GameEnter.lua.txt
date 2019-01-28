@@ -11,6 +11,7 @@ function SendEnterScene(buf)
     local uid = msg.nick_name
     print("--------登录成功---nick_name:",uid)
     
+    MyUser.UserId = msg.user_id
     MyUser.NickName = msg.nick_name
     MyUser.Score = msg.score
     MyUser.Exp = msg.exp

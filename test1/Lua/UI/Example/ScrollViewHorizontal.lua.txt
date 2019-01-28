@@ -27,7 +27,7 @@ function ShowScrollViewHorizontal(lastUI)
     LastUI = lastUI
     if UI == nil then
         -- 加载界面prefab
-        UI = CSLoadAndInstantiatePrefab("UI/Prefab/Example", "Example/ScrollViewHorizontal");
+        UI = CSLoadAndInstantiatePrefabUI(AssetUIExamplePath, AssetUIExamplePath.."/ScrollViewHorizontal");
         -- 找到子元素的样本
         scrollViewItemBase = CSFindGameObject('MainCanvas/ScrollViewHorizontal/Scroll View/Viewport/Content/Panel')
 

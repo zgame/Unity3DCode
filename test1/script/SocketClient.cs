@@ -280,13 +280,13 @@ public class SocketClient
         try
         {
 
-#if THREAD_SAFE || HOTFIX_ENABLE
-            lock (ReadBundles.luaenv.luaEnvLock)
-#endif
-            {
+//#if THREAD_SAFE || HOTFIX_ENABLE
+//            lock (ReadBundles.luaenv.luaEnvLock)
+//#endif
+//            {
                 FDelegateNetWorkReceive f = ReadBundles.luaenv.Global.Get<FDelegateNetWorkReceive>("GoCallLuaNetWorkReceive");
                 f(header.MainCMDID, header.SubCMDID, dataBuffer,System.Text.Encoding.Default.GetString(msgBuffer));
-            }
+//            }
         }
         catch (Exception e)
         {

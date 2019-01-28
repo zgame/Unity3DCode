@@ -18,6 +18,8 @@ require("Lua/UI/Utils/UICommon")
 require("Lua/mainLoop")
 cs_coroutine = (require 'Lua/XLua/cs_coroutine')
 MySerpent = require("Lua/Common/serpent")
+local Timer = require("Lua/Common/timer")
+MyTimer = Timer()
 
 
 -- 加载protobuf
@@ -35,6 +37,7 @@ require("Lua/UI/Common/MessageBoxOKCancel")
 -- 加载游戏逻辑
 require("Lua/UI/Game/EnterGame")
 require("Lua/UI/Game/LoadBundleFilePanel")
+require("Lua/UI/Game/Battle")
 require("Lua/UI/Game/MainUI")
 
 
@@ -50,4 +53,11 @@ require("Lua/UI/Example/TableView")
 require("Lua/mainGlobal")
 
 -- 进入游戏
-StartGame()
+--Start()
+StartBattle()
+
+
+--关闭下载界面, 销毁掉download界面
+local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')
+CSDestroyGameObject(DownLoadBundleFilePanelObject)       -- 销毁
+--DownLoadBundleFilePanelObject:SetActive(false)        -- 隐藏

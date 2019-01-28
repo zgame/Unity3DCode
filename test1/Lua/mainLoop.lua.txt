@@ -10,6 +10,14 @@ gameobject:AddComponent(typeof(CS.MainLoop_Runner))
 function MainLoop()
     --print("mian loop")
     -- 当网络收到数据包之后，开始进入游戏主界面， 因为网络线程是另外的线程，不能操作主线程， 所以用通知的方式来触发
+    
+    
+    -- 开启计时器，后面是使用示例
+    MyTimer:update(CS.UnityEngine.Time.deltaTime)
+    --MyTimer:after(2, function() print("after 2") end)
+    --MyTimer:every(0.5, function() print(1) end)
+    
+    
     if CanEnterGame then        
         EnterGameNext()
         CanEnterGame = false

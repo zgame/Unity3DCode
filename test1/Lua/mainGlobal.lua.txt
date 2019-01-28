@@ -1,10 +1,20 @@
 
+---------------------------路径---------------------------
+AssetPath = "Assets/AssetPackage/"     -- asset path
+--AssetUIPath = "UI/Prefab/"
+AssetUICommonPath = "UI/Prefab/Common"
+AssetUIGamePath = "UI/Prefab/Game"
+AssetUIExamplePath = "UI/Prefab/Example"
 
-AssetUIPath = "Assets/AssetPackage/UI/Prefab/"     -- asset UI  
+AssetMonsterPath = "Model/Prefab"
 
+-------------------------玩家数据---------------------------
 MyToken = 1     -- 给服务器发的token
-MyUserId = nil   -- 我的uid
-
-
 MyPlayer = Player:New(User:New())
 MyUser = MyPlayer.User
+
+
+-------------------------网络---------------------------
+MySocket = CS.SocketClient()
+
+CanEnterGame = false   -- 

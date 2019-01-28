@@ -126,12 +126,22 @@ public class ReadBundles
         if (!instantiate)
             return null;
         // 创建物体，设置父物体，清理位置
-        var obj = GameObject.Instantiate(prefab, GameObject.Find(parentDir).gameObject.transform, true);
+        GameObject obj;
+        if (parentDir == null)
+        {
+            obj = GameObject.Instantiate(prefab);
+        }
+        else
+        {
+            obj = GameObject.Instantiate(prefab, GameObject.Find(parentDir).gameObject.transform, true);
+        }
+
         obj.name = obj.name.Replace("(Clone)", "");
-        obj.GetComponent<RectTransform>().offsetMin = new Vector2(0.0f, 0.0f);
-        obj.GetComponent<RectTransform>().offsetMax = new Vector2(0.0f, 0.0f);
-        obj.transform.localScale = new Vector3(1, 1, 1);
-        obj.SetActive(true);
+        
+//        obj.GetComponent<RectTransform>().offsetMin = new Vector2(0.0f, 0.0f);
+//        obj.GetComponent<RectTransform>().offsetMax = new Vector2(0.0f, 0.0f);
+//        obj.transform.localScale = new Vector3(1, 1, 1);
+//        obj.SetActive(true);
         return obj;
     }
     

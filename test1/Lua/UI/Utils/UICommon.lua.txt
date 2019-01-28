@@ -1,11 +1,16 @@
 
 -------------------------------------物体的加载，查找，显示，隐藏--------------------------------------------------
 -- 加载并创建 UI prefab
-function CSLoadAndInstantiatePrefab(bundleName, prefabName)
+function CSLoadAndInstantiatePrefabUI(bundleName, prefabName)
     -- 这里要注意一下： 
     -- 第一个参数是bundle manifest里面bundle的名字（一般有目录）
     -- 第二个参数是asset 里面的目录
-    return CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetUIPath.. prefabName ..".prefab","MainCanvas",true);    
+    local obj = CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetPath.. prefabName ..".prefab","MainCanvas",true)
+    obj:GetComponent(typeof(CS.UnityEngine.RectTransform)).offsetMin = CS.UnityEngine.Vector2.zero
+    obj:GetComponent(typeof(CS.UnityEngine.RectTransform)).offsetMax = CS.UnityEngine.Vector2.zero
+    obj.transform.localScale = CS.UnityEngine.Vector3.one;
+    obj:SetActive(true)
+    return obj
 end
 
 -- 只是做加载，并不生成，用在loading
@@ -13,7 +18,19 @@ function CSLoadNotInstantiatePrefab(bundleName, prefabName)
     -- 这里要注意一下： 
     -- 第一个参数是bundle manifest里面bundle的名字（一般有目录）
     -- 第二个参数是asset 里面的目录
-    return CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetUIPath.. prefabName ..".prefab","MainCanvas",false);
+    CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetPath.. prefabName ..".prefab",nil, false)
+end
+
+-- 加载并创建 场景 prefab
+function CSLoadAndInstantiatePrefabGameObject(bundleName, prefabName)
+    -- 这里要注意一下： 
+    -- 第一个参数是bundle manifest里面bundle的名字（一般有目录）
+    -- 第二个参数是asset 里面的目录
+    
+    local obj= CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetPath.. prefabName ..".prefab",nil,true)
+    obj.transform.localScale = CS.UnityEngine.Vector3.one
+    obj.transform.localPosition = CS.UnityEngine.Vector3.zero
+    return obj
 end
 
 
@@ -26,6 +43,16 @@ function CSFindGameObject(name)
     end
     return obj
 end
+-- 查找子物体
+function CSFindGameObjectByParent(parent,name)
+    local obj = parent.transform:Find(name)
+    if obj==nil then
+        print("找不到  ".. name.. "  注意路径必须完全一致，大小写敏感")
+    end
+    return obj
+end
+
+
 -- 销毁物体
 function CSDestroyGameObject(obj)
     CS.UnityEngine.GameObject.Destroy (obj)
@@ -39,6 +66,12 @@ end
 function CSShowGameObject(obj)
     obj:SetActive(true)
 end
+
+-- 设置物体的文本显示内容
+function CSSetText(parent,name,txt)
+    CSFindGameObjectByParent(parent,name):GetComponentInChildren(typeof(CS.UnityEngine.UI.Text)).text = txt
+end
+
 --------------------------------------单一按钮事件绑定和解绑，提供2种方式--------------------------------------------------
 
 -- 按照 组件 查找按钮，绑定事件
@@ -51,16 +84,16 @@ end
 
 -- 按照 目录 查找按钮，绑定事件
 function CSFindGameObjectButtonEventCall(prefabName, func)
-    local prefab = CS.UnityEngine.GameObject.Find(prefabName)
+    local prefab = CSFindGameObject(prefabName)
     prefab:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:AddListener(func)
 end
 -- 有父物体，查找子物体
-function CSFindGameObjectByParentButtonEventCall(prefabName, patent, func)
-    local prefab = patent.transform:Find(prefabName)
+function CSFindGameObjectByParentButtonEventCall(prefabName, parent, func)
+    local prefab = CSFindGameObjectByParent(parent,prefabName)
     prefab:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:AddListener(func)
 end
 function CSFindGameObjectButtonEventCallRemove(prefabName, func)
-    local prefab = CS.UnityEngine.GameObject.Find(prefabName)
+    local prefab = CSFindGameObject(prefabName)
     prefab:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:RemoveListener(func)
 end
 

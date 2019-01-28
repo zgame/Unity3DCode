@@ -27,7 +27,7 @@ function ShowScrollView1(lastUI)
     LastUI = lastUI
     if UI == nil then
         -- 加载界面prefab
-        UI = CSLoadAndInstantiatePrefab("UI/Prefab/Example", "Example/ScrollView1Button");
+        UI = CSLoadAndInstantiatePrefabUI(AssetUIExamplePath, AssetUIExamplePath.."/ScrollView1Button");
         -- 找到子元素的样本
         scrollViewItemBase = CSFindGameObject('MainCanvas/ScrollView1Button/Scroll View/Viewport/Content/Panel')
 

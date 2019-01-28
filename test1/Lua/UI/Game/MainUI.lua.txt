@@ -27,6 +27,11 @@ local function ButtonEventMessageBoxOKCancel()
     print("MessageBoxOKCancel ")
     ShowMessageBoxOKCancel("测试",nil)
 end
+local function ButtonEventStartBattle()
+    print("Start battle")
+    StartBattle(mainUI)
+    
+end
 ------------------------------------------------
 
 -- 显示当前界面
@@ -39,7 +44,9 @@ end
 -- 开始主界面
 function StartMainUI(lastUI)
     -- 加载界面prefab
-    mainUI = CSLoadAndInstantiatePrefab("UI/Prefab/Game","Game/MainUI");
+    mainUI = CSLoadAndInstantiatePrefabUI(AssetUIGamePath,AssetUIGamePath.."/MainUI");
+    CSSetText(mainUI,"Text",MyUser.UserId)
+  
 
     -- 关闭上一个界面
     CSDestroyGameObject(lastUI)       -- 销毁加载界面
@@ -51,5 +58,6 @@ function StartMainUI(lastUI)
     CSFindGameObjectByParentButtonEventCall( "TableView" ,mainUI,ButtonEventTableView)          -- 用名字找按钮，绑定事件
     CSFindGameObjectByParentButtonEventCall( "ScrollViewHorizontal" ,mainUI,ButtonEventScrollViewHorizontal)          -- 用名字找按钮，绑定事件
     CSFindGameObjectByParentButtonEventCall( "MessageBoxOKCancel" ,mainUI,ButtonEventMessageBoxOKCancel)          -- 用名字找按钮，绑定事件
+    CSFindGameObjectByParentButtonEventCall( "StartGame" ,mainUI, ButtonEventStartBattle)          -- 用名字找按钮，绑定事件
 
 end

@@ -1,0 +1,34 @@
+
+local BattleUI = nil    -- 进入游戏的界面句柄
+
+
+
+
+-- 开始游戏
+function StartBattle(lastUI)
+
+    -- 加载界面prefab
+    BattleUI = CSLoadAndInstantiatePrefabUI(AssetUIGamePath,AssetUIGamePath.."/Battle")
+    
+    -- 加载场景
+    
+    -- 加载模型
+    --CSLoadNotInstantiatePrefab(AssetMonsterPath.."/1qinglong",AssetMonsterPath.."/1qinglong_1.tga")
+    --CSLoadNotInstantiatePrefab(AssetMonsterPath.."/1qinglong",AssetMonsterPath.."/1qinglong_2.tga")
+    local monster1 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/1qinglong",AssetMonsterPath.."/1qinglong")
+    
+    local monster2 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/2baihu",AssetMonsterPath.."/2baihu")
+    
+
+    -- 关闭上一个界面
+    if lastUI~=nil then
+        CSDestroyGameObject(lastUI)       -- 销毁加载界面
+    end
+    
+    
+    
+
+   
+end
+
+

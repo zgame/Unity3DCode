@@ -1,8 +1,6 @@
 
-MyEnterGameUI = nil    -- 进入游戏的界面句柄
-MySocket = CS.SocketClient()
+local MyEnterGameUI = nil    -- 进入游戏的界面句柄
 
-CanEnterGame = false   
 
 
 -- 提示框回调
@@ -26,20 +24,23 @@ local function ButtonEvent()
     end
 end
 
+
 -- 开始游戏
-function StartGame()
+function Start()
     -- 连接服务器
     MySocket:SendConnect("172.16.140.131",8123)
     
     -- 加载界面prefab
-    MyEnterGameUI = CSLoadAndInstantiatePrefab("UI/Prefab/Game","Game/EnterGame");
-
+    MyEnterGameUI = CSLoadAndInstantiatePrefabUI(AssetUIGamePath,AssetUIGamePath.."/EnterGame")
+   
     CSGetComponentInChildrenButtonEventCall(MyEnterGameUI, ButtonEvent)                                         -- 用组件类型找按钮，绑定事件，适合只有一个按钮的情况
     
-    --关闭下载界面, 销毁掉download界面
-    local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')
-    --DownLoadBundleFilePanelObject:SetActive(false)        -- 隐藏
-    CSDestroyGameObject(DownLoadBundleFilePanelObject)       -- 销毁
+    ----关闭下载界面, 销毁掉download界面
+    --local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')
+    ----DownLoadBundleFilePanelObject:SetActive(false)        -- 隐藏
+    --CSDestroyGameObject(DownLoadBundleFilePanelObject)       -- 销毁
+
+   
 end
 
 -- 进入下一个界面

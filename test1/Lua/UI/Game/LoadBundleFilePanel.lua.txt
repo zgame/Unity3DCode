@@ -1,7 +1,7 @@
 
 function LoadBundleFilePanel(lastUI)
     -- 加载界面prefab
-    local loadingUI = CSLoadAndInstantiatePrefab("UI/Prefab/Game", "Game/LoadBundleFilePanel");
+    local loadingUI = CSLoadAndInstantiatePrefabUI(AssetUIGamePath,AssetUIGamePath.."/LoadBundleFilePanel");
     local slider = loadingUI:GetComponentInChildren(typeof(CS.UnityEngine.UI.Slider))     -- 进度条
 
     CSDestroyGameObject(lastUI)       -- 销毁上一个界面
@@ -9,10 +9,10 @@ function LoadBundleFilePanel(lastUI)
     -- 开始加载游戏资源
     slider.value = 0.2
 
-    CSLoadNotInstantiatePrefab("UI/Prefab/Example",  "Example/ScrollView1Button");
+    CSLoadNotInstantiatePrefab(AssetUIExamplePath, AssetUIExamplePath.."/ScrollView1Button");
     slider.value = 0.5
 
-    CSLoadNotInstantiatePrefab("UI/Prefab/Common",  "Common/MessageBoxOKCancel");
+    CSLoadNotInstantiatePrefab(AssetUICommonPath, AssetUICommonPath.."/MessageBoxOKCancel");
     slider.value = 1
 
   
