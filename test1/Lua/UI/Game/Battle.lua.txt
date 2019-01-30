@@ -13,11 +13,22 @@ function StartBattle(lastUI)
     -- 加载场景
     
     -- 加载模型
-    --CSLoadNotInstantiatePrefab(AssetMonsterPath.."/1qinglong",AssetMonsterPath.."/1qinglong_1.tga")
-    --CSLoadNotInstantiatePrefab(AssetMonsterPath.."/1qinglong",AssetMonsterPath.."/1qinglong_2.tga")
     local monster1 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/1qinglong",AssetMonsterPath.."/1qinglong")
-    
     local monster2 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/2baihu",AssetMonsterPath.."/2baihu")
+
+
+    local animator1 = monster1:GetComponent(typeof(CS.UnityEngine.Animator))
+    MyTimer:after(5, function()         animator1:SetTrigger("attack")        print("attack")    end)
+    MyTimer:after(10, function()         animator1:SetTrigger("sp")        print("sp")    end)
+    MyTimer:after(15, function()         animator1:SetTrigger("hit")        print("hit")    end)
+    MyTimer:after(20, function()         animator1:SetTrigger("dead")        print("dead")    end)
+    
+
+    local animator2 = monster2:GetComponent(typeof(CS.UnityEngine.Animator))
+    MyTimer:after(25, function()         animator2:SetTrigger("attack")        print("attack")    end)
+    MyTimer:after(30, function()         animator2:SetTrigger("sp")        print("sp")    end)
+    MyTimer:after(35, function()         animator2:SetTrigger("hit")        print("hit")    end)
+    MyTimer:after(40, function()         animator2:SetTrigger("dead")        print("dead")    end)
     
 
     -- 关闭上一个界面
