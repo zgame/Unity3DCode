@@ -53,8 +53,8 @@ require("Lua/UI/Example/TableView")
 require("Lua/mainGlobal")
 
 -- 进入游戏
---Start()
-StartBattle()
+Start()
+--StartBattle()
 
 
 --关闭下载界面, 销毁掉download界面
