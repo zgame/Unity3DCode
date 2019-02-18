@@ -1,0 +1,265 @@
+{
+  "version": "0.3.0",
+  "scope": "tree",
+  "id": "d01ac7cb-6e1b-4546-887d-f7c921cca866",
+  "title": "zsw1",
+  "description": "test",
+  "root": "4a6ddf22-6ffb-4e47-888b-206eca2c3bc2",
+  "properties": {},
+  "nodes": {
+    "19007e9d-a287-404e-8740-441f75c33007": {
+      "id": "19007e9d-a287-404e-8740-441f75c33007",
+      "name": "BTSequence",
+      "title": "BTSequence",
+      "description": "顺序执行",
+      "properties": {
+        "precondition": "preseq"
+      },
+      "display": {
+        "x": 156,
+        "y": -336
+      },
+      "children": [
+        "4c21efca-262c-4e1f-8760-ff628c6bd29c",
+        "0a04f855-d6ad-41cd-89f5-47c2b5bf5147",
+        "e8e7a15a-3d5d-4a74-a9eb-d3f99531d1e6",
+        "30ed35ca-91ab-4fb8-8b93-af1cd115ea05"
+      ]
+    },
+    "e8e7a15a-3d5d-4a74-a9eb-d3f99531d1e6": {
+      "id": "e8e7a15a-3d5d-4a74-a9eb-d3f99531d1e6",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "show1",
+        "precondition": "preshow1"
+      },
+      "display": {
+        "x": 372,
+        "y": -288
+      }
+    },
+    "30ed35ca-91ab-4fb8-8b93-af1cd115ea05": {
+      "id": "30ed35ca-91ab-4fb8-8b93-af1cd115ea05",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "show2",
+        "precondition": "preshow2"
+      },
+      "display": {
+        "x": 372,
+        "y": -204
+      }
+    },
+    "6813b169-8d20-477f-902d-64b40abceca7": {
+      "id": "6813b169-8d20-477f-902d-64b40abceca7",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "run1",
+        "precondition": ""
+      },
+      "display": {
+        "x": 372,
+        "y": -120
+      }
+    },
+    "0a04f855-d6ad-41cd-89f5-47c2b5bf5147": {
+      "id": "0a04f855-d6ad-41cd-89f5-47c2b5bf5147",
+      "name": "BTWaitAction",
+      "title": "等待<key>时间",
+      "description": "延迟0.3",
+      "properties": {
+        "key": 0.3,
+        "precondition": ""
+      },
+      "display": {
+        "x": 372,
+        "y": -384
+      }
+    },
+    "5de64f5b-2141-41fb-a5e1-28631b9c401c": {
+      "id": "5de64f5b-2141-41fb-a5e1-28631b9c401c",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "run2",
+        "precondition": ""
+      },
+      "display": {
+        "x": 372,
+        "y": -24
+      }
+    },
+    "6817281d-a984-4263-89e1-43715fbdd077": {
+      "id": "6817281d-a984-4263-89e1-43715fbdd077",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "run3",
+        "precondition": ""
+      },
+      "display": {
+        "x": 372,
+        "y": 60
+      }
+    },
+    "4a6ddf22-6ffb-4e47-888b-206eca2c3bc2": {
+      "id": "4a6ddf22-6ffb-4e47-888b-206eca2c3bc2",
+      "name": "BTParallelFlexible",
+      "title": "BTParallelFlexible",
+      "description": "执行全部符合条件的子节点",
+      "properties": {
+        "precondition": ""
+      },
+      "display": {
+        "x": -48,
+        "y": 12
+      },
+      "children": [
+        "19007e9d-a287-404e-8740-441f75c33007",
+        "2eefadf2-6137-4dc5-8c0f-1ec769f17426",
+        "0cb09a6c-baef-4697-8446-787d69079dc7",
+        "e85411d6-07a2-49b5-8afa-be6b6c75fab1"
+      ]
+    },
+    "47f764b8-9c3c-4ff6-9642-a64e37c3fd81": {
+      "id": "47f764b8-9c3c-4ff6-9642-a64e37c3fd81",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "run4",
+        "precondition": ""
+      },
+      "display": {
+        "x": 372,
+        "y": 144
+      }
+    },
+    "2eefadf2-6137-4dc5-8c0f-1ec769f17426": {
+      "id": "2eefadf2-6137-4dc5-8c0f-1ec769f17426",
+      "name": "BTParallelFlexible",
+      "title": "BTParallelFlexible是",
+      "description": "松散并行",
+      "properties": {
+        "precondition": ""
+      },
+      "display": {
+        "x": 156,
+        "y": -72
+      },
+      "children": [
+        "6813b169-8d20-477f-902d-64b40abceca7",
+        "5de64f5b-2141-41fb-a5e1-28631b9c401c"
+      ]
+    },
+    "0cb09a6c-baef-4697-8446-787d69079dc7": {
+      "id": "0cb09a6c-baef-4697-8446-787d69079dc7",
+      "name": "BTParallel",
+      "title": "BTParallel",
+      "description": "敏感并行",
+      "properties": {
+        "shouldEndWhenOneEnd": "true",
+        "precondition": ""
+      },
+      "display": {
+        "x": 156,
+        "y": 108
+      },
+      "children": [
+        "6817281d-a984-4263-89e1-43715fbdd077",
+        "47f764b8-9c3c-4ff6-9642-a64e37c3fd81"
+      ]
+    },
+    "e85411d6-07a2-49b5-8afa-be6b6c75fab1": {
+      "id": "e85411d6-07a2-49b5-8afa-be6b6c75fab1",
+      "name": "BTPrioritySelector",
+      "title": "BTPrioritySelector",
+      "description": "优先选择，第一个成功的，就返回",
+      "properties": {
+        "precondition": ""
+      },
+      "display": {
+        "x": 156,
+        "y": 324
+      },
+      "children": [
+        "6494be9c-cc99-4804-a9c7-1ba85755cbc6",
+        "b997acd5-e4af-4bda-b410-957afb49fec8",
+        "b01793d7-ac13-46df-ab0a-dba75cfa129b"
+      ]
+    },
+    "b997acd5-e4af-4bda-b410-957afb49fec8": {
+      "id": "b997acd5-e4af-4bda-b410-957afb49fec8",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "show1",
+        "precondition": "preshow1"
+      },
+      "display": {
+        "x": 372,
+        "y": 324
+      }
+    },
+    "6494be9c-cc99-4804-a9c7-1ba85755cbc6": {
+      "id": "6494be9c-cc99-4804-a9c7-1ba85755cbc6",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "show2",
+        "precondition": "preshow2"
+      },
+      "display": {
+        "x": 372,
+        "y": 240
+      }
+    },
+    "b01793d7-ac13-46df-ab0a-dba75cfa129b": {
+      "id": "b01793d7-ac13-46df-ab0a-dba75cfa129b",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "show2",
+        "precondition": ""
+      },
+      "display": {
+        "x": 372,
+        "y": 408
+      }
+    },
+    "4c21efca-262c-4e1f-8760-ff628c6bd29c": {
+      "id": "4c21efca-262c-4e1f-8760-ff628c6bd29c",
+      "name": "BTCondition",
+      "title": "BTCondition",
+      "description": "",
+      "properties": {
+        "precondition": "",
+        "assertFunc": "assertFunc",
+        "assertValue": ""
+      },
+      "display": {
+        "x": 372,
+        "y": -468
+      }
+    }
+  },
+  "display": {
+    "camera_x": 332,
+    "camera_y": 446,
+    "camera_z": 1,
+    "x": -252,
+    "y": 12
+  },
+  "custom_nodes": []
+}
