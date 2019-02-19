@@ -1,0 +1,90 @@
+
+
+--------------------------------------------------------------------------------------
+--- 玩家的角色
+--------------------------------------------------------------------------------------
+
+Character = {}
+function Character:New()
+    c = {
+        Name = "",      
+        Type = 0 ,     -- 职业类型
+        BattleBTRoot = nil,  -- AI行为树
+        BattleBTTimer = nil,  -- AI行为树的定时器
+        
+        Model = nil,   -- 模型object
+        Animator = nil,  -- 动画控制器
+        
+        PlayerState = nil,   -- 当前状态
+        Enemy = nil,     -- 敌人
+        
+        HP = 100,
+        MaxHP = 100,
+        Speed = 1, 
+        
+        
+        
+    }
+    setmetatable(c, self)
+    self.__index = self
+    return c
+end
+
+-- AI行为树开始
+function Character:BTRootInit(file)
+    self.BattleBTRoot = BattleInit(file, self)
+    self.BattleBTTimer = MyTimer:every(0.5 , function()        BattleUpdate(0.5,self.BattleBTRoot)   end)
+    --MyTimer:after(5, function()        MyTimer:cancel(self.BattleBTTimer)    end)
+end
+
+-- AI行为树停止
+function Character:BTRootStop()
+    MyTimer:cancel(self.BattleBTTimer)
+end
+
+-- 加载模型和动画
+function Character:LoadGameObject(name)
+    self.Name = name
+    self.Model = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/"..name,AssetMonsterPath.."/"..name)
+    --local animator1 = monster1:GetComponent(typeof(CS.UnityEngine.Animator))
+    self.Animator =  self.Model:GetComponentInChildren(typeof(CS.UnityEngine.Animator))
+end
+
+
+--------------------------------------------------------------------------
+
+
+-- 往目的地跑过去
+function Character:PlayerRun()
+    if Distance > 1 then
+        Distance = Distance - Speed
+        print(self.Name.."跑步ing，距离:"..Distance)
+        self.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, self.Model.transform.localPosition.z + 1);
+        self.Animator:SetTrigger("run")
+        return false
+    else
+        print(self.Name.."跑到目的地")
+        self.Animator:SetTrigger("stoprun")
+        return true
+    end
+end
+
+
+-- 玩家普通攻击
+function Character:PlayerAttack()
+    if EnemyHP > 0 then
+        EnemyHP = EnemyHP - Damage
+        print("敌人被[  普通攻击  ]打了，剩余血量"..EnemyHP)
+        self.Animator:SetTrigger("stoprun")
+        self.Animator:SetTrigger("attack")
+        --else
+        --    print("敌人被[ 普通攻击 ]杀死了")
+        --    EnemyType = nil
+    end
+    return true
+end
+
+
+
+
+

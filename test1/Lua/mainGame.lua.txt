@@ -11,6 +11,7 @@ require("Lua/Const/protocol_ls")
 
 require("Lua/Model/Player")
 require("Lua/Model/User")
+require("Lua/Model/Character")
 
 
 -- 加载全局通用函数
@@ -21,6 +22,9 @@ cs_coroutine = (require 'Lua/XLua/cs_coroutine')
 MySerpent = require("Lua/Common/serpent")
 local Timer = require("Lua/Common/timer")
 MyTimer = Timer()
+
+-- 加载战斗逻辑
+require("Lua/Battle/Run")
 
 
 -- 加载protobuf
@@ -56,7 +60,7 @@ require("Lua/mainGlobal")
 -- 进入游戏
 --Start()
 StartBattle()
-require("Lua/Battle/Run")
+
 
 --关闭下载界面, 销毁掉download界面
 local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')

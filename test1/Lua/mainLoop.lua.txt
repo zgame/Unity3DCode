@@ -22,4 +22,8 @@ function MainLoop()
         EnterGameNext()
         CanEnterGame = false
     end
+
+    --if RunBattleLoop then
+    --    BattleUpdate(CS.UnityEngine.Time.deltaTime)
+    --end
 end

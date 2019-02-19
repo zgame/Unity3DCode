@@ -13,29 +13,44 @@ function StartBattle(lastUI)
     -- 加载场景
     
     -- 加载模型
-    local monster1 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/1qinglong",AssetMonsterPath.."/1qinglong")
-    local monster2 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/2baihu",AssetMonsterPath.."/2baihu")
+    --local monster1 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/Tauren",AssetMonsterPath.."/Tauren")
+    --local monster1 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/1qinglong",AssetMonsterPath.."/1qinglong")
+    --local monster2 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/2baihu",AssetMonsterPath.."/2baihu")
 
 
-    local animator1 = monster1:GetComponent(typeof(CS.UnityEngine.Animator))
-    MyTimer:after(5, function()         animator1:SetTrigger("attack")        print("attack")    end)
-    MyTimer:after(10, function()         animator1:SetTrigger("sp")        print("sp")    end)
-    MyTimer:after(15, function()         animator1:SetTrigger("hit")        print("hit")    end)
-    MyTimer:after(20, function()         animator1:SetTrigger("dead")        print("dead")    end)
+    --local animator1 = monster1:GetComponent(typeof(CS.UnityEngine.Animator))
+    --local animator1 = monster1:GetComponentInChildren(typeof(CS.UnityEngine.Animator))
+    --MyTimer:after(5, function()         animator1:SetTrigger("attack")        print("attack")    end)
+    --MyTimer:after(10, function()         animator1:SetTrigger("run")        print("run")    end)
+    --MyTimer:after(13, function()         animator1:SetTrigger("stoprun")        print("stoprun")    end)
+    --MyTimer:after(15, function()         animator1:SetTrigger("hit")        print("hit")    end)
+    --MyTimer:after(20, function()         animator1:SetTrigger("sp1")        print("sp1")    end)
+    --MyTimer:after(25, function()         animator1:SetTrigger("sp2")        print("sp2")    end)
+    --MyTimer:after(30, function()         animator1:SetTrigger("dead")        print("dead")    end)
     
 
-    local animator2 = monster2:GetComponent(typeof(CS.UnityEngine.Animator))
-    MyTimer:after(25, function()         animator2:SetTrigger("attack")        print("attack")    end)
-    MyTimer:after(30, function()         animator2:SetTrigger("sp")        print("sp")    end)
-    MyTimer:after(35, function()         animator2:SetTrigger("hit")        print("hit")    end)
-    MyTimer:after(40, function()         animator2:SetTrigger("dead")        print("dead")    end)
-    
+    --local animator2 = monster2:GetComponent(typeof(CS.UnityEngine.Animator))
+    --MyTimer:after(25, function()         animator2:SetTrigger("attack")        print("attack")    end)
+    --MyTimer:after(30, function()         animator2:SetTrigger("sp")        print("sp")    end)
+    --MyTimer:after(35, function()         animator2:SetTrigger("hit")        print("hit")    end)
+    --MyTimer:after(40, function()         animator2:SetTrigger("dead")        print("dead")    end)
+    --
 
     -- 关闭上一个界面
     if lastUI~=nil then
         CSDestroyGameObject(lastUI)       -- 销毁加载界面
     end
+
+
+    --BattleInit("Lua/Battle/btJson/zsw2")
+    --local battleTimer = MyTimer:every(0.5 , function()        BattleUpdate(0.5)   end)
+    --MyTimer:after(5, function()        MyTimer:cancel(battleTimer)    end)
     
+    
+    local tauren = Character:New()
+    tauren:LoadGameObject("Tauren")
+    tauren:BTRootInit("Lua/Battle/btJson/zsw2")
+   
     
     
 

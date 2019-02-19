@@ -17,4 +17,5 @@ MyUser = MyPlayer.User
 -------------------------网络---------------------------
 MySocket = CS.SocketClient()
 
-CanEnterGame = false   -- 
+CanEnterGame = false   -- 进入游戏
+--RunBattleLoop = false  -- 战斗逻辑循环

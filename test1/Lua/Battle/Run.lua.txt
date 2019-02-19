@@ -1,36 +1,95 @@
 --serpent = require("Utils.serpent")
 --require("Utils.global")
 require("Lua/Battle/BehaviorTree3/BTInit")
-
-
 require("Lua/Battle/BattleState")
 require("Lua/Battle/BattleFunc")
 
 
---init btroot
-local btroot
-function init()
-    local binder = Binder
+
+
+-------------------------------绑定关系-----------------------------------------
+
+
+
+function BattleInit(file, character)
+    local binder = {
+
+        PlayerIdle = PlayerIdle,
+        CheckDistance = CheckDistance,
+        PlayerRun = function()   return character:PlayerRun() end,
+        CheckEnemyLive = CheckEnemyLive,
+        CheckPlayerAlive = CheckPlayerAlive,
+        EnemyBorn = EnemyBorn,
+        CheckEnemyNotExist = CheckEnemyNotExist,
+
+        GetTrue = GetTrue,
+        GetFalse = GetFalse,
+        RunAway = RunAway,
+
+        PlayerAttack = function()   return character:PlayerAttack() end,
+        PlayerSkillAttack = PlayerSkillAttack,
+        PlayerHit = PlayerHit,
+
+
+        -- skill
+        CheckSkillHasDamage = CheckSkillHasDamage,
+        CheckSkillRecoverHp = CheckSkillRecoverHp,
+        RecoverHp = RecoverHp,
+        CheckSkillBuffer = CheckSkillBuffer,
+        CheckSkillDeBuffer = CheckSkillDeBuffer,
+
+        -- buffer
+        AddBufferSpeed = AddBufferSpeed,
+        AddBufferAttack = AddBufferAttack,
+        AddBufferDefence = AddBufferDefence,
+        AddBufferElementAttack = AddBufferElementAttack,
+        AddBufferElementDefence = AddBufferElementDefence,
+        AddBufferAccuracy = AddBufferAccuracy,
+        AddBufferCritical = AddBufferCritical,
+        AddBufferCriticalDamage = AddBufferCriticalDamage,
+
+        -- deBuffer
+        AddDeBufferSpeed = AddDeBufferSpeed,
+        AddDeBufferAttack = AddDeBufferAttack,
+        AddDeBufferDefence = AddDeBufferDefence,
+        AddDeBufferElementAttack = AddDeBufferElementAttack,
+        AddDeBufferElementDefence = AddDeBufferElementDefence,
+        AddDeBufferAccuracy = AddDeBufferAccuracy,
+        AddDeBufferCritical = AddDeBufferCritical,
+        AddDeBufferCriticalDamage = AddDeBufferCriticalDamage,
+        AddDeBufferFreeze = AddDeBufferFreeze,
+        AddDeBufferBurn = AddDeBufferBurn,
+        AddDeBufferBlood = AddDeBufferBlood,
+        AddDeBufferSeal = AddDeBufferSeal,
+        AddDeBufferStun = AddDeBufferStun,
+        AddDeBufferChaos = AddDeBufferChaos,
+        AddDeBufferParalysis = AddDeBufferParalysis,
+        AddDeBufferSleep = AddDeBufferSleep,
+
+    }
+
     --btroot = bt.loadFromJson("zsw2.json", binder)
-    btroot = bt.LoadFromLua("Lua/Battle/btJson/zsw2", binder)
+    local btroot = bt.LoadFromLua(file, binder)
     btroot:activate(binder)
 
+    btroot.character = character
 
+    return btroot
     --print(serpent.block(btroot))
     --print("-------------------------------------------------------------")
 
 end
 
 --tick per frame 
-function update(dt)
+function BattleUpdate(dt, btroot)
     print("-----------------------------------------------------------------------------------------------------------")
     if btroot:evaluate() then
         btroot:tick(dt)
     end
 end
 
-init()
 
-for i = 1, RunTurn do
-    update(0.1)
-end
+--
+--for i = 1, RunTurn do
+--    BattleUpdate(0.1)
+--end

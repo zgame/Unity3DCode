@@ -15,18 +15,18 @@ function CheckDistance()
         return false
     end
 end
-
--- 往目的地跑过去
-function PlayerRun()
-    if Distance > 1 then
-        Distance = Distance - Speed
-        print("跑步ing，距离:"..Distance)
-        return false
-    else
-        print("跑到目的地")
-        return true
-    end
-end
+--
+---- 往目的地跑过去
+--function PlayerRun()
+--    if Distance > 1 then
+--        Distance = Distance - Speed
+--        print("跑步ing，距离:"..Distance)
+--        return false
+--    else
+--        print("跑到目的地")
+--        return true
+--    end
+--end
 
 -- 生成敌人
 function EnemyBorn()
@@ -70,9 +70,9 @@ function CheckEnemyLive()
     end
 end
 
-
-
--- 玩家普通攻击
+--
+--
+---- 玩家普通攻击
 function PlayerAttack()
     if EnemyHP > 0 then
         EnemyHP = EnemyHP - Damage
@@ -168,65 +168,4 @@ function RecoverHp()
     return true
 end
 
-
-
--------------------------------绑定关系-----------------------------------------
-
-Binder = {
-
-    PlayerIdle = PlayerIdle,
-    CheckDistance = CheckDistance,
-    PlayerRun = PlayerRun,
-    CheckEnemyLive = CheckEnemyLive,
-    CheckPlayerAlive = CheckPlayerAlive,
-    EnemyBorn = EnemyBorn,
-    CheckEnemyNotExist = CheckEnemyNotExist,
-
-    GetTrue = GetTrue,
-    GetFalse = GetFalse,
-    RunAway = RunAway,
-
-    PlayerAttack = PlayerAttack,
-    PlayerSkillAttack = PlayerSkillAttack,
-    PlayerHit = PlayerHit,
-
-
-    -- skill
-    CheckSkillHasDamage = CheckSkillHasDamage,
-    CheckSkillRecoverHp = CheckSkillRecoverHp,
-    RecoverHp = RecoverHp,
-    CheckSkillBuffer = CheckSkillBuffer,
-    CheckSkillDeBuffer = CheckSkillDeBuffer,
-
-    -- buffer
-    AddBufferSpeed = AddBufferSpeed,
-    AddBufferAttack = AddBufferAttack,
-    AddBufferDefence = AddBufferDefence,
-    AddBufferElementAttack = AddBufferElementAttack,
-    AddBufferElementDefence = AddBufferElementDefence,
-    AddBufferAccuracy = AddBufferAccuracy,
-    AddBufferCritical = AddBufferCritical,
-    AddBufferCriticalDamage = AddBufferCriticalDamage,
-
-    -- deBuffer
-    AddDeBufferSpeed = AddDeBufferSpeed,
-    AddDeBufferAttack = AddDeBufferAttack,
-    AddDeBufferDefence = AddDeBufferDefence,
-    AddDeBufferElementAttack = AddDeBufferElementAttack,
-    AddDeBufferElementDefence = AddDeBufferElementDefence,
-    AddDeBufferAccuracy = AddDeBufferAccuracy,
-    AddDeBufferCritical = AddDeBufferCritical,
-    AddDeBufferCriticalDamage = AddDeBufferCriticalDamage,
-    AddDeBufferFreeze = AddDeBufferFreeze,
-    AddDeBufferBurn = AddDeBufferBurn,
-    AddDeBufferBlood = AddDeBufferBlood,
-    AddDeBufferSeal = AddDeBufferSeal,
-    AddDeBufferStun = AddDeBufferStun,
-    AddDeBufferChaos = AddDeBufferChaos,
-    AddDeBufferParalysis = AddDeBufferParalysis,
-    AddDeBufferSleep = AddDeBufferSleep,
-
-
-
-}
 
