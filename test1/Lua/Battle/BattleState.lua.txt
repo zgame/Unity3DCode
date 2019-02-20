@@ -16,7 +16,7 @@ StateDead = 6       -- 死亡
 PlayerState = nil   -- 当前状态
 EnemyType = nil     -- 敌人
 
-Distance = 10        -- 敌人距离
+Distance = 4        -- 敌人距离
 Speed = 1           -- 跑步速度
 EnemyHP = 100
 EnemyMaxHP = 100

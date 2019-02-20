@@ -5,16 +5,6 @@ function PlayerIdle()
     return true
 end
 
--- 距离的判断
-function CheckDistance()
-    if Distance > 1 then
-        print("敌人距离好远， 我要跑过去")
-        return true    -- 距离还远, 需要跑过去
-    else
-        print("敌人距离近了， 可以揍他了")
-        return false
-    end
-end
 --
 ---- 往目的地跑过去
 --function PlayerRun()
@@ -72,44 +62,34 @@ end
 
 --
 --
----- 玩家普通攻击
-function PlayerAttack()
-    if EnemyHP > 0 then
-        EnemyHP = EnemyHP - Damage
-        print("敌人被[  普通攻击  ]打了，剩余血量"..EnemyHP)
-    --else
-    --    print("敌人被[ 普通攻击 ]杀死了")
-    --    EnemyType = nil
-    end
-    return true
-end
-
--- 玩家释放技能
-function PlayerSkillAttack()
-    if EnemyHP > 0 then
-        EnemyHP = EnemyHP - SkillDamage
-        print("敌人被[ 技能 ]打了，剩余血量"..EnemyHP)
-    --else
-    --    print("敌人被[ 技能 ]杀死了")
-    --    EnemyType = nil
-    end
-    return true
-end
+-- 玩家普通攻击
+--function PlayerAttack()
+--    if EnemyHP > 0 then
+--        EnemyHP = EnemyHP - Damage
+--        print("敌人被[  普通攻击  ]打了，剩余血量"..EnemyHP)
+--    --else
+--    --    print("敌人被[ 普通攻击 ]杀死了")
+--    --    EnemyType = nil
+--    end
+--    return true
+--end
+--
+---- 玩家释放技能
+--function PlayerSkillAttack()
+--    if EnemyHP > 0 then
+--        EnemyHP = EnemyHP - SkillDamage
+--        print("敌人被[ 技能 ]打了，剩余血量"..EnemyHP)
+--    --else
+--    --    print("敌人被[ 技能 ]杀死了")
+--    --    EnemyType = nil
+--    end
+--    return true
+--end
 
 
 
 -------------------------------玩家-----------------------------------------
--- 玩家受到攻击
-function PlayerHit()
-    if HP > 0 then
-        HP = HP - Damage
-        print("玩家 受到攻击, hp "..HP)
-    else
-        print("玩家 死了")
-        PlayerState = StateDead
-    end
-    return true
-end
+
 
 
 -- 玩家是否已经死亡

@@ -15,7 +15,7 @@ function BattleInit(file, character)
     local binder = {
 
         PlayerIdle = PlayerIdle,
-        CheckDistance = CheckDistance,
+        CheckDistance = function()   return character:CheckDistance() end,
         PlayerRun = function()   return character:PlayerRun() end,
         CheckEnemyLive = CheckEnemyLive,
         CheckPlayerAlive = CheckPlayerAlive,
@@ -27,8 +27,8 @@ function BattleInit(file, character)
         RunAway = RunAway,
 
         PlayerAttack = function()   return character:PlayerAttack() end,
-        PlayerSkillAttack = PlayerSkillAttack,
-        PlayerHit = PlayerHit,
+        PlayerSkillAttack =  function()   return character:PlayerSkillAttack() end,
+        PlayerHit = function()   return character:PlayerHit() end,
 
 
         -- skill
