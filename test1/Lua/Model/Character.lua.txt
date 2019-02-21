@@ -67,16 +67,25 @@ end
 -- 往目的地跑过去
 function Character:PlayerRun()
 
-    Distance = Distance - Speed
-    print(self.Name .. "跑步ing，距离:" .. Distance)
-    PlayerState = StateRun
-    self.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, self.Model.transform.localPosition.z + 1);
-    self.Animator:SetTrigger("run")
+    if self.PlayerState == StateIdle then
+        self.PlayerState = StateRun
+        self.Animator:SetTrigger("run")
+    end
 
-    if Distance <= 1 then
-        PlayerState = StateIdle
-        print(self.Name .. "跑到目的地")
-        self.Animator:SetTrigger("stoprun")
+    if self.PlayerState == StateRun then
+        Distance = Distance - Speed
+        print(self.Name .. "跑步ing，距离:" .. Distance)
+        
+        --self.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, self.Model.transform.localPosition.z + 1);
+        
+        if Distance <= 1 then
+            self.PlayerState = StateIdle
+            print(self.Name .. "跑到目的地")
+            self.Animator:SetTrigger("stoprun")
+        else
+            -- doTween 来移动角色
+            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(0, 0, self.Model.transform.localPosition.z + 2),0.5)
+        end
     end
 
     return false
@@ -88,13 +97,13 @@ end
 function Character:PlayerAttack()
     --if EnemyHP > 0 then
 
-    if PlayerState == StateIdle then
+    if self.PlayerState == StateIdle then
 
         EnemyHP = EnemyHP - Damage
         print("敌人被[  普通攻击  ]打了，剩余血量"..EnemyHP)
         --self.Animator:SetTrigger("stoprun")
         self.Animator:SetTrigger("attack")
-        PlayerState = StateAttack
+        self.PlayerState = StateAttack
         --else
         --    print("敌人被[ 普通攻击 ]杀死了")
         --    EnemyType = nil
@@ -102,7 +111,7 @@ function Character:PlayerAttack()
         return false
     end
     
-    if PlayerState == StateAttack then
+    if self.PlayerState == StateAttack then
         local info = self.Animator:GetCurrentAnimatorStateInfo(0)
 
         print(info:IsName("Attack"))
@@ -112,7 +121,7 @@ function Character:PlayerAttack()
             return false
         else
             print("攻击动画播放完毕")
-            PlayerState = StateIdle
+            self.PlayerState = StateIdle
             return true
         end
 
@@ -123,15 +132,15 @@ end
 
 -- 玩家释放技能
 function Character:PlayerSkillAttack()
-    if PlayerState == StateIdle then
+    if self.PlayerState == StateIdle then
         EnemyHP = EnemyHP - SkillDamage
         print("敌人被[ 技能 ]打了，剩余血量"..EnemyHP)
         self.Animator:SetTrigger("sp1")
-        PlayerState = StateSkill
+        self.PlayerState = StateSkill
         return false
     end
 
-    if PlayerState == StateSkill then
+    if self.PlayerState == StateSkill then
         local info = self.Animator:GetCurrentAnimatorStateInfo(0)
         print(info:IsName("skill01"))
         print(info.normalizedTime)
@@ -140,7 +149,7 @@ function Character:PlayerSkillAttack()
             return false
         else
             print("技能攻击动画播放完毕")
-            PlayerState = StateIdle
+            self.PlayerState = StateIdle
             return true
         end
 
@@ -149,28 +158,28 @@ end
 
 -- 玩家受到攻击
 function Character:PlayerHit()
-    if PlayerState == StateIdle then
+    if self.PlayerState == StateIdle then
         HP = HP - Damage
         if HP < 0 then
-            PlayerState = StateHit
+            self.PlayerState = StateHit
             self.Animator:SetTrigger("hit")
             print("玩家 受到攻击, hp "..HP)
         else
             print("玩家 死了")
             self.Animator:SetTrigger("dead")
-            PlayerState = StateDead
+            self.PlayerState = StateDead
         end
         return false
     end
     
-    if PlayerState == StateHit then
+    if self.PlayerState == StateHit then
         local info = self.Animator:GetCurrentAnimatorStateInfo(0)
         if info:IsName("hitted") then
             print("正在被打动画")
             return false
         else
             print("hit动画播放完毕")
-            PlayerState = StateIdle
+            self.PlayerState = StateIdle
             return true
         end
     end

@@ -5,18 +5,6 @@ function PlayerIdle()
     return true
 end
 
---
----- 往目的地跑过去
---function PlayerRun()
---    if Distance > 1 then
---        Distance = Distance - Speed
---        print("跑步ing，距离:"..Distance)
---        return false
---    else
---        print("跑到目的地")
---        return true
---    end
---end
 
 -- 生成敌人
 function EnemyBorn()
@@ -60,31 +48,6 @@ function CheckEnemyLive()
     end
 end
 
---
---
--- 玩家普通攻击
---function PlayerAttack()
---    if EnemyHP > 0 then
---        EnemyHP = EnemyHP - Damage
---        print("敌人被[  普通攻击  ]打了，剩余血量"..EnemyHP)
---    --else
---    --    print("敌人被[ 普通攻击 ]杀死了")
---    --    EnemyType = nil
---    end
---    return true
---end
---
----- 玩家释放技能
---function PlayerSkillAttack()
---    if EnemyHP > 0 then
---        EnemyHP = EnemyHP - SkillDamage
---        print("敌人被[ 技能 ]打了，剩余血量"..EnemyHP)
---    --else
---    --    print("敌人被[ 技能 ]杀死了")
---    --    EnemyType = nil
---    end
---    return true
---end
 
 
 

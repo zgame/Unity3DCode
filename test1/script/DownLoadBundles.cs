@@ -34,6 +34,7 @@ public class DownLoadBundles : MonoBehaviour
     private List<string> downloadList = new List<string>();        // 需要更新的列表
     private float progress;                    //进度
     private float progressStep;                    //进度增量
+    private static bool DoNotDownload = true;     // 是否下载bundle    
     
     
     void Awake()
@@ -49,7 +50,14 @@ public class DownLoadBundles : MonoBehaviour
    
     IEnumerator Start()
     {
-        yield return StartCoroutine(VersionFileDownLoadAndCheck());//开始加载网络Version文件
+        if (DoNotDownload)
+        {
+            yield return StartCoroutine(DoNext());        // 不下载bundle，直接进入游戏
+        }
+        else
+        {
+            yield return StartCoroutine(VersionFileDownLoadAndCheck()); //开始加载网络Version文件
+        }
     }
     
     //---------------------------------------------------------------------------------
