@@ -1,9 +1,5 @@
 require("Lua/Battle/Buffer")
 -------------------------------发呆，跑动-----------------------------------------
-function PlayerIdle()
-    print("玩家发呆一下，马上敌人就出来了")
-    return true
-end
 
 
 -- 生成敌人

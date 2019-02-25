@@ -105,8 +105,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 828,
-        "y": 528
+        "x": 852,
+        "y": 924
       }
     },
     "30475607-b84f-43d8-8c24-a23fba820a5a": {
@@ -143,7 +143,9 @@
         "ee0eab42-43a6-4e5a-b826-f4dd9132bc85",
         "2f5fc224-982d-4d94-8d71-41c74c62234e",
         "76dda714-5bad-4c0f-aa17-9befc77a78b0",
-        "ec17302e-d44c-48a9-8d29-d6b070cd07cd"
+        "f5464fdf-f94a-45fb-862b-63ed086516cc",
+        "ec17302e-d44c-48a9-8d29-d6b070cd07cd",
+        "1cd89c96-43fc-4890-b1e8-223245fd4343"
       ]
     },
     "2f5fc224-982d-4d94-8d71-41c74c62234e": {
@@ -201,8 +203,8 @@
         "precondition": "GetTrue"
       },
       "display": {
-        "x": 624,
-        "y": 612
+        "x": 672,
+        "y": 1308
       }
     },
     "c91d0d4d-76ab-4579-8417-e1b6aa602610": {
@@ -243,7 +245,7 @@
       },
       "display": {
         "x": 1140,
-        "y": 360
+        "y": 384
       },
       "children": [
         "dd8b405c-58a6-47cf-90ea-f7827478416c",
@@ -265,8 +267,8 @@
         "precondition": "CheckSkillDeBuffer"
       },
       "display": {
-        "x": 1128,
-        "y": 708
+        "x": 1332,
+        "y": 828
       },
       "children": [
         "9d11b231-032e-40d3-80e4-4f5184820652",
@@ -395,8 +397,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1512,
-        "y": 504
+        "x": 1776,
+        "y": 600
       }
     },
     "638994e8-9b4e-4ee0-8afd-34e51168f107": {
@@ -409,8 +411,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1512,
-        "y": 564
+        "x": 1776,
+        "y": 660
       }
     },
     "26e3a043-2a54-4657-b2bb-fa833f68e24d": {
@@ -423,8 +425,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1524,
-        "y": 624
+        "x": 1788,
+        "y": 720
       }
     },
     "750d4281-b90d-4a03-a72a-b6b1eb8c4f92": {
@@ -437,8 +439,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1548,
-        "y": 684
+        "x": 1812,
+        "y": 780
       }
     },
     "96fab39f-da4b-4308-8274-1da53e039941": {
@@ -451,8 +453,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1560,
-        "y": 744
+        "x": 1824,
+        "y": 840
       }
     },
     "416968a6-aacc-4107-918c-8ccea907a173": {
@@ -465,8 +467,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1536,
-        "y": 804
+        "x": 1800,
+        "y": 900
       }
     },
     "4cabe7c8-e137-4dbe-95eb-5f47edd7b3e0": {
@@ -479,8 +481,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1524,
-        "y": 864
+        "x": 1788,
+        "y": 960
       }
     },
     "e7ddaaa7-3ae2-40a3-a098-9287eeb03298": {
@@ -493,8 +495,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1560,
-        "y": 924
+        "x": 1824,
+        "y": 1020
       }
     },
     "9e19c1a8-94a6-49a2-87d6-b6b87c2ad44b": {
@@ -507,8 +509,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1524,
-        "y": 984
+        "x": 1788,
+        "y": 1080
       }
     },
     "70517fe1-639a-4309-b9f9-aafd48ebf692": {
@@ -521,8 +523,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1512,
-        "y": 1044
+        "x": 1776,
+        "y": 1140
       }
     },
     "dc31e136-d4e9-4fb9-a56f-d3fbb5663d34": {
@@ -535,8 +537,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1512,
-        "y": 1104
+        "x": 1776,
+        "y": 1200
       }
     },
     "554c65c8-b319-4b32-a126-018a80d93a9e": {
@@ -549,8 +551,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1512,
-        "y": 1164
+        "x": 1776,
+        "y": 1260
       }
     },
     "197f1006-8fae-4cad-a15e-f077065d0c67": {
@@ -563,8 +565,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1512,
-        "y": 1224
+        "x": 1776,
+        "y": 1320
       }
     },
     "84c34ede-4afd-4da3-88d8-a58d52f5d6fc": {
@@ -577,8 +579,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1524,
-        "y": 1284
+        "x": 1788,
+        "y": 1380
       }
     },
     "52aa6133-7ae9-4bec-8356-33c3fc12a488": {
@@ -591,8 +593,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1536,
-        "y": 1344
+        "x": 1800,
+        "y": 1440
       }
     },
     "9c3d83f9-9e4e-491f-83ad-fb24759736bb": {
@@ -605,8 +607,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1524,
-        "y": 1404
+        "x": 1788,
+        "y": 1500
       }
     },
     "76dda714-5bad-4c0f-aa17-9befc77a78b0": {
@@ -627,6 +629,34 @@
         "c2bf0968-c727-417d-828e-c7d8b95be0b1",
         "46f7cfc9-3e2e-4c89-8d05-a60134a4bfb4"
       ]
+    },
+    "f5464fdf-f94a-45fb-862b-63ed086516cc": {
+      "id": "f5464fdf-f94a-45fb-862b-63ed086516cc",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "PlayerSkillAttack2",
+        "precondition": ""
+      },
+      "display": {
+        "x": 876,
+        "y": 588
+      }
+    },
+    "1cd89c96-43fc-4890-b1e8-223245fd4343": {
+      "id": "1cd89c96-43fc-4890-b1e8-223245fd4343",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "PlayerDead",
+        "precondition": ""
+      },
+      "display": {
+        "x": 816,
+        "y": 1140
+      }
     }
   },
   "display": {

@@ -1,7 +1,7 @@
 
 
 local zsw2 = {
-  custom_nodes = {} --[[table: 00000000004b2450]],
+  custom_nodes = {} --[[table: 00000000004b6610]],
   description = "",
   display = {
     camera_x = 415.5899999961257,
@@ -9,153 +9,167 @@ local zsw2 = {
     camera_z = 0.5,
     x = -216,
     y = 0
-  } --[[table: 00000000004b23d0]],
+  } --[[table: 00000000004b6590]],
   id = "2169dcca-f074-47f1-bec5-bfd5feefb37b",
   nodes = {
+    ["1cd89c96-43fc-4890-b1e8-223245fd4343"] = {
+      description = "",
+      display = {
+        x = 816,
+        y = 1140
+      } --[[table: 00000000004b6550]],
+      id = "1cd89c96-43fc-4890-b1e8-223245fd4343",
+      name = "BTRunAction",
+      properties = {
+        operation = "PlayerDead",
+        precondition = ""
+      } --[[table: 00000000004b6510]],
+      title = "执行<operation>函数"
+    } --[[table: 00000000004b64d0]],
     ["2d6f1d56-67fc-43e1-8588-554ef1845fb8"] = {
       description = "",
       display = {
         x = 1596,
         y = 384
-      } --[[table: 00000000004ae2d0]],
+      } --[[table: 00000000004c6a10]],
       id = "2d6f1d56-67fc-43e1-8588-554ef1845fb8",
       name = "BTRunAction",
       properties = {
         operation = "AddBufferCriticalDamage",
         precondition = ""
-      } --[[table: 00000000004ae250]],
+      } --[[table: 00000000004c6990]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ae210]],
+    } --[[table: 00000000004c6950]],
     ["2f5fc224-982d-4d94-8d71-41c74c62234e"] = {
       description = "",
       display = {
         x = 828,
         y = 84
-      } --[[table: 00000000004ab000]],
+      } --[[table: 00000000004c3b50]],
       id = "2f5fc224-982d-4d94-8d71-41c74c62234e",
       name = "BTRunAction",
       properties = {
         operation = "PlayerAttack",
         precondition = ""
-      } --[[table: 00000000004aafc0]],
+      } --[[table: 00000000004c3b10]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004aaf80]],
+    } --[[table: 00000000004c3ad0]],
     ["4cabe7c8-e137-4dbe-95eb-5f47edd7b3e0"] = {
       description = "",
       display = {
-        x = 1524,
-        y = 864
-      } --[[table: 00000000004ae9d0]],
+        x = 1788,
+        y = 960
+      } --[[table: 00000000004c7110]],
       id = "4cabe7c8-e137-4dbe-95eb-5f47edd7b3e0",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferCritical",
         precondition = ""
-      } --[[table: 00000000004ae950]],
+      } --[[table: 00000000004c7090]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ae910]],
+    } --[[table: 00000000004c7050]],
     ["8f708ff6-fac6-444f-8faf-171fe03222f0"] = {
       description = "",
       display = {
         x = 1572,
         y = 264
-      } --[[table: 00000000004ae0d0]],
+      } --[[table: 00000000004c6810]],
       id = "8f708ff6-fac6-444f-8faf-171fe03222f0",
       name = "BTRunAction",
       properties = {
         operation = "AddBufferAccuracy",
         precondition = ""
-      } --[[table: 00000000004ae050]],
+      } --[[table: 00000000004c6790]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ae010]],
+    } --[[table: 00000000004c6750]],
     ["9c3d83f9-9e4e-491f-83ad-fb24759736bb"] = {
       description = "",
       display = {
-        x = 1524,
-        y = 1404
-      } --[[table: 00000000004b2250]],
+        x = 1788,
+        y = 1500
+      } --[[table: 00000000004b6250]],
       id = "9c3d83f9-9e4e-491f-83ad-fb24759736bb",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferSleep",
         precondition = ""
-      } --[[table: 00000000004b21d0]],
+      } --[[table: 00000000004b61d0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b2190]],
+    } --[[table: 00000000004b6190]],
     ["9c82ffa4-6727-47ca-8854-08e0f90e4ddc"] = {
       children = {
         "a7cdc9d2-5e27-47d3-a485-9999aba7bcb6",
         "30ed4cfe-b88d-4db3-aa3f-f7548503f5ea",
         "43087d89-33d1-4c88-9ea8-d8e306cab2d9"
-      } --[[table: 000000000049fb50]],
+      } --[[table: 000000000049bd20]],
       description = "",
       display = {
         x = 408,
         y = -264
-      } --[[table: 000000000049fb10]],
+      } --[[table: 000000000049bce0]],
       id = "9c82ffa4-6727-47ca-8854-08e0f90e4ddc",
       name = "BTSequence",
       properties = {
         precondition = "CheckEnemyNotExist"
-      } --[[table: 000000000049fa90]],
+      } --[[table: 000000000049bc60]],
       title = "BTSequence无敌人"
-    } --[[table: 000000000049fa10]],
+    } --[[table: 000000000049bbe0]],
     ["9d11b231-032e-40d3-80e4-4f5184820652"] = {
       description = "",
       display = {
-        x = 1512,
-        y = 504
-      } --[[table: 00000000004ae3d0]],
+        x = 1776,
+        y = 600
+      } --[[table: 00000000004c6b10]],
       id = "9d11b231-032e-40d3-80e4-4f5184820652",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferSpeed",
         precondition = ""
-      } --[[table: 00000000004ae350]],
+      } --[[table: 00000000004c6a90]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ae310]],
+    } --[[table: 00000000004c6a50]],
     ["9e19c1a8-94a6-49a2-87d6-b6b87c2ad44b"] = {
       description = "",
       display = {
-        x = 1524,
-        y = 984
-      } --[[table: 00000000004aebd0]],
+        x = 1788,
+        y = 1080
+      } --[[table: 00000000004c7310]],
       id = "9e19c1a8-94a6-49a2-87d6-b6b87c2ad44b",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferFreeze",
         precondition = ""
-      } --[[table: 00000000004aeb50]],
+      } --[[table: 00000000004c7290]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004aeb10]],
+    } --[[table: 00000000004c7250]],
     ["26e3a043-2a54-4657-b2bb-fa833f68e24d"] = {
       description = "",
       display = {
-        x = 1524,
-        y = 624
-      } --[[table: 00000000004ae5d0]],
+        x = 1788,
+        y = 720
+      } --[[table: 00000000004c6d10]],
       id = "26e3a043-2a54-4657-b2bb-fa833f68e24d",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferDefence",
         precondition = ""
-      } --[[table: 00000000004ae550]],
+      } --[[table: 00000000004c6c90]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ae510]],
+    } --[[table: 00000000004c6c50]],
     ["30ed4cfe-b88d-4db3-aa3f-f7548503f5ea"] = {
       description = "",
       display = {
         x = 624,
         y = -264
-      } --[[table: 00000000004aa940]],
+      } --[[table: 00000000004c3490]],
       id = "30ed4cfe-b88d-4db3-aa3f-f7548503f5ea",
       name = "BTWaitAction",
       properties = {
         key = 0.20000000000000001,
         precondition = ""
-      } --[[table: 000000000049fc10]],
+      } --[[table: 000000000049bde0]],
       title = "等待<key>时间,敌人出现"
-    } --[[table: 000000000049fb90]],
+    } --[[table: 000000000049bd60]],
     ["46f7cfc9-3e2e-4c89-8d05-a60134a4bfb4"] = {
       children = {
         "9d11b231-032e-40d3-80e4-4f5184820652",
@@ -174,316 +188,318 @@ local zsw2 = {
         "84c34ede-4afd-4da3-88d8-a58d52f5d6fc",
         "52aa6133-7ae9-4bec-8356-33c3fc12a488",
         "9c3d83f9-9e4e-491f-83ad-fb24759736bb"
-      } --[[table: 00000000004ab7c0]],
+      } --[[table: 00000000004c4310]],
       description = "",
       display = {
-        x = 1128,
-        y = 708
-      } --[[table: 00000000004ab780]],
+        x = 1332,
+        y = 828
+      } --[[table: 00000000004c42d0]],
       id = "46f7cfc9-3e2e-4c89-8d05-a60134a4bfb4",
       name = "BTParallelFlexible",
       properties = {
         precondition = "CheckSkillDeBuffer"
-      } --[[table: 00000000004ab700]],
+      } --[[table: 00000000004c4250]],
       title = "BTParallelFlexible(DeBuffer)"
-    } --[[table: 00000000004ab680]],
+    } --[[table: 00000000004c41d0]],
     ["52aa6133-7ae9-4bec-8356-33c3fc12a488"] = {
       description = "",
       display = {
-        x = 1536,
-        y = 1344
-      } --[[table: 00000000004b2150]],
+        x = 1800,
+        y = 1440
+      } --[[table: 00000000004b6150]],
       id = "52aa6133-7ae9-4bec-8356-33c3fc12a488",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferParalysis",
         precondition = ""
-      } --[[table: 00000000004b20d0]],
+      } --[[table: 00000000004b60d0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b2090]],
+    } --[[table: 00000000004b6090]],
     ["70e562ef-21c9-4df7-8a1c-377886606a89"] = {
       description = "这里可以增加boss放技能逃跑",
       display = {
-        x = 624,
-        y = 612
-      } --[[table: 00000000004ab2c0]],
+        x = 672,
+        y = 1308
+      } --[[table: 00000000004c3e10]],
       id = "70e562ef-21c9-4df7-8a1c-377886606a89",
       name = "BTRunAction",
       properties = {
         operation = "RunAway",
         precondition = "GetTrue"
-      } --[[table: 00000000004ab280]],
+      } --[[table: 00000000004c3dd0]],
       title = "执行<operation>函数，跑远（预留）"
-    } --[[table: 00000000004ab240]],
+    } --[[table: 00000000004c3d90]],
     ["76dda714-5bad-4c0f-aa17-9befc77a78b0"] = {
       children = {
         "98b0b233-a5a3-4d02-8af3-31472fc6748d",
         "c91d0d4d-76ab-4579-8417-e1b6aa602610",
         "c2bf0968-c727-417d-828e-c7d8b95be0b1",
         "46f7cfc9-3e2e-4c89-8d05-a60134a4bfb4"
-      } --[[table: 00000000004b2390]],
+      } --[[table: 00000000004b6390]],
       description = "",
       display = {
         x = 852,
         y = 252
-      } --[[table: 00000000004b2350]],
+      } --[[table: 00000000004b6350]],
       id = "76dda714-5bad-4c0f-aa17-9befc77a78b0",
       name = "BTParallelFlexible",
       properties = {
         precondition = ""
-      } --[[table: 00000000004b2310]],
+      } --[[table: 00000000004b6310]],
       title = "BTParallelFlexible技能"
-    } --[[table: 00000000004b2290]],
+    } --[[table: 00000000004b6290]],
     ["84c34ede-4afd-4da3-88d8-a58d52f5d6fc"] = {
       description = "",
       display = {
-        x = 1524,
-        y = 1284
-      } --[[table: 00000000004b2050]],
+        x = 1788,
+        y = 1380
+      } --[[table: 00000000004b6050]],
       id = "84c34ede-4afd-4da3-88d8-a58d52f5d6fc",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferChaos",
         precondition = ""
-      } --[[table: 00000000004b1fd0]],
+      } --[[table: 00000000004b5fd0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b1f90]],
+    } --[[table: 00000000004b5f90]],
     ["96fab39f-da4b-4308-8274-1da53e039941"] = {
       description = "",
       display = {
-        x = 1560,
-        y = 744
-      } --[[table: 00000000004ae7d0]],
+        x = 1824,
+        y = 840
+      } --[[table: 00000000004c6f10]],
       id = "96fab39f-da4b-4308-8274-1da53e039941",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferElementDefence",
         precondition = ""
-      } --[[table: 00000000004ae750]],
+      } --[[table: 00000000004c6e90]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ae710]],
+    } --[[table: 00000000004c6e50]],
     ["98b0b233-a5a3-4d02-8af3-31472fc6748d"] = {
       description = "技能伤害",
       display = {
         x = 1128,
         y = 132
-      } --[[table: 00000000004aac00]],
+      } --[[table: 00000000004c3750]],
       id = "98b0b233-a5a3-4d02-8af3-31472fc6748d",
       name = "BTRunAction",
       properties = {
         operation = "PlayerSkillAttack",
         precondition = "CheckSkillHasDamage"
-      } --[[table: 00000000004aab40]],
+      } --[[table: 00000000004c3690]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004aab00]],
+    } --[[table: 00000000004c3650]],
     ["197f1006-8fae-4cad-a15e-f077065d0c67"] = {
       description = "",
       display = {
-        x = 1512,
-        y = 1224
-      } --[[table: 00000000004b1f50]],
+        x = 1776,
+        y = 1320
+      } --[[table: 00000000004b5f50]],
       id = "197f1006-8fae-4cad-a15e-f077065d0c67",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferStun",
         precondition = ""
-      } --[[table: 00000000004b1f10]],
+      } --[[table: 00000000004b5f10]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b1ed0]],
+    } --[[table: 00000000004b5ed0]],
     ["554c65c8-b319-4b32-a126-018a80d93a9e"] = {
       description = "",
       display = {
-        x = 1512,
-        y = 1164
-      } --[[table: 00000000004b1e90]],
+        x = 1776,
+        y = 1260
+      } --[[table: 00000000004b5e90]],
       id = "554c65c8-b319-4b32-a126-018a80d93a9e",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferSeal",
         precondition = ""
-      } --[[table: 00000000004b1e50]],
+      } --[[table: 00000000004b5e50]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b1e10]],
+    } --[[table: 00000000004b5e10]],
     ["750d4281-b90d-4a03-a72a-b6b1eb8c4f92"] = {
       description = "",
       display = {
-        x = 1548,
-        y = 684
-      } --[[table: 00000000004ae6d0]],
+        x = 1812,
+        y = 780
+      } --[[table: 00000000004c6e10]],
       id = "750d4281-b90d-4a03-a72a-b6b1eb8c4f92",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferElementAttack",
         precondition = ""
-      } --[[table: 00000000004ae650]],
+      } --[[table: 00000000004c6d90]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ae610]],
+    } --[[table: 00000000004c6d50]],
     ["786f61ba-1a25-4c93-8b1d-1e611898e56f"] = {
       description = "",
       display = {
         x = 1548,
         y = 24
-      } --[[table: 00000000004ab880]],
+      } --[[table: 00000000004c43d0]],
       id = "786f61ba-1a25-4c93-8b1d-1e611898e56f",
       name = "BTRunAction",
       properties = {
         operation = "AddBufferAttack",
         precondition = ""
-      } --[[table: 00000000004ab840]],
+      } --[[table: 00000000004c4390]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ab800]],
+    } --[[table: 00000000004c4350]],
     ["43087d89-33d1-4c88-9ea8-d8e306cab2d9"] = {
       description = "",
       display = {
         x = 624,
         y = -180
-      } --[[table: 00000000004ab0c0]],
+      } --[[table: 00000000004c3c10]],
       id = "43087d89-33d1-4c88-9ea8-d8e306cab2d9",
       name = "BTRunAction",
       properties = {
         operation = "EnemyBorn",
         precondition = ""
-      } --[[table: 00000000004ab080]],
+      } --[[table: 00000000004c3bd0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ab040]],
+    } --[[table: 00000000004c3b90]],
     ["70517fe1-639a-4309-b9f9-aafd48ebf692"] = {
       description = "",
       display = {
-        x = 1512,
-        y = 1044
-      } --[[table: 00000000004aec90]],
+        x = 1776,
+        y = 1140
+      } --[[table: 00000000004c73d0]],
       id = "70517fe1-639a-4309-b9f9-aafd48ebf692",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferBurn",
         precondition = ""
-      } --[[table: 00000000004aec50]],
+      } --[[table: 00000000004c7390]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004aec10]],
+    } --[[table: 00000000004c7350]],
     ["416968a6-aacc-4107-918c-8ccea907a173"] = {
       description = "",
       display = {
-        x = 1536,
-        y = 804
-      } --[[table: 00000000004ae8d0]],
+        x = 1800,
+        y = 900
+      } --[[table: 00000000004c7010]],
       id = "416968a6-aacc-4107-918c-8ccea907a173",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferAccuracy",
         precondition = ""
-      } --[[table: 00000000004ae850]],
+      } --[[table: 00000000004c6f90]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ae810]],
+    } --[[table: 00000000004c6f50]],
     ["638994e8-9b4e-4ee0-8afd-34e51168f107"] = {
       description = "",
       display = {
-        x = 1512,
-        y = 564
-      } --[[table: 00000000004ae4d0]],
+        x = 1776,
+        y = 660
+      } --[[table: 00000000004c6c10]],
       id = "638994e8-9b4e-4ee0-8afd-34e51168f107",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferAttack",
         precondition = ""
-      } --[[table: 00000000004ae450]],
+      } --[[table: 00000000004c6b90]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ae410]],
+    } --[[table: 00000000004c6b50]],
     ["3560791a-803d-471b-9b11-dbf8f3007f26"] = {
       description = "",
       display = {
         x = 1584,
         y = 144
-      } --[[table: 00000000004aded0]],
+      } --[[table: 00000000004c6610]],
       id = "3560791a-803d-471b-9b11-dbf8f3007f26",
       name = "BTRunAction",
       properties = {
         operation = "AddBufferElementAttack",
         precondition = ""
-      } --[[table: 00000000004ade50]],
+      } --[[table: 00000000004c6590]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ade10]],
+    } --[[table: 00000000004c6550]],
     ["30475607-b84f-43d8-8c24-a23fba820a5a"] = {
       children = {
         "cec6c4a4-78e2-4756-8ed3-5b5a95aeb4b7",
         "ab9eb718-0b68-4604-82a2-6719588d2c58",
         "70e562ef-21c9-4df7-8a1c-377886606a89"
-      } --[[table: 00000000004aae00]],
+      } --[[table: 00000000004c3950]],
       description = "",
       display = {
         x = 252,
         y = 228
-      } --[[table: 00000000004aadc0]],
+      } --[[table: 00000000004c3910]],
       id = "30475607-b84f-43d8-8c24-a23fba820a5a",
       name = "BTPrioritySelector",
       properties = {
         precondition = "CheckEnemyLive"
-      } --[[table: 00000000004aad80]],
+      } --[[table: 00000000004c38d0]],
       title = "BTPrioritySelector有敌人进攻"
-    } --[[table: 00000000004aad00]],
+    } --[[table: 00000000004c3850]],
     ["a7cdc9d2-5e27-47d3-a485-9999aba7bcb6"] = {
       description = "",
       display = {
         x = 624,
         y = -348
-      } --[[table: 000000000049f9d0]],
+      } --[[table: 000000000049bba0]],
       id = "a7cdc9d2-5e27-47d3-a485-9999aba7bcb6",
       name = "BTRunAction",
       properties = {
         operation = "PlayerIdle",
         precondition = ""
-      } --[[table: 000000000049f990]],
+      } --[[table: 000000000049bb60]],
       title = "执行<operation>函数"
-    } --[[table: 000000000049f910]],
+    } --[[table: 000000000049bae0]],
     ["ab9eb718-0b68-4604-82a2-6719588d2c58"] = {
       children = {
         "ee0eab42-43a6-4e5a-b826-f4dd9132bc85",
         "2f5fc224-982d-4d94-8d71-41c74c62234e",
         "76dda714-5bad-4c0f-aa17-9befc77a78b0",
-        "ec17302e-d44c-48a9-8d29-d6b070cd07cd"
-      } --[[table: 00000000004aaf40]],
+        "f5464fdf-f94a-45fb-862b-63ed086516cc",
+        "ec17302e-d44c-48a9-8d29-d6b070cd07cd",
+        "1cd89c96-43fc-4890-b1e8-223245fd4343"
+      } --[[table: 00000000004c3a90]],
       description = "",
       display = {
         x = 552,
         y = 228
-      } --[[table: 00000000004aaf00]],
+      } --[[table: 00000000004c3a50]],
       id = "ab9eb718-0b68-4604-82a2-6719588d2c58",
       name = "BTSequence",
       properties = {
         precondition = ""
-      } --[[table: 00000000004aaec0]],
+      } --[[table: 00000000004c3a10]],
       title = "BTSequence攻击"
-    } --[[table: 00000000004aae40]],
+    } --[[table: 00000000004c3990]],
     ["ad72b0d3-b557-4f40-834f-2a5ba37b2002"] = {
       description = "",
       display = {
         x = 1560,
         y = 324
-      } --[[table: 00000000004ae1d0]],
+      } --[[table: 00000000004c6910]],
       id = "ad72b0d3-b557-4f40-834f-2a5ba37b2002",
       name = "BTRunAction",
       properties = {
         operation = "AddBufferCritical",
         precondition = ""
-      } --[[table: 00000000004ae150]],
+      } --[[table: 00000000004c6890]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ae110]],
+    } --[[table: 00000000004c6850]],
     ["b86e6749-d196-47a3-88d2-fc45510336ee"] = {
       children = {
         "9c82ffa4-6727-47ca-8854-08e0f90e4ddc",
         "30475607-b84f-43d8-8c24-a23fba820a5a"
-      } --[[table: 00000000004ab200]],
+      } --[[table: 00000000004c3d50]],
       description = "",
       display = {
         x = -12,
         y = 0
-      } --[[table: 00000000004ab1c0]],
+      } --[[table: 00000000004c3d10]],
       id = "b86e6749-d196-47a3-88d2-fc45510336ee",
       name = "BTPrioritySelector",
       properties = {
         precondition = "CheckPlayerAlive"
-      } --[[table: 00000000004ab140]],
+      } --[[table: 00000000004c3c90]],
       title = "BTPrioritySelector"
-    } --[[table: 00000000004ab100]],
+    } --[[table: 00000000004c3c50]],
     ["c2bf0968-c727-417d-828e-c7d8b95be0b1"] = {
       children = {
         "dd8b405c-58a6-47cf-90ea-f7827478416c",
@@ -494,152 +510,166 @@ local zsw2 = {
         "8f708ff6-fac6-444f-8faf-171fe03222f0",
         "ad72b0d3-b557-4f40-834f-2a5ba37b2002",
         "2d6f1d56-67fc-43e1-8588-554ef1845fb8"
-      } --[[table: 00000000004ab640]],
+      } --[[table: 00000000004c4190]],
       description = "",
       display = {
         x = 1140,
-        y = 360
-      } --[[table: 00000000004ab600]],
+        y = 384
+      } --[[table: 00000000004c4150]],
       id = "c2bf0968-c727-417d-828e-c7d8b95be0b1",
       name = "BTParallelFlexible",
       properties = {
         precondition = "CheckSkillBuffer"
-      } --[[table: 00000000004ab580]],
+      } --[[table: 00000000004c40d0]],
       title = "BTParallelFlexible(Buffer)"
-    } --[[table: 00000000004ab4c0]],
+    } --[[table: 00000000004c4010]],
     ["c91d0d4d-76ab-4579-8417-e1b6aa602610"] = {
       description = "",
       display = {
         x = 1128,
         y = 252
-      } --[[table: 00000000004ab3c0]],
+      } --[[table: 00000000004c3f10]],
       id = "c91d0d4d-76ab-4579-8417-e1b6aa602610",
       name = "BTRunAction",
       properties = {
         operation = "RecoverHp",
         precondition = "CheckSkillRecoverHp"
-      } --[[table: 00000000004ab340]],
+      } --[[table: 00000000004c3e90]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ab300]],
+    } --[[table: 00000000004c3e50]],
     ["cec6c4a4-78e2-4756-8ed3-5b5a95aeb4b7"] = {
       description = "",
       display = {
         x = 624,
         y = -84
-      } --[[table: 00000000004aaa00]],
+      } --[[table: 00000000004c3550]],
       id = "cec6c4a4-78e2-4756-8ed3-5b5a95aeb4b7",
       name = "BTRunAction",
       properties = {
         operation = "PlayerRun",
         precondition = "CheckDistance"
-      } --[[table: 00000000004aa9c0]],
+      } --[[table: 00000000004c3510]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004aa980]],
+    } --[[table: 00000000004c34d0]],
     ["dc31e136-d4e9-4fb9-a56f-d3fbb5663d34"] = {
       description = "",
       display = {
-        x = 1512,
-        y = 1104
-      } --[[table: 00000000004b1dd0]],
+        x = 1776,
+        y = 1200
+      } --[[table: 00000000004b5dd0]],
       id = "dc31e136-d4e9-4fb9-a56f-d3fbb5663d34",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferBlood",
         precondition = ""
-      } --[[table: 00000000004b1d50]],
+      } --[[table: 00000000004b5d50]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004aecd0]],
+    } --[[table: 00000000004c7410]],
     ["dd8b405c-58a6-47cf-90ea-f7827478416c"] = {
       description = "",
       display = {
         x = 1548,
         y = -36
-      } --[[table: 00000000004ab480]],
+      } --[[table: 00000000004c3fd0]],
       id = "dd8b405c-58a6-47cf-90ea-f7827478416c",
       name = "BTRunAction",
       properties = {
         operation = "AddBufferSpeed",
         precondition = ""
-      } --[[table: 00000000004ab440]],
+      } --[[table: 00000000004c3f90]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ab400]],
+    } --[[table: 00000000004c3f50]],
     ["e0ae8d6e-a7ad-4416-8bc4-134b86e6bc4d"] = {
       description = "",
       display = {
         x = 1596,
         y = 204
-      } --[[table: 00000000004adfd0]],
+      } --[[table: 00000000004c6710]],
       id = "e0ae8d6e-a7ad-4416-8bc4-134b86e6bc4d",
       name = "BTRunAction",
       properties = {
         operation = "AddBufferElementDefence",
         precondition = ""
-      } --[[table: 00000000004adf50]],
+      } --[[table: 00000000004c6690]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004adf10]],
+    } --[[table: 00000000004c6650]],
     ["e7ddaaa7-3ae2-40a3-a098-9287eeb03298"] = {
       description = "",
       display = {
-        x = 1560,
-        y = 924
-      } --[[table: 00000000004aead0]],
+        x = 1824,
+        y = 1020
+      } --[[table: 00000000004c7210]],
       id = "e7ddaaa7-3ae2-40a3-a098-9287eeb03298",
       name = "BTRunAction",
       properties = {
         operation = "AddDeBufferCriticalDamage",
         precondition = ""
-      } --[[table: 00000000004aea50]],
+      } --[[table: 00000000004c7190]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004aea10]],
+    } --[[table: 00000000004c7150]],
     ["ec17302e-d44c-48a9-8d29-d6b070cd07cd"] = {
       description = "调试用，玩家打人同时也被打",
       display = {
-        x = 828,
-        y = 528
-      } --[[table: 00000000004aacc0]],
+        x = 852,
+        y = 924
+      } --[[table: 00000000004c3810]],
       id = "ec17302e-d44c-48a9-8d29-d6b070cd07cd",
       name = "BTRunAction",
       properties = {
         operation = "PlayerHit",
         precondition = ""
-      } --[[table: 00000000004aac80]],
+      } --[[table: 00000000004c37d0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004aac40]],
+    } --[[table: 00000000004c3790]],
     ["ee0eab42-43a6-4e5a-b826-f4dd9132bc85"] = {
       description = "",
       display = {
         x = 828,
         y = 0
-      } --[[table: 00000000004aaac0]],
+      } --[[table: 00000000004c3610]],
       id = "ee0eab42-43a6-4e5a-b826-f4dd9132bc85",
       name = "BTRunAction",
       properties = {
         operation = "PlayerAttack",
         precondition = ""
-      } --[[table: 00000000004aaa80]],
+      } --[[table: 00000000004c35d0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004aaa40]],
+    } --[[table: 00000000004c3590]],
+    ["f5464fdf-f94a-45fb-862b-63ed086516cc"] = {
+      description = "",
+      display = {
+        x = 876,
+        y = 588
+      } --[[table: 00000000004b6490]],
+      id = "f5464fdf-f94a-45fb-862b-63ed086516cc",
+      name = "BTRunAction",
+      properties = {
+        operation = "PlayerSkillAttack2",
+        precondition = ""
+      } --[[table: 00000000004b6410]],
+      title = "执行<operation>函数"
+    } --[[table: 00000000004b63d0]],
     ["fb008a66-8f83-4184-94ea-d69e7669712e"] = {
       description = "",
       display = {
         x = 1560,
         y = 84
-      } --[[table: 00000000004addd0]],
+      } --[[table: 00000000004c6510]],
       id = "fb008a66-8f83-4184-94ea-d69e7669712e",
       name = "BTRunAction",
       properties = {
         operation = "AddBufferDefence",
         precondition = ""
-      } --[[table: 00000000004add50]],
+      } --[[table: 00000000004c6490]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ab8c0]]
-  } --[[table: 000000000049f8d0]],
-  properties = {} --[[table: 000000000049f890]],
+    } --[[table: 00000000004c4410]]
+  } --[[table: 000000000049baa0]],
+  properties = {} --[[table: 000000000049ba60]],
   root = "b86e6749-d196-47a3-88d2-fc45510336ee",
   scope = "tree",
   title = "zsw2",
   version = "0.3.0"
-} --[[table: 000000000049f850]] 
+} --[[table: 000000000049ba20]] 
 
 
 

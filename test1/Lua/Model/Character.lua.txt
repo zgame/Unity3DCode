@@ -20,7 +20,8 @@ function Character:New()
         
         HP = 100,
         MaxHP = 100,
-        Speed = 1, 
+        Speed = 1,
+        Distance = 4,
         
         
         
@@ -33,7 +34,7 @@ end
 -- AI行为树开始
 function Character:BTRootInit(file)
     self.BattleBTRoot = BattleInit(file, self)
-    self.BattleBTTimer = MyTimer:every(0.5 , function()        BattleUpdate(0.5,self.BattleBTRoot)   end)
+    self.BattleBTTimer = MyTimer:every(0.5 , function()        BattleUpdate(0.5,self.BattleBTRoot, self.Name)   end)
     --MyTimer:after(5, function()        MyTimer:cancel(self.BattleBTTimer)    end)
 end
 
@@ -50,16 +51,32 @@ function Character:LoadGameObject(name)
     self.Animator =  self.Model:GetComponentInChildren(typeof(CS.UnityEngine.Animator))
 end
 
+-- 检查动画是否播放完毕
+function Character:AnimatorPlayEnd(name, returnIdle)
+    local info = self.Animator:GetCurrentAnimatorStateInfo(0)
+    --print(info:IsName("Attack"))
+    --print(info.normalizedTime)
+    if info:IsName(name) then
+        print("正在播放动画："..name)
+        return false
+    else
+        print("动画播放完毕"..name)
+        if returnIdle then
+            self.PlayerState = StateIdle
+        end
+        return true
+    end
+end
 
 --------------------------------------------------------------------------
 
 -- 距离的判断
 function Character:CheckDistance()
-    if Distance > 1 then
-        print("敌人距离好远， 我要跑过去")
+    if self.Distance > 1 then
+        print("敌人距离好远， 我要跑过去".. self.Distance)
         return true    -- 距离还远, 需要跑过去
     else
-        print("敌人距离近了， 可以揍他了")
+        print("敌人距离近了， 可以揍他了".. self.Distance)
         return false
     end
 end
@@ -73,18 +90,18 @@ function Character:PlayerRun()
     end
 
     if self.PlayerState == StateRun then
-        Distance = Distance - Speed
-        print(self.Name .. "跑步ing，距离:" .. Distance)
+        self.Distance = self.Distance - self.Speed
+        print(self.Name .. "跑步ing，距离:" .. self.Distance)
         
         --self.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, self.Model.transform.localPosition.z + 1);
         
-        if Distance <= 1 then
+        if self.Distance <= 1 then
             self.PlayerState = StateIdle
             print(self.Name .. "跑到目的地")
             self.Animator:SetTrigger("stoprun")
         else
             -- doTween 来移动角色
-            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(0, 0, self.Model.transform.localPosition.z + 2),0.5)
+            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x, self.Model.transform.localPosition.y, self.Model.transform.localPosition.z + 2),0.5)
         end
     end
 
@@ -95,7 +112,7 @@ end
 
 -- 玩家普通攻击
 function Character:PlayerAttack()
-    --if EnemyHP > 0 then
+    print("PlayerAttack"..self.PlayerState)
 
     if self.PlayerState == StateIdle then
 
@@ -112,18 +129,21 @@ function Character:PlayerAttack()
     end
     
     if self.PlayerState == StateAttack then
-        local info = self.Animator:GetCurrentAnimatorStateInfo(0)
-
-        print(info:IsName("Attack"))
-        print(info.normalizedTime)
-        if info:IsName("Attack") then
-            print("正在攻击")
-            return false
-        else
-            print("攻击动画播放完毕")
-            self.PlayerState = StateIdle
-            return true
-        end
+        return self:AnimatorPlayEnd("Attack", true)
+       
+        
+        --local info = self.Animator:GetCurrentAnimatorStateInfo(0)
+        --
+        --print(info:IsName("Attack"))
+        --print(info.normalizedTime)
+        --if info:IsName("Attack") then
+        --    print("正在攻击")
+        --    return false
+        --else
+        --    print("攻击动画播放完毕")
+        --    self.PlayerState = StateIdle
+        --    return true
+        --end
 
     end
 
@@ -132,6 +152,7 @@ end
 
 -- 玩家释放技能
 function Character:PlayerSkillAttack()
+    print("PlayerSkillAttack")
     if self.PlayerState == StateIdle then
         EnemyHP = EnemyHP - SkillDamage
         print("敌人被[ 技能 ]打了，剩余血量"..EnemyHP)
@@ -141,29 +162,37 @@ function Character:PlayerSkillAttack()
     end
 
     if self.PlayerState == StateSkill then
-        local info = self.Animator:GetCurrentAnimatorStateInfo(0)
-        print(info:IsName("skill01"))
-        print(info.normalizedTime)
-        if info:IsName("skill01") then
-            print("正在技能攻击")
-            return false
-        else
-            print("技能攻击动画播放完毕")
-            self.PlayerState = StateIdle
-            return true
-        end
-
+        return  self:AnimatorPlayEnd("Skill01",true)
     end
 end
 
+
+-- 玩家释放技能
+function Character:PlayerSkillAttack2()
+    print("PlayerSkillAttack2")
+    if self.PlayerState == StateIdle then
+        EnemyHP = EnemyHP - SkillDamage
+        print("敌人被[ 技能2 ]打了，剩余血量"..EnemyHP)
+        self.Animator:SetTrigger("sp2")
+        self.PlayerState = StateSkill
+        return false
+    end
+
+    if self.PlayerState == StateSkill then
+        return  self:AnimatorPlayEnd("Skill02",true)
+    end
+end
+
+
 -- 玩家受到攻击
 function Character:PlayerHit()
+    print("PlayerHit")
     if self.PlayerState == StateIdle then
-        HP = HP - Damage
-        if HP < 0 then
+        self.HP = self.HP - Damage
+        if self.HP > 0 then
             self.PlayerState = StateHit
             self.Animator:SetTrigger("hit")
-            print("玩家 受到攻击, hp "..HP)
+            print("玩家 受到攻击, hp "..self.HP)
         else
             print("玩家 死了")
             self.Animator:SetTrigger("dead")
@@ -173,14 +202,64 @@ function Character:PlayerHit()
     end
     
     if self.PlayerState == StateHit then
-        local info = self.Animator:GetCurrentAnimatorStateInfo(0)
-        if info:IsName("hitted") then
-            print("正在被打动画")
-            return false
-        else
-            print("hit动画播放完毕")
-            self.PlayerState = StateIdle
-            return true
-        end
+        return  self:AnimatorPlayEnd("Hit",true)
+        --if playEnd then
+        --    self.PlayerState = StateIdle
+        --    return true
+        --else
+        --    return false
+        --end
+        
+        --local info = self.Animator:GetCurrentAnimatorStateInfo(0)
+        --if info:IsName("Hit") then
+        --    print("正在被打动画")
+        --    return false
+        --else
+        --    print("hit动画播放完毕")
+        --    self.PlayerState = StateIdle
+        --    return true
+        --end
     end
 end
+
+
+
+-- 玩家死亡
+function Character:PlayerDead()
+    print("PlayerDead")
+    if self.PlayerState == StateIdle then
+            print("玩家 死了")
+            self.Animator:SetTrigger("dead")
+            self.PlayerState = StateDead
+        return false
+    end
+
+    if self.PlayerState == StateDead then
+        return  self:AnimatorPlayEnd("Death",false)
+        --if playEnd then
+        --    self.PlayerState = StateIdle
+        --    return true
+        --else
+        --    return false
+        --end
+        
+        --local info = self.Animator:GetCurrentAnimatorStateInfo(0)
+        --if info:IsName("Death") then
+        --    print("正在死亡动画")
+        --    return false
+        --else
+        --    print("死亡动画播放完毕")
+        --    --self.PlayerState = StateIdle
+        --    return true
+        --end
+    end
+end
+
+
+-- 玩家发呆
+function Character:PlayerIdle()
+    print("玩家发呆一下，马上敌人就出来了")
+    self.PlayerState = StateIdle
+    return true
+end
+

@@ -14,7 +14,7 @@ require("Lua/Battle/BattleFunc")
 function BattleInit(file, character)
     local binder = {
 
-        PlayerIdle = PlayerIdle,
+        PlayerIdle = function()   return character:PlayerIdle() end,
         CheckDistance = function()   return character:CheckDistance() end,
         PlayerRun = function()   return character:PlayerRun() end,
         CheckEnemyLive = CheckEnemyLive,
@@ -28,7 +28,9 @@ function BattleInit(file, character)
 
         PlayerAttack = function()   return character:PlayerAttack() end,
         PlayerSkillAttack =  function()   return character:PlayerSkillAttack() end,
+        PlayerSkillAttack2 =  function()   return character:PlayerSkillAttack2() end,
         PlayerHit = function()   return character:PlayerHit() end,
+        PlayerDead = function()   return character:PlayerDead() end,
 
 
         -- skill
@@ -81,8 +83,8 @@ function BattleInit(file, character)
 end
 
 --tick per frame 
-function BattleUpdate(dt, btroot)
-    print("-----------------------------------------------------------------------------------------------------------")
+function BattleUpdate(dt, btroot, name)
+    print("---------------------------------------------"..name.."--------------------------------------------------------------")
     if btroot:evaluate() then
         btroot:tick(dt)
     end

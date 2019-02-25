@@ -50,6 +50,30 @@ function StartBattle(lastUI)
     local tauren = Character:New()
     tauren:LoadGameObject("Tauren")
     tauren:BTRootInit("Lua/Battle/btJson/zsw2")
+    tauren.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 0);
+
+
+    local Gnome = Character:New()
+    Gnome:LoadGameObject("Gnome")
+    Gnome:BTRootInit("Lua/Battle/btJson/zsw2")
+    Gnome.Model.transform.localPosition = CS.UnityEngine.Vector3(4, 0, 0);
+
+    local Bloodelf = Character:New()
+    Bloodelf:LoadGameObject("Bloodelf")
+    Bloodelf:BTRootInit("Lua/Battle/btJson/zsw2")
+    Bloodelf.Model.transform.localPosition = CS.UnityEngine.Vector3(-4, 0, 0);
+
+    local Dwarf = Character:New()
+    Dwarf:LoadGameObject("Dwarf")
+    Dwarf:BTRootInit("Lua/Battle/btJson/zsw2")
+    Dwarf.Model.transform.localPosition = CS.UnityEngine.Vector3(-2, 0, 0);
+
+
+    local Human = Character:New()
+    Human:LoadGameObject("Human")
+    Human:BTRootInit("Lua/Battle/btJson/zsw2")
+    Human.Model.transform.localPosition = CS.UnityEngine.Vector3(2, 0, 0);
+
 
 
     --DOtween = CS.DG.Tweening.DOTween
