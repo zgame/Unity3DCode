@@ -21,7 +21,7 @@ function Character:New()
         HP = 100,
         MaxHP = 100,
         Speed = 1,
-        Distance = 4,
+        Distance = 40,
         
         
         
@@ -101,7 +101,7 @@ function Character:PlayerRun()
             self.Animator:SetTrigger("stoprun")
         else
             -- doTween 来移动角色
-            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x, self.Model.transform.localPosition.y, self.Model.transform.localPosition.z + 2),0.5)
+            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x, self.Model.transform.localPosition.y, self.Model.transform.localPosition.z + self.Speed),0.5)
         end
     end
 
