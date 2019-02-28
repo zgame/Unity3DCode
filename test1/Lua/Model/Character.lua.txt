@@ -20,8 +20,9 @@ function Character:New()
         
         HP = 100,
         MaxHP = 100,
-        Speed = 1,
-        Distance = 40,
+        Speed = 1,          -- 移动速度
+        Distance = 40,      -- 敌人距离
+        AttackRange = 1,    -- 攻击范围距离
         
         
         
@@ -72,7 +73,7 @@ end
 
 -- 距离的判断
 function Character:CheckDistance()
-    if self.Distance > 1 then
+    if self.Distance > self.AttackRange then
         print("敌人距离好远， 我要跑过去".. self.Distance)
         return true    -- 距离还远, 需要跑过去
     else
@@ -95,13 +96,16 @@ function Character:PlayerRun()
         
         --self.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, self.Model.transform.localPosition.z + 1);
         
-        if self.Distance <= 1 then
+        if self.Distance <= self.AttackRange then
             self.PlayerState = StateIdle
             print(self.Name .. "跑到目的地")
             self.Animator:SetTrigger("stoprun")
         else
             -- doTween 来移动角色
             local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x, self.Model.transform.localPosition.y, self.Model.transform.localPosition.z + self.Speed),0.5)
+            tween:SetEase(CS.DG.Tweening.Ease.Linear)       -- 设定平均移动方式
+
+
         end
     end
 
