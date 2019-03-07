@@ -1,0 +1,233 @@
+
+--------------------------------------------------------------------------------------
+--- 怪物
+--------------------------------------------------------------------------------------
+
+Monster = {}
+function Monster:New()
+    c = {
+        Name = "",
+        Type = 0 ,     -- 类型
+        BattleBTRoot = nil,  -- AI行为树
+        BattleBTTimer = nil,  -- AI行为树的定时器
+
+        Debug = false,  -- 调试输出
+        Model = nil,   -- 模型object
+        Animator = nil,  -- 动画控制器
+
+        MonsterState = StateIdle,   -- 当前状态
+        Enemy = nil,     -- 敌人
+
+        HP = 100,
+        MaxHP = 100,
+        Speed = 1,          -- 移动速度
+        Distance = 40,      -- 敌人距离
+        AttackRange = 1,    -- 攻击范围距离
+
+
+
+    }
+    setmetatable(c, self)
+    self.__index = self
+    return c
+end
+
+-- AI行为树开始
+function Monster:BTRootInit(file)
+    self.BattleBTRoot = BattleCharacterInit(file, self)
+    self.BattleBTTimer = MyTimer:every(0.5 , function()        BattleCharacterUpdate(0.5,self.BattleBTRoot, self.Name)   end)
+    --MyTimer:after(5, function()        MyTimer:cancel(self.BattleBTTimer)    end)
+end
+
+-- AI行为树停止
+function Monster:BTRootStop()
+    MyTimer:cancel(self.BattleBTTimer)
+end
+
+-- 加载模型和动画
+function Monster:LoadGameObject(name)
+    self.Name = name
+    self.Model = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/"..name,AssetMonsterPath.."/"..name)
+    --local animator1 = monster1:GetComponent(typeof(CS.UnityEngine.Animator))
+    self.Animator =  self.Model:GetComponentInChildren(typeof(CS.UnityEngine.Animator))
+
+    -- 让敌人转过来
+    --self.Model.transform.localRotation = CS.UnityEngine.Vector3(0, 180, 0);
+    self.Model.transform.localRotation = CS.UnityEngine.Quaternion.Euler(0, 180, 0);
+end
+
+-- 检查动画是否播放完毕
+function Monster:AnimatorPlayEnd(name, returnIdle)
+    local info = self.Animator:GetCurrentAnimatorStateInfo(0)
+    --print(info:IsName("Attack"))
+    --print(info.normalizedTime)
+    if info:IsName(name) then
+        self.Log("正在播放动画："..name)
+        return false
+    else
+        self.Log("动画播放完毕"..name)
+        if returnIdle then
+            self.MonsterState = StateIdle
+        end
+        return true
+    end
+end
+
+
+
+
+--------------------------------------------------------------------------
+
+-- 距离的判断
+function Monster:CheckDistance()
+    if self.Distance > self.AttackRange then
+        self.Log("敌人距离好远， 我要跑过去".. self.Distance)
+        return true    -- 距离还远, 需要跑过去
+    else
+        self.Log("敌人距离近了， 可以揍他了".. self.Distance)
+        return false
+    end
+end
+
+-- 往目的地跑过去
+function Monster:PlayerRun()
+
+    if self.MonsterState == StateIdle then
+        self.MonsterState = StateRun
+        self.Animator:SetTrigger("run")
+    end
+
+    if self.MonsterState == StateRun then
+        self.Distance = self.Distance - self.Speed
+        self.Log(self.Name .. "跑步ing，距离:" .. self.Distance)
+
+        --self.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, self.Model.transform.localPosition.z + 1);
+
+        if self.Distance <= self.AttackRange then
+            self.MonsterState = StateIdle
+            self.Log(self.Name .. "跑到目的地")
+            self.Animator:SetTrigger("stoprun")
+        else
+            -- doTween 来移动角色
+            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x + self.Speed , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z ),0.5)
+            tween:SetEase(CS.DG.Tweening.Ease.Linear)       -- 设定平均移动方式
+
+        end
+    end
+
+    return false
+
+end
+
+
+-- 玩家普通攻击
+function Monster:PlayerAttack()
+    --print("PlayerAttack"..self.MonsterState)
+
+    if self.MonsterState == StateIdle then
+
+        EnemyHP = EnemyHP - Damage
+        self.Log("敌人被[  普通攻击  ]打了，剩余血量"..EnemyHP)
+        --self.Animator:SetTrigger("stoprun")
+        self.Animator:SetTrigger("attack")
+        self.MonsterState = StateAttack
+        return false
+    end
+
+    if self.MonsterState == StateAttack then
+        return self:AnimatorPlayEnd("Attack", true)
+    end
+
+end
+
+
+-- 玩家释放技能
+function Monster:PlayerSkillAttack()
+    self:PlayerAttack()
+    --print("PlayerSkillAttack")
+    --if self.MonsterState == StateIdle then
+    --    EnemyHP = EnemyHP - SkillDamage
+    --    print("敌人被[ 技能 ]打了，剩余血量"..EnemyHP)
+    --    self.Animator:SetTrigger("sp1")
+    --    self.MonsterState = StateSkill
+    --    return false
+    --end
+    --
+    --if self.MonsterState == StateSkill then
+    --    return  self:AnimatorPlayEnd("Skill01",true)
+    --end
+end
+--
+--
+-- 玩家释放技能
+function Character:PlayerSkillAttack2()
+    self:PlayerAttack()
+    --print("PlayerSkillAttack2")
+    --if self.MonsterState == StateIdle then
+    --    EnemyHP = EnemyHP - SkillDamage
+    --    print("敌人被[ 技能2 ]打了，剩余血量"..EnemyHP)
+    --    self.Animator:SetTrigger("sp2")
+    --    self.MonsterState = StateSkill
+    --    return false
+    --end
+    --
+    --if self.MonsterState == StateSkill then
+    --    return  self:AnimatorPlayEnd("Skill02",true)
+    --end
+end
+
+
+-- 玩家受到攻击
+function Monster:PlayerHit()
+    --print("PlayerHit")
+    if self.MonsterState == StateIdle then
+        self.HP = self.HP - Damage
+        if self.HP > 0 then
+            self.MonsterState = StateHit
+            self.Animator:SetTrigger("hit")
+            self.Log("玩家 受到攻击, hp "..self.HP)
+        else
+            self.Log("玩家 死了")
+            self.Animator:SetTrigger("dead")
+            self.MonsterState = StateDead
+        end
+        return false
+    end
+
+    if self.MonsterState == StateHit then
+        return  self:AnimatorPlayEnd("Hit",true)
+    end
+end
+
+
+
+-- 玩家死亡
+function Monster:PlayerDead()
+    --print("PlayerDead")
+    if self.MonsterState == StateIdle then
+        self.Log("玩家 死了")
+        self.Animator:SetTrigger("dead")
+        self.MonsterState = StateDead
+        return false
+    end
+
+    if self.MonsterState == StateDead then
+        return  self:AnimatorPlayEnd("Death",false)
+    end
+end
+
+
+-- 玩家发呆
+function Monster:PlayerIdle()
+    self.Log("玩家发呆一下，马上敌人就出来了")
+    self.MonsterState = StateIdle
+    return true
+end
+
+
+-- log
+function Monster:Log(str)
+    if self.Debug then
+        print(str)
+    end
+end

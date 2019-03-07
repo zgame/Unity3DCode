@@ -1,8 +1,49 @@
 --serpent = require("Utils.serpent")
 --require("Utils.global")
-require("Lua/Battle/BehaviorTree3/BTInit")
-require("Lua/Battle/BattleState")
-require("Lua/Battle/BattleFunc")
+
+
+
+-- 生成玩家
+local function BattleCreatePlayer()
+print("BattleCreatePlayer")
+    return true
+end
+
+-- 生成敌人
+local function BattleCreateEnemy()
+    print("BattleCreateEnemy")
+    return true
+end
+
+-- 玩家跑
+local function BattlePlayerRun()
+    print("BattlePlayerRun")
+    return true
+end
+
+-- 进入战斗区域
+local function BattleStartAttackRing()
+    print("BattleStartAttackRing")
+    return true
+end
+
+-- 敌人开始进攻
+local function BattleEnemyAttack()
+    print("BattleEnemyAttack")
+    return true
+end
+
+-- 敌人全灭
+local function BattleEnemyAllDead()
+    print("BattleEnemyAllDead")
+    return true
+end
+
+-- 胜利动画
+local function BattleWin()
+    print("BattleWin")
+    return true
+end
 
 
 
@@ -11,87 +52,25 @@ require("Lua/Battle/BattleFunc")
 
 
 
-function BattleInit(file, character)
+function BattleInit(file)
     local binder = {
-
-        PlayerIdle = function()   return character:PlayerIdle() end,
-        CheckDistance = function()   return character:CheckDistance() end,
-        PlayerRun = function()   return character:PlayerRun() end,
-        CheckEnemyLive = CheckEnemyLive,
-        CheckPlayerAlive = CheckPlayerAlive,
-        EnemyBorn = EnemyBorn,
-        CheckEnemyNotExist = CheckEnemyNotExist,
-
-        GetTrue = GetTrue,
-        GetFalse = GetFalse,
-        RunAway = RunAway,
-
-        PlayerAttack = function()   return character:PlayerAttack() end,
-        PlayerSkillAttack =  function()   return character:PlayerSkillAttack() end,
-        PlayerSkillAttack2 =  function()   return character:PlayerSkillAttack2() end,
-        PlayerHit = function()   return character:PlayerHit() end,
-        PlayerDead = function()   return character:PlayerDead() end,
-
-
-        -- skill
-        CheckSkillHasDamage = CheckSkillHasDamage,
-        CheckSkillRecoverHp = CheckSkillRecoverHp,
-        RecoverHp = RecoverHp,
-        CheckSkillBuffer = CheckSkillBuffer,
-        CheckSkillDeBuffer = CheckSkillDeBuffer,
-
-        -- buffer
-        AddBufferSpeed = AddBufferSpeed,
-        AddBufferAttack = AddBufferAttack,
-        AddBufferDefence = AddBufferDefence,
-        AddBufferElementAttack = AddBufferElementAttack,
-        AddBufferElementDefence = AddBufferElementDefence,
-        AddBufferAccuracy = AddBufferAccuracy,
-        AddBufferCritical = AddBufferCritical,
-        AddBufferCriticalDamage = AddBufferCriticalDamage,
-
-        -- deBuffer
-        AddDeBufferSpeed = AddDeBufferSpeed,
-        AddDeBufferAttack = AddDeBufferAttack,
-        AddDeBufferDefence = AddDeBufferDefence,
-        AddDeBufferElementAttack = AddDeBufferElementAttack,
-        AddDeBufferElementDefence = AddDeBufferElementDefence,
-        AddDeBufferAccuracy = AddDeBufferAccuracy,
-        AddDeBufferCritical = AddDeBufferCritical,
-        AddDeBufferCriticalDamage = AddDeBufferCriticalDamage,
-        AddDeBufferFreeze = AddDeBufferFreeze,
-        AddDeBufferBurn = AddDeBufferBurn,
-        AddDeBufferBlood = AddDeBufferBlood,
-        AddDeBufferSeal = AddDeBufferSeal,
-        AddDeBufferStun = AddDeBufferStun,
-        AddDeBufferChaos = AddDeBufferChaos,
-        AddDeBufferParalysis = AddDeBufferParalysis,
-        AddDeBufferSleep = AddDeBufferSleep,
-
+        BattleCreatePlayer = BattleCreatePlayer,
+        BattleCreateEnemy = BattleCreateEnemy,
+        BattlePlayerRun = BattlePlayerRun,
+        BattleStartAttackRing = BattleStartAttackRing,
+        BattleEnemyAttack = BattleEnemyAttack,
+        BattleEnemyAllDead = BattleEnemyAllDead,
+        BattleWin = BattleWin,
     }
-
-    --btroot = bt.loadFromJson("zsw2.json", binder)
     local btroot = bt.LoadFromLua(file, binder)
     btroot:activate(binder)
-
-    btroot.character = character
-
     return btroot
-    --print(serpent.block(btroot))
-    --print("-------------------------------------------------------------")
-
 end
 
---tick per frame 
-function BattleUpdate(dt, btroot, name)
-    print("---------------------------------------------"..name.."--------------------------------------------------------------")
+function BattleUpdate(dt, btroot)
+    print("---------------------------------------------BattleUpdate--------------------------------------------------------------")
     if btroot:evaluate() then
         btroot:tick(dt)
     end
 end
 
-
---
---for i = 1, RunTurn do
---    BattleUpdate(0.1)
---end

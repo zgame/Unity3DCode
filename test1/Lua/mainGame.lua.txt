@@ -12,6 +12,7 @@ require("Lua/Const/protocol_ls")
 require("Lua/Model/Player")
 require("Lua/Model/User")
 require("Lua/Model/Character")
+require("Lua/Model/Monster")
 
 
 -- 加载全局通用函数
@@ -24,7 +25,11 @@ local Timer = require("Lua/Common/timer")
 MyTimer = Timer()
 
 -- 加载战斗逻辑
+require("Lua/Battle/BehaviorTree3/BTInit")
+require("Lua/Battle/BattleState")
+require("Lua/Battle/BattleFunc")
 require("Lua/Battle/Run")
+require("Lua/Battle/RunCharacter")
 
 
 -- 加载protobuf
@@ -63,6 +68,7 @@ StartBattle()
 
 
 --关闭下载界面, 销毁掉download界面
-local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')
-CSDestroyGameObject(DownLoadBundleFilePanelObject)       -- 销毁
+--local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')
+--CSDestroyGameObject(DownLoadBundleFilePanelObject)       -- 销毁
+
 --DownLoadBundleFilePanelObject:SetActive(false)        -- 隐藏

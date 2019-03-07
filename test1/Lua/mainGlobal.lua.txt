@@ -6,7 +6,8 @@ AssetUICommonPath = "UI/Prefab/Common"
 AssetUIGamePath = "UI/Prefab/Game"
 AssetUIExamplePath = "UI/Prefab/Example"
 
-AssetMonsterPath = "Model/Prefab"
+AssetCharacterPath = "Model/Prefab/Character"
+AssetMonsterPath = "Model/Prefab/Monster"
 
 -------------------------玩家数据---------------------------
 MyToken = 1     -- 给服务器发的token

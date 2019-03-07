@@ -7,42 +7,42 @@ function EnemyBorn()
     if EnemyType == nil then
         EnemyType = 1
         EnemyHP = EnemyMaxHP
-        print("出现敌人")
+        --print("出现敌人")
     else
-        print("已经有敌人，不用生成")
+        --print("已经有敌人，不用生成")
     end
 end
 
-
--- 有没有敌人
-function CheckEnemyNotExist()
-    if EnemyType == nil then
-        print("没有敌人")
-        return true
-    else
-        print("敌人存在")
-        return false
-    end
-end
-
--------------------------------攻击----------------------------------------
-
--- 敌人是否死亡
-function CheckEnemyLive()
-    if EnemyType == nil then
-        print("没有敌人，不用攻击")
-        return false
-    end
-
-    if EnemyHP > 0 then
-        print("有敌人， 揍他")
-        return true     -- 敌人没死，打他
-    else
-        print("敌人已经死了，不打了")
-        EnemyType = nil
-        return false
-    end
-end
+--
+---- 有没有敌人
+--function CheckEnemyNotExist()
+--    if EnemyType == nil then
+--        print("没有敌人")
+--        return true
+--    else
+--        print("敌人存在")
+--        return false
+--    end
+--end
+--
+---------------------------------攻击----------------------------------------
+--
+---- 敌人是否死亡
+--function CheckEnemyLive()
+--    if EnemyType == nil then
+--        print("没有敌人，不用攻击")
+--        return false
+--    end
+--
+--    if EnemyHP > 0 then
+--        print("有敌人， 揍他")
+--        return true     -- 敌人没死，打他
+--    else
+--        print("敌人已经死了，不打了")
+--        EnemyType = nil
+--        return false
+--    end
+--end
 
 
 
@@ -50,23 +50,9 @@ end
 -------------------------------玩家-----------------------------------------
 
 
-
--- 玩家是否已经死亡
-
-function CheckPlayerAlive()
-    if PlayerState == StateDead then
-        print("玩家已经死亡")
-        return false
-    else
-        print("玩家活着")
-        return true
-    end
-end
-
-
 -- 躲避
 function RunAway()
-    print("跑开躲避")
+    --print("跑开躲避")
 end
 
 -------------------------------调试-----------------------------------------
@@ -103,7 +89,7 @@ function RecoverHp()
     if HP > MaxHP then
         HP = MaxHP
     end
-    print("成功恢复血量:"..reHp)
+    --print("成功恢复血量:"..reHp)
     return true
 end
 

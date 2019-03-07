@@ -57,14 +57,13 @@ function StartBattle(lastUI)
     tauren.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 0)
     
   
-    
     -- 生成最右侧的
     local Gnome = Character:New()
     Gnome:LoadGameObject("Gnome")
     Gnome.Speed = 1.2
     Gnome.AttackRange = 6
     Gnome:BTRootInit("Lua/Battle/btJson/zsw2")
-    Gnome.Model.transform.localPosition = CS.UnityEngine.Vector3(4, 0, 0)
+    Gnome.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 4)
 
     -- 生成最左侧的
     local Bloodelf = Character:New()
@@ -72,7 +71,7 @@ function StartBattle(lastUI)
     Bloodelf.Speed = 1.3
     Bloodelf.AttackRange = 5
     Bloodelf:BTRootInit("Lua/Battle/btJson/zsw2")
-    Bloodelf.Model.transform.localPosition = CS.UnityEngine.Vector3(-4, 0, 0)
+    Bloodelf.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, -4)
 
     -- 生成左二
     local Dwarf = Character:New()
@@ -80,7 +79,7 @@ function StartBattle(lastUI)
     Dwarf.Speed = 1.1
     Dwarf.AttackRange = 2
     Dwarf:BTRootInit("Lua/Battle/btJson/zsw2")
-    Dwarf.Model.transform.localPosition = CS.UnityEngine.Vector3(-2, 0, 0)
+    Dwarf.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, -2)
 
     -- 生成右二
     local Human = Character:New()
@@ -88,7 +87,7 @@ function StartBattle(lastUI)
     Human.Speed = 1.6
     Human.AttackRange = 3
     Human:BTRootInit("Lua/Battle/btJson/zsw2")
-    Human.Model.transform.localPosition = CS.UnityEngine.Vector3(2, 0, 0)
+    Human.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 2)
 
 
     -------------------------相机------------------------------
@@ -125,8 +124,45 @@ function StartBattle(lastUI)
     --tween:OnComplete(){
     --    print("move callback")
     --}
+
+    -------------------------敌人------------------------------
+    -- 生成右二
+    local mon1 = Monster:New()
+    mon1:LoadGameObject("Goutouren01")
+    mon1.Speed = 1.6
+    mon1.AttackRange = 3
+    mon1:BTRootInit("Lua/Battle/btJson/zsw2")
+    mon1.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, 1)
+
+    -- 生成右二
+    local mon2 = Monster:New()
+    mon2:LoadGameObject("Goutouren02")
+    mon2.Speed = 1.6
+    mon2.AttackRange = 3
+    mon2:BTRootInit("Lua/Battle/btJson/zsw2")
+    mon2.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, -1)
+
+    -- 生成右二
+    local mon3 = Monster:New()
+    mon3:LoadGameObject("Yurenfashi")
+    mon3.Speed = 1.6
+    mon3.AttackRange = 3
+    mon3:BTRootInit("Lua/Battle/btJson/zsw2")
+    mon3.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, 3)
+
+    -- 生成右二
+    local mon4 = Monster:New()
+    mon4:LoadGameObject("Yurenzhanshi")
+    mon4.Speed = 1.6
+    mon4.AttackRange = 3
+    mon4:BTRootInit("Lua/Battle/btJson/zsw2")
+    mon4.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, -3)
+
+
     
-    
+    -- battle run
+    local BattleBTRoot = BattleInit("Lua/Battle/btJson/BattleRun")
+    local BattleBTTimer = MyTimer:every(0.5 , function()        BattleUpdate(0.5, BattleBTRoot )   end)
 
    
 end
