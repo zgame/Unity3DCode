@@ -20,3 +20,9 @@ MySocket = CS.SocketClient()
 
 CanEnterGame = false   -- 进入游戏
 --RunBattleLoop = false  -- 战斗逻辑循环
+
+
+
+---------------------------战斗--------------------------------
+BattleCharacterList = {}  --  玩家总列表
+BattleEnemyList = {}      -- 敌人总列表

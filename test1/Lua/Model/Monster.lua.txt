@@ -15,6 +15,7 @@ function Monster:New()
         Model = nil,   -- 模型object
         Animator = nil,  -- 动画控制器
 
+        Enable = false,   -- 激活敌人
         MonsterState = StateIdle,   -- 当前状态
         Enemy = nil,     -- 敌人
 
@@ -35,7 +36,7 @@ end
 -- AI行为树开始
 function Monster:BTRootInit(file)
     self.BattleBTRoot = BattleCharacterInit(file, self)
-    self.BattleBTTimer = MyTimer:every(0.5 , function()        BattleCharacterUpdate(0.5,self.BattleBTRoot, self.Name)   end)
+    self.BattleBTTimer = MyTimer:every(0.5 , function()        BattleCharacterUpdate(0.5,self, self.BattleBTRoot, self.Name)   end)
     --MyTimer:after(5, function()        MyTimer:cancel(self.BattleBTTimer)    end)
 end
 
@@ -52,15 +53,12 @@ function Monster:LoadGameObject(name)
     self.Animator =  self.Model:GetComponentInChildren(typeof(CS.UnityEngine.Animator))
 
     -- 让敌人转过来
-    --self.Model.transform.localRotation = CS.UnityEngine.Vector3(0, 180, 0);
     self.Model.transform.localRotation = CS.UnityEngine.Quaternion.Euler(0, 180, 0);
 end
 
 -- 检查动画是否播放完毕
 function Monster:AnimatorPlayEnd(name, returnIdle)
     local info = self.Animator:GetCurrentAnimatorStateInfo(0)
-    --print(info:IsName("Attack"))
-    --print(info.normalizedTime)
     if info:IsName(name) then
         self.Log("正在播放动画："..name)
         return false
@@ -74,9 +72,61 @@ function Monster:AnimatorPlayEnd(name, returnIdle)
 end
 
 
+--------------------------------------------------------------------------
+
+-- 是否已经死亡
+function Monster:CheckPlayerAlive()
+    --if self.MonsterState == StateDead then
+    --    self.Log("已经死亡")
+    --    return false
+    --else
+    --    self.Log("玩家活着")
+    --    return true
+    --end
+end
+
+
+
+-- 有没有敌人
+function Monster:CheckEnemyNotExist()
+    if self.Enable then
+        return false
+    end
+    return true
+    --if #BattleCharacterList == 0 then
+    --    self.Log("没有敌人")
+    --    return true
+    --else
+    --    self.Log("敌人存在")
+    --    return false
+    --end
+end
+
+
+
+-- 敌人是否死亡
+function Monster:CheckEnemyLive()
+    return true
+    --if EnemyType == nil then
+    --    self.Log("没有敌人，不用攻击")
+    --    return false
+    --end
+    --
+    --if EnemyHP > 0 then
+    --    self.Log("有敌人， 揍他")
+    --    return true     -- 敌人没死，打他
+    --else
+    --    self.Log("敌人已经死了，不打了")
+    --    EnemyType = nil
+    --    return false
+    --end
+end
+
 
 
 --------------------------------------------------------------------------
+
+
 
 -- 距离的判断
 function Monster:CheckDistance()
@@ -125,8 +175,7 @@ function Monster:PlayerAttack()
     --print("PlayerAttack"..self.MonsterState)
 
     if self.MonsterState == StateIdle then
-
-        EnemyHP = EnemyHP - Damage
+        --EnemyHP = EnemyHP - Damage
         self.Log("敌人被[  普通攻击  ]打了，剩余血量"..EnemyHP)
         --self.Animator:SetTrigger("stoprun")
         self.Animator:SetTrigger("attack")
@@ -177,6 +226,13 @@ function Character:PlayerSkillAttack2()
 end
 
 
+-- 是否被攻击
+function  Monster:CheckHit()
+    return false
+end
+
+
+
 -- 玩家受到攻击
 function Monster:PlayerHit()
     --print("PlayerHit")
@@ -199,29 +255,59 @@ function Monster:PlayerHit()
     end
 end
 
-
+-- 是否死亡
+function  Monster:CheckDead()
+    if self.HP <= 0 then
+        return true
+    end
+    return false
+end
 
 -- 玩家死亡
 function Monster:PlayerDead()
     --print("PlayerDead")
-    if self.MonsterState == StateIdle then
-        self.Log("玩家 死了")
+    if self.MonsterState ~= StateDead then
+        self.Log(self.Name.."播放死亡动画")
         self.Animator:SetTrigger("dead")
         self.MonsterState = StateDead
         return false
     end
 
     if self.MonsterState == StateDead then
-        return  self:AnimatorPlayEnd("Death",false)
+        --return  self:AnimatorPlayEnd("Death",false)
+        self.Log(self.Name.."死了")
     end
 end
 
 
 -- 玩家发呆
 function Monster:PlayerIdle()
-    self.Log("玩家发呆一下，马上敌人就出来了")
+    self.Log(self.Name.."发呆一下")
     self.MonsterState = StateIdle
     return true
+end
+
+
+-- 巡逻
+function Monster:EnemyPatrol()
+    return true
+end
+
+
+-- 找到附近的敌人
+function Monster:FindNearEnemy()
+    local dis = GetVector3Distance(BattleCharacterList[1].Model.transform.localPosition, self.Model.transform.localPosition)  -- 距离
+    local lock = BattleCharacterList[1]  -- 锁定
+    for i in ipairs(BattleCharacterList)do
+        local now_dis = GetVector3Distance(BattleCharacterList[i].Model.transform.localPosition, self.Model.transform.localPosition)
+        if now_dis < dis then
+            dis = now_dis
+            lock = BattleCharacterList[i]
+            --print("距离"..dis.."      锁定"..lock.Name)
+        end
+    end
+    self.Enemy = lock
+    --print(self.Name.."锁定"..lock.Name)
 end
 
 

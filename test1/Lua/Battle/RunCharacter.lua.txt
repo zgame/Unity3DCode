@@ -1,5 +1,5 @@
 
--------------------------------绑定关系-----------------------------------------
+-------------------------------角色和小怪物的AI-----------------------------------------
 
 
 
@@ -13,7 +13,11 @@ function BattleCharacterInit(file, character)
         CheckPlayerAlive = function()   return character:CheckPlayerAlive() end,
         EnemyBorn = EnemyBorn,
         CheckEnemyNotExist = function()   return character:CheckEnemyNotExist() end,
-
+        
+        EnemyPatrol = function()   return character:EnemyPatrol() end,
+        CheckHit =  function()   return character:CheckHit() end,
+        CheckDead = function()   return character:CheckDead() end,
+        
         GetTrue = GetTrue,
         GetFalse = GetFalse,
         RunAway = RunAway,
@@ -69,9 +73,9 @@ function BattleCharacterInit(file, character)
 end
 
 
-function BattleCharacterUpdate(dt, btroot, name)
-    print("---------------------------------------------"..name.."--------------------------------------------------------------")
-    if btroot:evaluate() then
-        btroot:tick(dt)
+function BattleCharacterUpdate(dt, character)
+    character.Log("---------------------------------------------"..character.Name.."--------------------------------------------------------------")
+    if character.BattleBTRoot:evaluate() then
+        character.BattleBTRoot:tick(dt)
     end
 end

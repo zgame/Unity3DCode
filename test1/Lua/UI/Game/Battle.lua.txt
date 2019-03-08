@@ -46,75 +46,75 @@ function StartBattle(lastUI)
     --local battleTimer = MyTimer:every(0.5 , function()        BattleUpdate(0.5)   end)
     --MyTimer:after(5, function()        MyTimer:cancel(battleTimer)    end)
 
-    --------------------------角色--------------------------------------
-    
-    -- 生成中间位置的牛头人
-    local tauren = Character:New()
-    tauren:LoadGameObject("Tauren")
-    tauren.Speed = 2
-    tauren.AttackRange = 3
-    tauren:BTRootInit("Lua/Battle/btJson/zsw2")
-    tauren.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 0)
-    
-  
-    -- 生成最右侧的
-    local Gnome = Character:New()
-    Gnome:LoadGameObject("Gnome")
-    Gnome.Speed = 1.2
-    Gnome.AttackRange = 6
-    Gnome:BTRootInit("Lua/Battle/btJson/zsw2")
-    Gnome.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 4)
+    ----------------------------角色--------------------------------------
+    --
+    ---- 生成中间位置的牛头人
+    --local tauren = Character:New()
+    --tauren:LoadGameObject("Tauren")
+    --tauren.Speed = 2
+    --tauren.AttackRange = 3
+    --tauren:BTRootInit("Lua/Battle/btJson/zsw2")
+    --tauren.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 0)
+    --
+    --
+    ---- 生成最右侧的
+    --local Gnome = Character:New()
+    --Gnome:LoadGameObject("Gnome")
+    --Gnome.Speed = 1.2
+    --Gnome.AttackRange = 6
+    --Gnome:BTRootInit("Lua/Battle/btJson/zsw2")
+    --Gnome.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 4)
+    --
+    ---- 生成最左侧的
+    --local Bloodelf = Character:New()
+    --Bloodelf:LoadGameObject("Bloodelf")
+    --Bloodelf.Speed = 1.3
+    --Bloodelf.AttackRange = 5
+    --Bloodelf:BTRootInit("Lua/Battle/btJson/zsw2")
+    --Bloodelf.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, -4)
+    --
+    ---- 生成左二
+    --local Dwarf = Character:New()
+    --Dwarf:LoadGameObject("Dwarf")
+    --Dwarf.Speed = 1.1
+    --Dwarf.AttackRange = 2
+    --Dwarf:BTRootInit("Lua/Battle/btJson/zsw2")
+    --Dwarf.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, -2)
+    --
+    ---- 生成右二
+    --local Human = Character:New()
+    --Human:LoadGameObject("Human")
+    --Human.Speed = 1.6
+    --Human.AttackRange = 3
+    --Human:BTRootInit("Lua/Battle/btJson/zsw2")
+    --Human.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 2)
+    --
 
-    -- 生成最左侧的
-    local Bloodelf = Character:New()
-    Bloodelf:LoadGameObject("Bloodelf")
-    Bloodelf.Speed = 1.3
-    Bloodelf.AttackRange = 5
-    Bloodelf:BTRootInit("Lua/Battle/btJson/zsw2")
-    Bloodelf.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, -4)
-
-    -- 生成左二
-    local Dwarf = Character:New()
-    Dwarf:LoadGameObject("Dwarf")
-    Dwarf.Speed = 1.1
-    Dwarf.AttackRange = 2
-    Dwarf:BTRootInit("Lua/Battle/btJson/zsw2")
-    Dwarf.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, -2)
-
-    -- 生成右二
-    local Human = Character:New()
-    Human:LoadGameObject("Human")
-    Human.Speed = 1.6
-    Human.AttackRange = 3
-    Human:BTRootInit("Lua/Battle/btJson/zsw2")
-    Human.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 2)
-
-
-    -------------------------相机------------------------------
-    -- 设定相机跟踪中间位置的角色
-    local camera = CSFindGameObject("CMFollowCenter")
-    if camera then
-        print("设定跟踪相机"..camera.name)
-        local followCamera = camera:GetComponent(typeof(CS.Cinemachine.CinemachineVirtualCamera))
-        followCamera.Follow = tauren.Model.transform       -- 绑定到中间位置的角色上面去
-    end
-
-    local camera2 = CSFindGameObject("CMFreeLook")
-    if camera2 then
-        print("设定玩家控制旋转角度相机"..camera2.name)
-        local freelookCamera = camera2:GetComponent(typeof(CS.Cinemachine.CinemachineFreeLook))
-        freelookCamera.LookAt = tauren.Model.transform       -- 绑定到中间位置的角色上面去
-        freelookCamera.Follow = tauren.Model.transform       -- 绑定到中间位置的角色上面去
-    end
-
-    local camera3 = CSFindGameObject("CMDollyTrack")
-    if camera3 then
-        print("自动旋转角度相机"..camera3.name)
-        local dollyCamera = camera3:GetComponent(typeof(CS.Cinemachine.CinemachineVirtualCamera))
-        dollyCamera.LookAt = tauren.Model.transform       -- 绑定到中间位置的角色上面去
-        local dolly = CSFindGameObject("Dolly")
-        dolly.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 35)
-    end
+    ---------------------------相机------------------------------
+    ---- 设定相机跟踪中间位置的角色
+    --local camera = CSFindGameObject("CMFollowCenter")
+    --if camera then
+    --    print("设定跟踪相机"..camera.name)
+    --    local followCamera = camera:GetComponent(typeof(CS.Cinemachine.CinemachineVirtualCamera))
+    --    followCamera.Follow = tauren.Model.transform       -- 绑定到中间位置的角色上面去
+    --end
+    --
+    --local camera2 = CSFindGameObject("CMFreeLook")
+    --if camera2 then
+    --    print("设定玩家控制旋转角度相机"..camera2.name)
+    --    local freelookCamera = camera2:GetComponent(typeof(CS.Cinemachine.CinemachineFreeLook))
+    --    freelookCamera.LookAt = tauren.Model.transform       -- 绑定到中间位置的角色上面去
+    --    freelookCamera.Follow = tauren.Model.transform       -- 绑定到中间位置的角色上面去
+    --end
+    --
+    --local camera3 = CSFindGameObject("CMDollyTrack")
+    --if camera3 then
+    --    print("自动旋转角度相机"..camera3.name)
+    --    local dollyCamera = camera3:GetComponent(typeof(CS.Cinemachine.CinemachineVirtualCamera))
+    --    dollyCamera.LookAt = tauren.Model.transform       -- 绑定到中间位置的角色上面去
+    --    local dolly = CSFindGameObject("Dolly")
+    --    dolly.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 35)
+    --end
 
     ----------------------------------------------------------------
     
@@ -125,38 +125,38 @@ function StartBattle(lastUI)
     --    print("move callback")
     --}
 
-    -------------------------敌人------------------------------
-    -- 生成右二
-    local mon1 = Monster:New()
-    mon1:LoadGameObject("Goutouren01")
-    mon1.Speed = 1.6
-    mon1.AttackRange = 3
-    mon1:BTRootInit("Lua/Battle/btJson/zsw2")
-    mon1.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, 1)
-
-    -- 生成右二
-    local mon2 = Monster:New()
-    mon2:LoadGameObject("Goutouren02")
-    mon2.Speed = 1.6
-    mon2.AttackRange = 3
-    mon2:BTRootInit("Lua/Battle/btJson/zsw2")
-    mon2.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, -1)
-
-    -- 生成右二
-    local mon3 = Monster:New()
-    mon3:LoadGameObject("Yurenfashi")
-    mon3.Speed = 1.6
-    mon3.AttackRange = 3
-    mon3:BTRootInit("Lua/Battle/btJson/zsw2")
-    mon3.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, 3)
-
-    -- 生成右二
-    local mon4 = Monster:New()
-    mon4:LoadGameObject("Yurenzhanshi")
-    mon4.Speed = 1.6
-    mon4.AttackRange = 3
-    mon4:BTRootInit("Lua/Battle/btJson/zsw2")
-    mon4.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, -3)
+    ---------------------------敌人------------------------------
+    ---- 生成右二
+    --local mon1 = Monster:New()
+    --mon1:LoadGameObject("Goutouren01")
+    --mon1.Speed = 1.6
+    --mon1.AttackRange = 3
+    --mon1:BTRootInit("Lua/Battle/btJson/zsw2")
+    --mon1.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, 1)
+    --
+    ---- 生成右二
+    --local mon2 = Monster:New()
+    --mon2:LoadGameObject("Goutouren02")
+    --mon2.Speed = 1.6
+    --mon2.AttackRange = 3
+    --mon2:BTRootInit("Lua/Battle/btJson/zsw2")
+    --mon2.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, -1)
+    --
+    ---- 生成右二
+    --local mon3 = Monster:New()
+    --mon3:LoadGameObject("Yurenfashi")
+    --mon3.Speed = 1.6
+    --mon3.AttackRange = 3
+    --mon3:BTRootInit("Lua/Battle/btJson/zsw2")
+    --mon3.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, 3)
+    --
+    ---- 生成右二
+    --local mon4 = Monster:New()
+    --mon4:LoadGameObject("Yurenzhanshi")
+    --mon4.Speed = 1.6
+    --mon4.AttackRange = 3
+    --mon4:BTRootInit("Lua/Battle/btJson/zsw2")
+    --mon4.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, -3)
 
 
     

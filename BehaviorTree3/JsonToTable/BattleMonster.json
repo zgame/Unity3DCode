@@ -1,0 +1,233 @@
+{
+  "version": "0.3.0",
+  "scope": "tree",
+  "id": "78d18473-e848-4c5a-8974-734e547a8491",
+  "title": "zsw_Monster1",
+  "description": "",
+  "root": "37b0636a-8936-4197-850e-ada263e2bd04",
+  "properties": {},
+  "nodes": {
+    "1f2b2c9f-3e58-4b7d-8899-ea935b52c37e": {
+      "id": "1f2b2c9f-3e58-4b7d-8899-ea935b52c37e",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "PlayerIdle",
+        "precondition": ""
+      },
+      "display": {
+        "x": 780,
+        "y": 384
+      }
+    },
+    "cfa2138c-db68-4278-aab2-a7097419c1ff": {
+      "id": "cfa2138c-db68-4278-aab2-a7097419c1ff",
+      "name": "BTSequence",
+      "title": "BTSequence无敌人",
+      "description": "",
+      "properties": {
+        "precondition": "CheckEnemyNotExist"
+      },
+      "display": {
+        "x": 396,
+        "y": 480
+      },
+      "children": [
+        "1f2b2c9f-3e58-4b7d-8899-ea935b52c37e",
+        "6cdec185-cbff-4b60-8abe-c8a9e0401acc",
+        "dc588c95-c45f-4710-834f-cca98cc50b42"
+      ]
+    },
+    "6cdec185-cbff-4b60-8abe-c8a9e0401acc": {
+      "id": "6cdec185-cbff-4b60-8abe-c8a9e0401acc",
+      "name": "BTWaitAction",
+      "title": "等待<key>时间,敌人出现",
+      "description": "",
+      "properties": {
+        "key": 0.2,
+        "precondition": ""
+      },
+      "display": {
+        "x": 780,
+        "y": 468
+      }
+    },
+    "bc3ce9d2-7509-43f8-90b9-bfaac07a03fe": {
+      "id": "bc3ce9d2-7509-43f8-90b9-bfaac07a03fe",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "PlayerRun",
+        "precondition": "CheckDistance"
+      },
+      "display": {
+        "x": 936,
+        "y": 708
+      }
+    },
+    "12b9ad4f-27f9-4ce9-876a-6d4a337b8fbf": {
+      "id": "12b9ad4f-27f9-4ce9-876a-6d4a337b8fbf",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "PlayerAttack",
+        "precondition": ""
+      },
+      "display": {
+        "x": 1188,
+        "y": 804
+      }
+    },
+    "dcb1c2fb-8f89-4f97-8ede-e4073ec2ff5f": {
+      "id": "dcb1c2fb-8f89-4f97-8ede-e4073ec2ff5f",
+      "name": "BTPrioritySelector",
+      "title": "BTPrioritySelector有敌人进攻",
+      "description": "",
+      "properties": {
+        "precondition": "CheckEnemyLive"
+      },
+      "display": {
+        "x": 408,
+        "y": 864
+      },
+      "children": [
+        "bc3ce9d2-7509-43f8-90b9-bfaac07a03fe",
+        "6d0840f4-1ed7-4288-85f6-9150e52149ad",
+        "a636c5ee-7ac2-4147-8ffd-f2e3409b4142"
+      ]
+    },
+    "6d0840f4-1ed7-4288-85f6-9150e52149ad": {
+      "id": "6d0840f4-1ed7-4288-85f6-9150e52149ad",
+      "name": "BTSequence",
+      "title": "BTSequence攻击",
+      "description": "",
+      "properties": {
+        "precondition": ""
+      },
+      "display": {
+        "x": 900,
+        "y": 864
+      },
+      "children": [
+        "12b9ad4f-27f9-4ce9-876a-6d4a337b8fbf",
+        "67aa2b6b-ecc0-4de7-8abf-a96e38711fc2"
+      ]
+    },
+    "67aa2b6b-ecc0-4de7-8abf-a96e38711fc2": {
+      "id": "67aa2b6b-ecc0-4de7-8abf-a96e38711fc2",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "PlayerAttack",
+        "precondition": ""
+      },
+      "display": {
+        "x": 1188,
+        "y": 900
+      }
+    },
+    "dc588c95-c45f-4710-834f-cca98cc50b42": {
+      "id": "dc588c95-c45f-4710-834f-cca98cc50b42",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "EnemyPatrol",
+        "precondition": ""
+      },
+      "display": {
+        "x": 780,
+        "y": 552
+      }
+    },
+    "735edd20-7156-42a7-875a-cbf88318e52e": {
+      "id": "735edd20-7156-42a7-875a-cbf88318e52e",
+      "name": "BTPrioritySelector",
+      "title": "BTPrioritySelector要打别人",
+      "description": "",
+      "properties": {
+        "precondition": ""
+      },
+      "display": {
+        "x": 24,
+        "y": 672
+      },
+      "children": [
+        "cfa2138c-db68-4278-aab2-a7097419c1ff",
+        "dcb1c2fb-8f89-4f97-8ede-e4073ec2ff5f"
+      ]
+    },
+    "a636c5ee-7ac2-4147-8ffd-f2e3409b4142": {
+      "id": "a636c5ee-7ac2-4147-8ffd-f2e3409b4142",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数，跑远（预留）",
+      "description": "这里可以增加boss放技能逃跑",
+      "properties": {
+        "operation": "RunAway",
+        "precondition": "GetTrue"
+      },
+      "display": {
+        "x": 960,
+        "y": 1020
+      }
+    },
+    "e1d4e39d-df5b-449c-85f5-0d88102cd97e": {
+      "id": "e1d4e39d-df5b-449c-85f5-0d88102cd97e",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "PlayerDead",
+        "precondition": "CheckDead"
+      },
+      "display": {
+        "x": 36,
+        "y": 132
+      }
+    },
+    "2cb03ab4-9e33-43bf-9dcf-ff06c8a1247d": {
+      "id": "2cb03ab4-9e33-43bf-9dcf-ff06c8a1247d",
+      "name": "BTRunAction",
+      "title": "执行<operation>函数",
+      "description": "",
+      "properties": {
+        "operation": "PlayerHit",
+        "precondition": "CheckHit"
+      },
+      "display": {
+        "x": 36,
+        "y": 288
+      }
+    },
+    "37b0636a-8936-4197-850e-ada263e2bd04": {
+      "id": "37b0636a-8936-4197-850e-ada263e2bd04",
+      "name": "BTPrioritySelector",
+      "title": "BTPrioritySelector",
+      "description": "",
+      "properties": {
+        "precondition": ""
+      },
+      "display": {
+        "x": -456,
+        "y": 504
+      },
+      "children": [
+        "e1d4e39d-df5b-449c-85f5-0d88102cd97e",
+        "2cb03ab4-9e33-43bf-9dcf-ff06c8a1247d",
+        "735edd20-7156-42a7-875a-cbf88318e52e"
+      ]
+    }
+  },
+  "display": {
+    "camera_x": 766,
+    "camera_y": 230,
+    "camera_z": 0.5,
+    "x": -732,
+    "y": 504
+  },
+  "custom_nodes": []
+}

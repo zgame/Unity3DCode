@@ -1,47 +1,188 @@
---serpent = require("Utils.serpent")
---require("Utils.global")
 
+-------------------------------------------------------------------------------------------
+--- 战斗总体逻辑流程
+-------------------------------------------------------------------------------------------
+
+-- 调试用
+local function BattleRunLog(str)
+    local debug = true
+    --local debug = false
+    if debug then
+        print(str)
+    end
+end
+
+-------------------------相机------------------------------
+-- 获取一个玩家角色目标
+local function BattleGetCharacter()
+    if BattleCharacterList[3] then
+        return BattleCharacterList[3]    -- 中间位置
+    end
+    if BattleCharacterList[2] then
+        return BattleCharacterList[2]   -- 中间靠左
+    end
+    if BattleCharacterList[4] then
+        return BattleCharacterList[4]   -- 中间靠右
+    end
+    if BattleCharacterList[1] then
+        return BattleCharacterList[1]   -- 左侧
+    end
+    if BattleCharacterList[5] then
+        return BattleCharacterList[5]    -- 右侧
+    end
+end
+
+-- 设定相机
+local function BattleCamera()
+
+    -- 设定相机跟踪中间位置的角色
+    local camera = CSFindGameObject("CMFollowCenter")
+    if camera then
+        BattleRunLog("设定跟踪相机"..camera.name)
+        local followCamera = camera:GetComponent(typeof(CS.Cinemachine.CinemachineVirtualCamera))
+        followCamera.Follow = BattleGetCharacter().Model.transform       -- 绑定到中间位置的角色上面去
+    end
+
+    local camera2 = CSFindGameObject("CMFreeLook")
+    if camera2 then
+        BattleRunLog("设定玩家控制旋转角度相机"..camera2.name)
+        local freelookCamera = camera2:GetComponent(typeof(CS.Cinemachine.CinemachineFreeLook))
+        freelookCamera.LookAt = BattleGetCharacter().Model.transform       -- 绑定到中间位置的角色上面去
+        freelookCamera.Follow = BattleGetCharacter().Model.transform       -- 绑定到中间位置的角色上面去
+    end
+
+    local camera3 = CSFindGameObject("CMDollyTrack")
+    if camera3 then
+        BattleRunLog("自动旋转角度相机"..camera3.name)
+        local dollyCamera = camera3:GetComponent(typeof(CS.Cinemachine.CinemachineVirtualCamera))
+        dollyCamera.LookAt = BattleGetCharacter().Model.transform       -- 绑定到中间位置的角色上面去
+        local dolly = CSFindGameObject("Dolly")
+        dolly.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 35)
+    end
+end
+
+--------------------------角色--------------------------------------
+--  生成玩家私有分支函数
 
 
 -- 生成玩家
 local function BattleCreatePlayer()
-print("BattleCreatePlayer")
+    if #BattleCharacterList == 0 then
+        BattleRunLog("BattleCreatePlayer")
+        local function _battleCreateCharacter(name, ai, speed, attackRange, offsetZ)
+            local character = Character:New()
+            character:LoadGameObject(name)
+            character.Speed = speed
+            character.AttackRange = attackRange
+            character:BTRootInit(ai)
+            character.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, offsetZ)
+            table.insert(BattleCharacterList, character)
+        end
+
+        -- 生成最左侧的
+        _battleCreateCharacter("Bloodelf","Lua/Battle/btJson/BattleCharacter" ,3,5, -4 )
+        -- 生成左二
+        _battleCreateCharacter("Dwarf","Lua/Battle/btJson/BattleCharacter" ,3,2, -2 )
+        -- 生成中间位置
+        _battleCreateCharacter("Tauren","Lua/Battle/btJson/BattleCharacter" ,3,3, 0 )
+        -- 生成右二
+        _battleCreateCharacter("Human","Lua/Battle/btJson/BattleCharacter" ,3,3, 2 )
+        -- 生成最右侧的
+        _battleCreateCharacter("Gnome","Lua/Battle/btJson/BattleCharacter" ,3,6, 4 )
+
+        BattleCamera()  -- 生成相机
+    else
+        -- 不用重新生成， 刷新一下状态即可    
+    end
     return true
 end
+
+-------------------------敌人------------------------------
+
 
 -- 生成敌人
 local function BattleCreateEnemy()
-    print("BattleCreateEnemy")
+    if #BattleEnemyList == 0 then
+        BattleRunLog("BattleCreateEnemy")
+        -- 生成敌人私有分支函数
+        local function _battleCreateMonster(name,ai,speed,attackRange, offsetZ)
+            --local enemyAway = -80  -- 敌人的生成位置距离
+            local mon = Monster:New()
+            mon:LoadGameObject(name)
+            mon.Speed = speed
+            mon.AttackRange = attackRange
+            mon:BTRootInit(ai)
+            mon.Model.transform.localPosition = CS.UnityEngine.Vector3(BattleAreaEnemyAway, 0, offsetZ)
+
+            table.insert(BattleEnemyList, mon)
+        end
+        _battleCreateMonster("Goutouren01","Lua/Battle/btJson/BattleMonster" ,1.6,3, 1 )
+        _battleCreateMonster("Goutouren02","Lua/Battle/btJson/BattleMonster" ,1.6,3, -1 )
+        _battleCreateMonster("Yurenfashi","Lua/Battle/btJson/BattleMonster" ,1.6,3, 3 )
+        _battleCreateMonster("Yurenzhanshi","Lua/Battle/btJson/BattleMonster" ,1.6,3, -3 )
+    else
+        -- 敌人没有全部消灭
+        BattleRunLog("敌人没有全部消灭")
+    end
+    
+        
     return true
 end
 
+-------------------------------------------------------------------------------------------------------------
+
 -- 玩家跑
 local function BattlePlayerRun()
-    print("BattlePlayerRun")
-    return true
+    BattleRunLog("BattlePlayerRun")
+
+    if BattleGetCharacter().Model.transform.localPosition.x < BattleAreaRunDistance then
+        -- 跑到战斗区域了
+        BattleRunLog("进入战斗区域")
+        return true
+    end
+    
+    return false
 end
 
 -- 进入战斗区域
 local function BattleStartAttackRing()
-    print("BattleStartAttackRing")
+    BattleRunLog("BattleStartAttackRing")
     return true
 end
 
 -- 敌人开始进攻
 local function BattleEnemyAttack()
-    print("BattleEnemyAttack")
+    BattleRunLog("BattleEnemyAttack")
+    for i in ipairs(BattleEnemyList)do
+        BattleEnemyList[i].Enable = true   -- 激活所有敌人
+        -- 敌人开始寻找玩家角色攻击
+        BattleEnemyList[i]:FindNearEnemy()
+    end
+    for i in ipairs(BattleCharacterList)do
+        --BattleCharacterList[i].Enable = true   -- 激活所有玩家
+        -- 开始寻找敌人攻击
+        --BattleCharacterList[i]:FindNearEnemy()
+    end
     return true
 end
 
 -- 敌人全灭
 local function BattleEnemyAllDead()
-    print("BattleEnemyAllDead")
-    return true
+    BattleRunLog("Check BattleEnemyAllDead")
+    if #BattleEnemyList == 0 then
+        BattleRunLog("敌人全歼")
+        return true     
+    end
+    return false
 end
 
 -- 胜利动画
 local function BattleWin()
-    print("BattleWin")
+    BattleRunLog("BattleWin")
+    
+    
+    -- 重置玩家角色的一些数值
+    
     return true
 end
 
@@ -49,8 +190,6 @@ end
 
 
 -------------------------------绑定关系-----------------------------------------
-
-
 
 function BattleInit(file)
     local binder = {
@@ -68,7 +207,9 @@ function BattleInit(file)
 end
 
 function BattleUpdate(dt, btroot)
-    print("---------------------------------------------BattleUpdate--------------------------------------------------------------")
+    BattleRunLog("---------------------------------------------BattleUpdate--------------------------------------------------------------")
+    --BattleRunLog("玩家有几个活着"..#BattleCharacterList)
+    --BattleRunLog("敌人有几个活着"..#BattleEnemyList)
     if btroot:evaluate() then
         btroot:tick(dt)
     end

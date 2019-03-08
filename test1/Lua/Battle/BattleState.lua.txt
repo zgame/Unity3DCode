@@ -13,15 +13,15 @@ StateDead = 6       -- 死亡
 
 -- 玩家状态
 
-PlayerState = nil   -- 当前状态
-EnemyType = nil     -- 敌人
+--PlayerState = nil   -- 当前状态
+--EnemyType = nil     -- 敌人
 
-Distance = 4        -- 敌人距离
-Speed = 1           -- 跑步速度
-EnemyHP = 100
-EnemyMaxHP = 100
-HP = 100
-MaxHP = 100
+--Distance = 4        -- 敌人距离
+--Speed = 1           -- 跑步速度
+--EnemyHP = 100
+--EnemyMaxHP = 100
+--HP = 100
+--MaxHP = 100
 Damage = 2          -- 普通伤害
 SkillDamage = 10    -- 技能伤害
 ReHp = 50      -- 回血
@@ -62,9 +62,9 @@ DeBufferCriticalDamage = 16    -- 降低暴击伤害
 
 
 
-
-
-
+BattleAreaRunDistance = -50      -- 玩家跑多远进入战场
+BattleAreaEnemyAway = -80                  -- 敌人的生成位置距离
+--BattleAreaRunDistance = 40
 
 
 
@@ -72,7 +72,7 @@ DeBufferCriticalDamage = 16    -- 降低暴击伤害
 
 
 -- Run多少回合
-RunTurn = 60
+--RunTurn = 60
 
 
 

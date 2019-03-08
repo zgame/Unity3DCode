@@ -4,47 +4,14 @@ require("Lua/Battle/Buffer")
 
 -- 生成敌人
 function EnemyBorn()
-    if EnemyType == nil then
-        EnemyType = 1
-        EnemyHP = EnemyMaxHP
-        --print("出现敌人")
-    else
-        --print("已经有敌人，不用生成")
-    end
+    --if EnemyType == nil then
+    --    EnemyType = 1
+    --    EnemyHP = EnemyMaxHP
+    --    --print("出现敌人")
+    --else
+    --    --print("已经有敌人，不用生成")
+    --end
 end
-
---
----- 有没有敌人
---function CheckEnemyNotExist()
---    if EnemyType == nil then
---        print("没有敌人")
---        return true
---    else
---        print("敌人存在")
---        return false
---    end
---end
---
----------------------------------攻击----------------------------------------
---
----- 敌人是否死亡
---function CheckEnemyLive()
---    if EnemyType == nil then
---        print("没有敌人，不用攻击")
---        return false
---    end
---
---    if EnemyHP > 0 then
---        print("有敌人， 揍他")
---        return true     -- 敌人没死，打他
---    else
---        print("敌人已经死了，不打了")
---        EnemyType = nil
---        return false
---    end
---end
-
-
 
 
 -------------------------------玩家-----------------------------------------
@@ -94,3 +61,13 @@ function RecoverHp()
 end
 
 
+-------------------------------距离判断-----------------------------------------------
+
+-- 获取两点之间的距离
+function GetVector3Distance(va,vb)
+    --local x = x1 - x2
+    --local y = y1 - y2
+    --local z = z1 - z2
+    --math.sqrt(x * x + y * y + z * z)
+    return math.sqrt((va.x - vb.x)^2 + (va.y - vb.y)^2 + (va.z - vb.z)^2)
+end

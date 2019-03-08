@@ -22,7 +22,7 @@ function Character:New()
         HP = 100,
         MaxHP = 100,
         Speed = 1,          -- 移动速度
-        Distance = 40,      -- 敌人距离
+        Distance = 100,      -- 敌人距离
         AttackRange = 1,    -- 攻击范围距离
         
         
@@ -36,7 +36,7 @@ end
 -- AI行为树开始
 function Character:BTRootInit(file)
     self.BattleBTRoot = BattleCharacterInit(file, self)
-    self.BattleBTTimer = MyTimer:every(0.5 , function()        BattleCharacterUpdate(0.5,self.BattleBTRoot, self.Name)   end)
+    self.BattleBTTimer = MyTimer:every(0.5 , function()        BattleCharacterUpdate(0.5,self,self.BattleBTRoot, self.Name)   end)
     --MyTimer:after(5, function()        MyTimer:cancel(self.BattleBTTimer)    end)
 end
 
@@ -91,11 +91,12 @@ end
 
 -- 有没有敌人
 function Character:CheckEnemyNotExist()
-    if EnemyType == nil then
-        print("没有敌人")
+    
+    if #BattleEnemyList == 0 then
+        self.Log("没有敌人")
         return true
     else
-        print("敌人存在")
+        self.Log("敌人存在")
         return false
     end
 end
@@ -104,19 +105,20 @@ end
 
 -- 敌人是否死亡
 function Character:CheckEnemyLive()
-    if EnemyType == nil then
-        print("没有敌人，不用攻击")
-        return false
-    end
-
-    if EnemyHP > 0 then
-        print("有敌人， 揍他")
-        return true     -- 敌人没死，打他
-    else
-        print("敌人已经死了，不打了")
-        EnemyType = nil
-        return false
-    end
+    return true
+    --if EnemyType == nil then
+    --    self.Log("没有敌人，不用攻击")
+    --    return false
+    --end
+    --
+    --if EnemyHP > 0 then
+    --    self.Log("有敌人， 揍他")
+    --    return true     -- 敌人没死，打他
+    --else
+    --    self.Log("敌人已经死了，不打了")
+    --    EnemyType = nil
+    --    return false
+    --end
 end
 
 
@@ -155,7 +157,19 @@ function Character:PlayerRun()
         else
             -- doTween 来移动角色
             local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x - self.Speed , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z ),0.5)
-            tween:SetEase(CS.DG.Tweening.Ease.Linear)       -- 设定平均移动方式
+
+            local ran = math.random(5)
+            if ran == 1 then
+                tween:SetEase(CS.DG.Tweening.Ease.InOutCubic)       -- 设定移动方式
+            elseif ran == 2 then
+                tween:SetEase(CS.DG.Tweening.Ease.OutSine)       -- 设定移动方式
+            elseif ran == 3 then
+                tween:SetEase(CS.DG.Tweening.Ease.InSine)       -- 设定移动方式
+            elseif ran == 4 then
+                tween:SetEase(CS.DG.Tweening.Ease.InQuad)       -- 设定移动方式
+            elseif ran == 5 then
+                tween:SetEase(CS.DG.Tweening.Ease.OutQuad)       -- 设定移动方式
+            end
 
 
         end
@@ -172,7 +186,7 @@ function Character:PlayerAttack()
 
     if self.PlayerState == StateIdle then
 
-        EnemyHP = EnemyHP - Damage
+        --EnemyHP = EnemyHP - Damage
         self.Log("敌人被[  普通攻击  ]打了，剩余血量"..EnemyHP)
         --self.Animator:SetTrigger("stoprun")
         self.Animator:SetTrigger("attack")
@@ -210,7 +224,7 @@ end
 function Character:PlayerSkillAttack()
     self.Log("PlayerSkillAttack")
     if self.PlayerState == StateIdle then
-        EnemyHP = EnemyHP - SkillDamage
+        --EnemyHP = EnemyHP - SkillDamage
         self.Log("敌人被[ 技能 ]打了，剩余血量"..EnemyHP)
         self.Animator:SetTrigger("sp1")
         self.PlayerState = StateSkill
@@ -227,7 +241,7 @@ end
 function Character:PlayerSkillAttack2()
     self.Log("PlayerSkillAttack2")
     if self.PlayerState == StateIdle then
-        EnemyHP = EnemyHP - SkillDamage
+        --EnemyHP = EnemyHP - SkillDamage
         self.Log("敌人被[ 技能2 ]打了，剩余血量"..EnemyHP)
         self.Animator:SetTrigger("sp2")
         self.PlayerState = StateSkill
@@ -295,6 +309,18 @@ function Character:PlayerDead()
     end
 end
 
+-- 是否被攻击
+function  Character:CheckHit()
+    return false
+end
+
+-- 是否死亡
+function  Character:CheckDead()
+    if self.HP <= 0 then
+        return true
+    end
+    return false
+end
 
 -- 玩家发呆
 function Character:PlayerIdle()
@@ -302,6 +328,29 @@ function Character:PlayerIdle()
     self.PlayerState = StateIdle
     return true
 end
+
+
+-- 找到附近的敌人
+function Character:FindNearEnemy()
+    if #BattleEnemyList == 0 then
+        self.Log("找不到敌人")
+        return 
+    end
+    
+    local dis = GetVector3Distance(BattleEnemyList[1].Model.transform.localPosition, self.Model.transform.localPosition)  -- 距离
+    local lock = BattleEnemyList[1]  -- 锁定
+    for i in ipairs(BattleEnemyList)do
+        local now_dis = GetVector3Distance(BattleEnemyList[1].Model.transform.localPosition, self.Model.transform.localPosition)
+        if now_dis < dis then
+            dis = now_dis
+            lock = BattleEnemyList[i]
+            --print("距离"..dis.."      锁定"..lock.Name)
+        end
+    end
+    
+    self.Enemy = lock
+end
+
 
 -- log
 function Character:Log(str)
