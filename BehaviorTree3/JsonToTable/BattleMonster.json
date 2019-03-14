@@ -77,8 +77,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1188,
-        "y": 804
+        "x": 1344,
+        "y": 720
       }
     },
     "dcb1c2fb-8f89-4f97-8ede-e4073ec2ff5f": {
@@ -113,6 +113,7 @@
       },
       "children": [
         "12b9ad4f-27f9-4ce9-876a-6d4a337b8fbf",
+        "232407b5-63e6-4f05-8d6b-02038b37196a",
         "67aa2b6b-ecc0-4de7-8abf-a96e38711fc2"
       ]
     },
@@ -126,8 +127,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 1188,
-        "y": 900
+        "x": 1344,
+        "y": 948
       }
     },
     "dc588c95-c45f-4710-834f-cca98cc50b42": {
@@ -220,6 +221,20 @@
         "2cb03ab4-9e33-43bf-9dcf-ff06c8a1247d",
         "735edd20-7156-42a7-875a-cbf88318e52e"
       ]
+    },
+    "232407b5-63e6-4f05-8d6b-02038b37196a": {
+      "id": "232407b5-63e6-4f05-8d6b-02038b37196a",
+      "name": "BTWaitAction",
+      "title": "等待<key>时间",
+      "description": "",
+      "properties": {
+        "key": 1,
+        "precondition": ""
+      },
+      "display": {
+        "x": 1344,
+        "y": 828
+      }
     }
   },
   "display": {

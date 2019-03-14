@@ -30,8 +30,8 @@
         "precondition": "CheckEnemyNotExist"
       },
       "display": {
-        "x": 252,
-        "y": -360
+        "x": 288,
+        "y": -372
       },
       "children": [
         "a7cdc9d2-5e27-47d3-a485-9999aba7bcb6",
@@ -76,8 +76,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 828,
-        "y": 0
+        "x": 960,
+        "y": 180
       }
     },
     "98b0b233-a5a3-4d02-8af3-31472fc6748d": {
@@ -87,11 +87,11 @@
       "description": "技能伤害",
       "properties": {
         "operation": "PlayerSkillAttack",
-        "precondition": "CheckSkillHasDamage"
+        "precondition": ""
       },
       "display": {
-        "x": 1128,
-        "y": 132
+        "x": 972,
+        "y": 288
       }
     },
     "ec17302e-d44c-48a9-8d29-d6b070cd07cd": {
@@ -135,29 +135,14 @@
         "precondition": ""
       },
       "display": {
-        "x": 552,
-        "y": 228
+        "x": 600,
+        "y": 240
       },
       "children": [
         "ee0eab42-43a6-4e5a-b826-f4dd9132bc85",
-        "2f5fc224-982d-4d94-8d71-41c74c62234e",
-        "76dda714-5bad-4c0f-aa17-9befc77a78b0",
+        "98b0b233-a5a3-4d02-8af3-31472fc6748d",
         "f5464fdf-f94a-45fb-862b-63ed086516cc"
       ]
-    },
-    "2f5fc224-982d-4d94-8d71-41c74c62234e": {
-      "id": "2f5fc224-982d-4d94-8d71-41c74c62234e",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "PlayerAttack",
-        "precondition": ""
-      },
-      "display": {
-        "x": 828,
-        "y": 84
-      }
     },
     "b86e6749-d196-47a3-88d2-fc45510336ee": {
       "id": "b86e6749-d196-47a3-88d2-fc45510336ee",
@@ -186,432 +171,9 @@
         "precondition": "GetTrue"
       },
       "display": {
-        "x": 840,
-        "y": 948
+        "x": 768,
+        "y": 636
       }
-    },
-    "c91d0d4d-76ab-4579-8417-e1b6aa602610": {
-      "id": "c91d0d4d-76ab-4579-8417-e1b6aa602610",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "RecoverHp",
-        "precondition": "CheckSkillRecoverHp"
-      },
-      "display": {
-        "x": 1128,
-        "y": 252
-      }
-    },
-    "dd8b405c-58a6-47cf-90ea-f7827478416c": {
-      "id": "dd8b405c-58a6-47cf-90ea-f7827478416c",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddBufferSpeed",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1548,
-        "y": -36
-      }
-    },
-    "c2bf0968-c727-417d-828e-c7d8b95be0b1": {
-      "id": "c2bf0968-c727-417d-828e-c7d8b95be0b1",
-      "name": "BTParallelFlexible",
-      "title": "BTParallelFlexible(Buffer)",
-      "description": "",
-      "properties": {
-        "precondition": "CheckSkillBuffer"
-      },
-      "display": {
-        "x": 1140,
-        "y": 384
-      },
-      "children": [
-        "dd8b405c-58a6-47cf-90ea-f7827478416c",
-        "786f61ba-1a25-4c93-8b1d-1e611898e56f",
-        "fb008a66-8f83-4184-94ea-d69e7669712e",
-        "3560791a-803d-471b-9b11-dbf8f3007f26",
-        "e0ae8d6e-a7ad-4416-8bc4-134b86e6bc4d",
-        "8f708ff6-fac6-444f-8faf-171fe03222f0",
-        "ad72b0d3-b557-4f40-834f-2a5ba37b2002",
-        "2d6f1d56-67fc-43e1-8588-554ef1845fb8"
-      ]
-    },
-    "46f7cfc9-3e2e-4c89-8d05-a60134a4bfb4": {
-      "id": "46f7cfc9-3e2e-4c89-8d05-a60134a4bfb4",
-      "name": "BTParallelFlexible",
-      "title": "BTParallelFlexible(DeBuffer)",
-      "description": "",
-      "properties": {
-        "precondition": "CheckSkillDeBuffer"
-      },
-      "display": {
-        "x": 1332,
-        "y": 828
-      },
-      "children": [
-        "9d11b231-032e-40d3-80e4-4f5184820652",
-        "638994e8-9b4e-4ee0-8afd-34e51168f107",
-        "26e3a043-2a54-4657-b2bb-fa833f68e24d",
-        "750d4281-b90d-4a03-a72a-b6b1eb8c4f92",
-        "96fab39f-da4b-4308-8274-1da53e039941",
-        "416968a6-aacc-4107-918c-8ccea907a173",
-        "4cabe7c8-e137-4dbe-95eb-5f47edd7b3e0",
-        "e7ddaaa7-3ae2-40a3-a098-9287eeb03298",
-        "9e19c1a8-94a6-49a2-87d6-b6b87c2ad44b",
-        "70517fe1-639a-4309-b9f9-aafd48ebf692",
-        "dc31e136-d4e9-4fb9-a56f-d3fbb5663d34",
-        "554c65c8-b319-4b32-a126-018a80d93a9e",
-        "197f1006-8fae-4cad-a15e-f077065d0c67",
-        "84c34ede-4afd-4da3-88d8-a58d52f5d6fc",
-        "52aa6133-7ae9-4bec-8356-33c3fc12a488",
-        "9c3d83f9-9e4e-491f-83ad-fb24759736bb"
-      ]
-    },
-    "786f61ba-1a25-4c93-8b1d-1e611898e56f": {
-      "id": "786f61ba-1a25-4c93-8b1d-1e611898e56f",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddBufferAttack",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1548,
-        "y": 24
-      }
-    },
-    "fb008a66-8f83-4184-94ea-d69e7669712e": {
-      "id": "fb008a66-8f83-4184-94ea-d69e7669712e",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddBufferDefence",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1560,
-        "y": 84
-      }
-    },
-    "3560791a-803d-471b-9b11-dbf8f3007f26": {
-      "id": "3560791a-803d-471b-9b11-dbf8f3007f26",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddBufferElementAttack",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1584,
-        "y": 144
-      }
-    },
-    "e0ae8d6e-a7ad-4416-8bc4-134b86e6bc4d": {
-      "id": "e0ae8d6e-a7ad-4416-8bc4-134b86e6bc4d",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddBufferElementDefence",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1596,
-        "y": 204
-      }
-    },
-    "8f708ff6-fac6-444f-8faf-171fe03222f0": {
-      "id": "8f708ff6-fac6-444f-8faf-171fe03222f0",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddBufferAccuracy",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1572,
-        "y": 264
-      }
-    },
-    "ad72b0d3-b557-4f40-834f-2a5ba37b2002": {
-      "id": "ad72b0d3-b557-4f40-834f-2a5ba37b2002",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddBufferCritical",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1560,
-        "y": 324
-      }
-    },
-    "2d6f1d56-67fc-43e1-8588-554ef1845fb8": {
-      "id": "2d6f1d56-67fc-43e1-8588-554ef1845fb8",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddBufferCriticalDamage",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1596,
-        "y": 384
-      }
-    },
-    "9d11b231-032e-40d3-80e4-4f5184820652": {
-      "id": "9d11b231-032e-40d3-80e4-4f5184820652",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferSpeed",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1776,
-        "y": 600
-      }
-    },
-    "638994e8-9b4e-4ee0-8afd-34e51168f107": {
-      "id": "638994e8-9b4e-4ee0-8afd-34e51168f107",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferAttack",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1776,
-        "y": 660
-      }
-    },
-    "26e3a043-2a54-4657-b2bb-fa833f68e24d": {
-      "id": "26e3a043-2a54-4657-b2bb-fa833f68e24d",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferDefence",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1788,
-        "y": 720
-      }
-    },
-    "750d4281-b90d-4a03-a72a-b6b1eb8c4f92": {
-      "id": "750d4281-b90d-4a03-a72a-b6b1eb8c4f92",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferElementAttack",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1812,
-        "y": 780
-      }
-    },
-    "96fab39f-da4b-4308-8274-1da53e039941": {
-      "id": "96fab39f-da4b-4308-8274-1da53e039941",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferElementDefence",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1824,
-        "y": 840
-      }
-    },
-    "416968a6-aacc-4107-918c-8ccea907a173": {
-      "id": "416968a6-aacc-4107-918c-8ccea907a173",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferAccuracy",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1800,
-        "y": 900
-      }
-    },
-    "4cabe7c8-e137-4dbe-95eb-5f47edd7b3e0": {
-      "id": "4cabe7c8-e137-4dbe-95eb-5f47edd7b3e0",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferCritical",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1788,
-        "y": 960
-      }
-    },
-    "e7ddaaa7-3ae2-40a3-a098-9287eeb03298": {
-      "id": "e7ddaaa7-3ae2-40a3-a098-9287eeb03298",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferCriticalDamage",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1824,
-        "y": 1020
-      }
-    },
-    "9e19c1a8-94a6-49a2-87d6-b6b87c2ad44b": {
-      "id": "9e19c1a8-94a6-49a2-87d6-b6b87c2ad44b",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferFreeze",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1788,
-        "y": 1080
-      }
-    },
-    "70517fe1-639a-4309-b9f9-aafd48ebf692": {
-      "id": "70517fe1-639a-4309-b9f9-aafd48ebf692",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferBurn",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1776,
-        "y": 1140
-      }
-    },
-    "dc31e136-d4e9-4fb9-a56f-d3fbb5663d34": {
-      "id": "dc31e136-d4e9-4fb9-a56f-d3fbb5663d34",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferBlood",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1776,
-        "y": 1200
-      }
-    },
-    "554c65c8-b319-4b32-a126-018a80d93a9e": {
-      "id": "554c65c8-b319-4b32-a126-018a80d93a9e",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferSeal",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1776,
-        "y": 1260
-      }
-    },
-    "197f1006-8fae-4cad-a15e-f077065d0c67": {
-      "id": "197f1006-8fae-4cad-a15e-f077065d0c67",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferStun",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1776,
-        "y": 1320
-      }
-    },
-    "84c34ede-4afd-4da3-88d8-a58d52f5d6fc": {
-      "id": "84c34ede-4afd-4da3-88d8-a58d52f5d6fc",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferChaos",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1788,
-        "y": 1380
-      }
-    },
-    "52aa6133-7ae9-4bec-8356-33c3fc12a488": {
-      "id": "52aa6133-7ae9-4bec-8356-33c3fc12a488",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferParalysis",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1800,
-        "y": 1440
-      }
-    },
-    "9c3d83f9-9e4e-491f-83ad-fb24759736bb": {
-      "id": "9c3d83f9-9e4e-491f-83ad-fb24759736bb",
-      "name": "BTRunAction",
-      "title": "执行<operation>函数",
-      "description": "",
-      "properties": {
-        "operation": "AddDeBufferSleep",
-        "precondition": ""
-      },
-      "display": {
-        "x": 1788,
-        "y": 1500
-      }
-    },
-    "76dda714-5bad-4c0f-aa17-9befc77a78b0": {
-      "id": "76dda714-5bad-4c0f-aa17-9befc77a78b0",
-      "name": "BTParallelFlexible",
-      "title": "BTParallelFlexible技能",
-      "description": "",
-      "properties": {
-        "precondition": ""
-      },
-      "display": {
-        "x": 852,
-        "y": 252
-      },
-      "children": [
-        "98b0b233-a5a3-4d02-8af3-31472fc6748d",
-        "c91d0d4d-76ab-4579-8417-e1b6aa602610",
-        "c2bf0968-c727-417d-828e-c7d8b95be0b1",
-        "46f7cfc9-3e2e-4c89-8d05-a60134a4bfb4"
-      ]
     },
     "f5464fdf-f94a-45fb-862b-63ed086516cc": {
       "id": "f5464fdf-f94a-45fb-862b-63ed086516cc",
@@ -623,8 +185,8 @@
         "precondition": ""
       },
       "display": {
-        "x": 876,
-        "y": 588
+        "x": 972,
+        "y": 384
       }
     },
     "1cd89c96-43fc-4890-b1e8-223245fd4343": {
@@ -661,8 +223,8 @@
     }
   },
   "display": {
-    "camera_x": 737.5899999961257,
-    "camera_y": 480,
+    "camera_x": 920.5899999961257,
+    "camera_y": 489,
     "camera_z": 0.5,
     "x": -960,
     "y": 36

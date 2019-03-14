@@ -25,7 +25,8 @@ public class DownLoadBundles : MonoBehaviour
     private static string BundleServerUrl = "http://118.89.188.193:8080/zswt/Android/";        // 版本服务器的web地址
     private static string BundleVersionFileName = "BundleVersion.txt";
     private static string GUIDownLoadBundleFilePanel = "MainCanvas/DownLoadBundleFilePanel";        // UI prefab 路径
-    public static string PhonePlatform = "Android";        // 手机平台，全局bundle的名字
+    public static string PhonePlatform = "";        // 手机平台，全局bundle的名字
+    
     
     private static string BundleVersionUrlPath = BundleServerUrl + BundleVersionFileName;        // 网络保存路径
     private string LocalBundlePath;                        // 本地保存路径
@@ -42,7 +43,8 @@ public class DownLoadBundles : MonoBehaviour
 #if UNITY_IPHONE  
         PhonePlatform = "IOS";                // 按照平台进行判断
 #else
-        PhonePlatform = "Android";                // 按照平台进行判断
+//        PhonePlatform = "Android";                // 按照平台进行判断
+        PhonePlatform = "StandaloneWindows64";                // 按照平台进行判断
 #endif
         LocalBundlePath = Application.persistentDataPath;                // 本地保存路径
         LocalVersionPath =  Path.Combine( LocalBundlePath , BundleVersionFileName);     // version本地保存的目录

@@ -55,7 +55,9 @@ end
 
 -- 销毁物体
 function CSDestroyGameObject(obj)
-    CS.UnityEngine.GameObject.Destroy (obj)
+    if obj ~= nil then
+        CS.UnityEngine.GameObject.Destroy (obj)
+    end
 end
 
 -- 隐藏界面物体

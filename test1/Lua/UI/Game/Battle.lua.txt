@@ -168,3 +168,46 @@ function StartBattle(lastUI)
 end
 
 
+-- 伤害数字
+function BattleUIDamageNumber(parent,damage)
+    local damageNumber = CSLoadAndInstantiatePrefabUI(AssetUIBattlePath,AssetUIBattlePath.."/DamageNumber")
+    damageNumber:GetComponent(typeof(CS.UnityEngine.UI.Text)).text = ""..damage
+
+    local mScreen= CS.UnityEngine.Camera.main:WorldToScreenPoint(parent.transform.position + CS.UnityEngine.Vector3(0,5,0))
+    damageNumber:GetComponent(typeof(CS.UnityEngine.RectTransform)).position = mScreen
+    
+    -- 动画效果
+    local position = damageNumber:GetComponent(typeof(CS.UnityEngine.RectTransform)).position
+    local tween = damageNumber.transform:DOMove(CS.UnityEngine.Vector3(position.x  , position.y  + 30 , position.z ),0.5)
+    tween:SetEase(CS.DG.Tweening.Ease.OutQuad)       -- 设定移动方式
+    
+    -- 1.5秒之后销毁
+    MyTimer:after(1.5, function() CSDestroyGameObject(damageNumber) end)
+end
+
+
+-- 血条
+function CreateBattleUIHPSlider(parentCharacter)
+    local hpSlider = CSLoadAndInstantiatePrefabUI(AssetUIBattlePath,AssetUIBattlePath.."/HPSlider")
+    hpSlider:GetComponentInChildren(typeof(CS.UnityEngine.UI.Slider)).value = parentCharacter.HP/ parentCharacter.MaxHP
+
+    parentCharacter.HPSlider = hpSlider
+    BattleUIHPSliderPosition(parentCharacter)
+    --local mScreen= CS.UnityEngine.Camera.main:WorldToScreenPoint(parentCharacter.Model.transform.position + CS.UnityEngine.Vector3(0,0,0))
+    --hpSlider:GetComponentInChildren(typeof(CS.UnityEngine.RectTransform)).position = mScreen
+    
+    ---- 动画效果
+    --local position = hpSlider:GetComponent(typeof(CS.UnityEngine.RectTransform)).position
+    --local tween = hpSlider.transform:DOMove(CS.UnityEngine.Vector3(position.x  , position.y  + 30 , position.z ),0.5)
+    --tween:SetEase(CS.DG.Tweening.Ease.OutQuad)       -- 设定移动方式
+    --
+    ---- 1.5秒之后销毁
+    --MyTimer:after(1.5, function() CSDestroyGameObject(hpSlider) end)
+    --return hpSlider
+end
+
+-- 更新血条位置
+function BattleUIHPSliderPosition(parentCharacter)
+    local mScreen= CS.UnityEngine.Camera.main:WorldToScreenPoint(parentCharacter.Model.transform.position + CS.UnityEngine.Vector3(0,3,0))
+    parentCharacter.HPSlider:GetComponentInChildren(typeof(CS.UnityEngine.RectTransform)).position = mScreen
+end

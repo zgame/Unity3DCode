@@ -5,8 +5,8 @@
 
 -- 调试用
 local function BattleRunLog(str)
-    local debug = true
-    --local debug = false
+    --local debug = true
+    local debug = false
     if debug then
         print(str)
     end
@@ -76,19 +76,24 @@ local function BattleCreatePlayer()
             character.AttackRange = attackRange
             character:BTRootInit(ai)
             character.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, offsetZ)
+
+            CreateBattleUIHPSlider(character)        -- 血条
+            
             table.insert(BattleCharacterList, character)
+            return character
         end
 
         -- 生成最左侧的
-        _battleCreateCharacter("Bloodelf","Lua/Battle/btJson/BattleCharacter" ,3,5, -4 )
+        _battleCreateCharacter("Bloodelf","Lua/Battle/btJson/BattleCharacter" ,6,20, -4 )
         -- 生成左二
-        _battleCreateCharacter("Dwarf","Lua/Battle/btJson/BattleCharacter" ,3,2, -2 )
+        _battleCreateCharacter("Dwarf","Lua/Battle/btJson/BattleCharacter" ,6,10, -2 )
         -- 生成中间位置
-        _battleCreateCharacter("Tauren","Lua/Battle/btJson/BattleCharacter" ,3,3, 0 )
+        local character = _battleCreateCharacter("Tauren","Lua/Battle/btJson/BattleCharacter" ,6,10, 0 )
+        --character.Debug = true
         -- 生成右二
-        _battleCreateCharacter("Human","Lua/Battle/btJson/BattleCharacter" ,3,3, 2 )
+        _battleCreateCharacter("Human","Lua/Battle/btJson/BattleCharacter" ,6,10, 2 )
         -- 生成最右侧的
-        _battleCreateCharacter("Gnome","Lua/Battle/btJson/BattleCharacter" ,3,6, 4 )
+        _battleCreateCharacter("Gnome","Lua/Battle/btJson/BattleCharacter" ,6,16, 4 )
 
         BattleCamera()  -- 生成相机
     else
@@ -113,13 +118,16 @@ local function BattleCreateEnemy()
             mon.AttackRange = attackRange
             mon:BTRootInit(ai)
             mon.Model.transform.localPosition = CS.UnityEngine.Vector3(BattleAreaEnemyAway, 0, offsetZ)
-
+            --mon.Debug = true
+            CreateBattleUIHPSlider(mon)        -- 血条
             table.insert(BattleEnemyList, mon)
+            return mon
         end
-        _battleCreateMonster("Goutouren01","Lua/Battle/btJson/BattleMonster" ,1.6,3, 1 )
-        _battleCreateMonster("Goutouren02","Lua/Battle/btJson/BattleMonster" ,1.6,3, -1 )
-        _battleCreateMonster("Yurenfashi","Lua/Battle/btJson/BattleMonster" ,1.6,3, 3 )
-        _battleCreateMonster("Yurenzhanshi","Lua/Battle/btJson/BattleMonster" ,1.6,3, -3 )
+        _battleCreateMonster("Goutouren01","Lua/Battle/btJson/BattleMonster" ,1.6,10, 1 )
+        _battleCreateMonster("Goutouren02","Lua/Battle/btJson/BattleMonster" ,1.6,10, -1 )
+        _battleCreateMonster("Yurenfashi","Lua/Battle/btJson/BattleMonster" ,1.6,10, 3 )
+        local mon = _battleCreateMonster("Yurenzhanshi","Lua/Battle/btJson/BattleMonster" ,1.6,10, -3 )
+        --mon.Debug = true
     else
         -- 敌人没有全部消灭
         BattleRunLog("敌人没有全部消灭")
@@ -161,7 +169,7 @@ local function BattleEnemyAttack()
     for i in ipairs(BattleCharacterList)do
         --BattleCharacterList[i].Enable = true   -- 激活所有玩家
         -- 开始寻找敌人攻击
-        --BattleCharacterList[i]:FindNearEnemy()
+        BattleCharacterList[i]:FindNearEnemy()
     end
     return true
 end

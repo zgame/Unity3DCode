@@ -51,11 +51,11 @@ end
 
 -- 恢复血量
 function RecoverHp()
-    local reHp = MaxHP - HP
-    HP = HP + ReHp
-    if HP > MaxHP then
-        HP = MaxHP
-    end
+    --local reHp = MaxHP - HP
+    --HP = HP + ReHp
+    --if HP > MaxHP then
+    --    HP = MaxHP
+    --end
     --print("成功恢复血量:"..reHp)
     return true
 end

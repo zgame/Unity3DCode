@@ -1,7 +1,7 @@
 
 
 local BattleMonster = {
-  custom_nodes = {} --[[table: 0000000000354a60]],
+  custom_nodes = {} --[[table: 0000000000354b60]],
   description = "",
   display = {
     camera_x = 766,
@@ -9,7 +9,7 @@ local BattleMonster = {
     camera_z = 0.5,
     x = -732,
     y = 504
-  } --[[table: 0000000000354a20]],
+  } --[[table: 0000000000354b20]],
   id = "78d18473-e848-4c5a-8974-734e547a8491",
   nodes = {
     ["1f2b2c9f-3e58-4b7d-8899-ea935b52c37e"] = {
@@ -57,6 +57,7 @@ local BattleMonster = {
     ["6d0840f4-1ed7-4288-85f6-9150e52149ad"] = {
       children = {
         "12b9ad4f-27f9-4ce9-876a-6d4a337b8fbf",
+        "232407b5-63e6-4f05-8d6b-02038b37196a",
         "67aa2b6b-ecc0-4de7-8abf-a96e38711fc2"
       } --[[table: 00000000003543e0]],
       description = "",
@@ -74,8 +75,8 @@ local BattleMonster = {
     ["12b9ad4f-27f9-4ce9-876a-6d4a337b8fbf"] = {
       description = "",
       display = {
-        x = 1188,
-        y = 804
+        x = 1344,
+        y = 720
       } --[[table: 0000000000354160]],
       id = "12b9ad4f-27f9-4ce9-876a-6d4a337b8fbf",
       name = "BTRunAction",
@@ -106,8 +107,8 @@ local BattleMonster = {
     ["67aa2b6b-ecc0-4de7-8abf-a96e38711fc2"] = {
       description = "",
       display = {
-        x = 1188,
-        y = 900
+        x = 1344,
+        y = 948
       } --[[table: 00000000003544a0]],
       id = "67aa2b6b-ecc0-4de7-8abf-a96e38711fc2",
       name = "BTRunAction",
@@ -134,6 +135,20 @@ local BattleMonster = {
       } --[[table: 0000000000354620]],
       title = "BTPrioritySelector要打别人"
     } --[[table: 00000000003545a0]],
+    ["232407b5-63e6-4f05-8d6b-02038b37196a"] = {
+      description = "",
+      display = {
+        x = 1344,
+        y = 828
+      } --[[table: 0000000000354ae0]],
+      id = "232407b5-63e6-4f05-8d6b-02038b37196a",
+      name = "BTWaitAction",
+      properties = {
+        key = 1,
+        precondition = ""
+      } --[[table: 0000000000354aa0]],
+      title = "等待<key>时间"
+    } --[[table: 0000000000354a20]],
     ["a636c5ee-7ac2-4147-8ffd-f2e3409b4142"] = {
       description = "这里可以增加boss放技能逃跑",
       display = {
