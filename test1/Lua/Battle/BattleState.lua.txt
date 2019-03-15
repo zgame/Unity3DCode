@@ -1,5 +1,7 @@
 
-
+-- 战斗逻辑循环时间控制
+BattleAILoopTimer = 0.2
+BattleAICharacterLoopTimer = 0.2
 
 -- 游戏状态
 

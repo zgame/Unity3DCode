@@ -15,9 +15,11 @@ function Character:New()
         Debug = false,  -- 调试输出
         Model = nil,   -- 模型object
         Animator = nil,  -- 动画控制器
-        
+
+        Enable = false,   -- 激活玩家角色
         PlayerState = StateIdle,   -- 当前状态
         Enemy = nil,     -- 敌人
+        UnderAttack = false,   -- 是否被攻击
         
         HP = 100,
         MaxHP = 100,
@@ -38,7 +40,7 @@ end
 -- AI行为树开始
 function Character:BTRootInit(file)
     self.BattleBTRoot = BattleCharacterInit(file, self)
-    self.BattleBTTimer = MyTimer:every(0.5 , function()        BattleCharacterUpdate(0.5,self,self.BattleBTRoot, self.Name)   end)
+    self.BattleBTTimer = MyTimer:every(BattleAICharacterLoopTimer , function()        BattleCharacterUpdate(BattleAICharacterLoopTimer,self,self.BattleBTRoot, self.Name)   end)
     --MyTimer:after(5, function()        MyTimer:cancel(self.BattleBTTimer)    end)
 end
 
@@ -108,27 +110,22 @@ end
 
 
 
--- 敌人是否死亡
+-- 敌人是否活着
 function Character:CheckEnemyLive()
+    BattleUIHPSliderPosition(self)
+    
+    if self.Enemy == nil and #BattleEnemyList == 0 then
+        return false  -- 没有活着的敌人
+    end
+    if self.Enemy ~= nil and self.Enemy.MonsterState == StateDead then
+        self:FindNearEnemy()
+    end
     return true
-    --if EnemyType == nil then
-    --    self:Log("没有敌人，不用攻击")
-    --    return false
-    --end
-    --
-    --if EnemyHP > 0 then
-    --    self:Log("有敌人， 揍他")
-    --    return true     -- 敌人没死，打他
-    --else
-    --    self:Log("敌人已经死了，不打了")
-    --    EnemyType = nil
-    --    return false
-    --end
 end
 
 
 
------------------------------------------------------------
+-----------------------------------跑------------------------
 
 -- 距离的判断
 function Character:CheckDistance()
@@ -138,7 +135,7 @@ function Character:CheckDistance()
     end
     
     if self.Distance > self.AttackRange then
-        self:Log("敌人距离好远， 我要跑过去".. self.Distance)
+        self.Log("敌人距离好远， 我要跑过去".. self.Distance)
         return true    -- 距离还远, 需要跑过去
     else
         self:Log("敌人距离近了， 可以揍他了".. self.Distance)
@@ -160,20 +157,12 @@ function Character:PlayerRun()
     end
 
     if self.PlayerState == StateRun then
-        --self.Distance = self.Distance - self.Speed
         self:Log(self.Name .. "跑步ing，距离:" .. self.Distance)
         
-        --self.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, self.Model.transform.localPosition.z + 1);
-        
         if self.Distance > self.AttackRange then
-        --    self.PlayerState = StateIdle
-        --    self:Log(self.Name .. "跑到目的地")
-        --    self.Animator:SetTrigger("stoprun")
-        --else
-
-            BattleUIHPSliderPosition(self)
+            
             -- doTween 来移动角色
-            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x - self.Speed , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z ),0.5)
+            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x - self.Speed , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z ),BattleAICharacterLoopTimer)
 
             local ran = math.random(5)
             if ran == 1 then
@@ -194,11 +183,11 @@ function Character:PlayerRun()
     
 end
 
-
+---------------------------------------攻击-----------------------------------------
 -- 玩家普通攻击
 function Character:PlayerAttack()
     self:Log("PlayerAttack    state: "..self.PlayerState)
-    local effect = nil
+    
     if self.PlayerState == StateIdle then
         --EnemyHP = EnemyHP - Damage
         self:Log("我方角色 [  普通攻击  ]，剩余血量"..self.Enemy.HP)
@@ -206,20 +195,20 @@ function Character:PlayerAttack()
         self.Animator:SetTrigger("attack")
         self.PlayerState = StateAttack
         if self.Name == "Human" then
-            effect = CSLoadAndInstantiatePrefabGameObject(AssetEffectPath..self.Name.."_EF",AssetEffectPath..self.Name.."_EF/Attack")
-            effect.transform.localPosition = self.Model.transform.localPosition
+            CreateBattleEffect(self,"Attack")
         end
 
-        
-        BattleUIDamageNumber(self.Model, 89)
-        
+        self.Enemy.UnderAttack = true
+        self.Enemy.HP = self.Enemy.HP - 11
+        BattleUIHPSliderShow(self.Enemy)
+        BattleUIDamageNumber(self.Enemy.Model, 11)        
 
         
         return false
     end
     
     if self.PlayerState == StateAttack then
-        return self:AnimatorPlayEnd("Attack", true,  function() CSDestroyGameObject(effect) end)
+        return self:AnimatorPlayEnd("Attack", true)
     end
 
 end
@@ -227,7 +216,7 @@ end
 
 -- 玩家释放技能
 function Character:PlayerSkillAttack()
-    local effect = nil
+
     self:Log("PlayerSkillAttack")
     if self.PlayerState == StateIdle then
         --EnemyHP = EnemyHP - SkillDamage
@@ -235,21 +224,24 @@ function Character:PlayerSkillAttack()
         self.Animator:SetTrigger("sp1")
         self.PlayerState = StateSkill
         if self.Name == "Human" then
-            effect = CSLoadAndInstantiatePrefabGameObject(AssetEffectPath..self.Name.."_EF",AssetEffectPath..self.Name.."_EF/Skill01")
-            effect.transform.localPosition = self.Model.transform.localPosition
+            CreateBattleEffect(self,"Skill01")
         end
+        self.Enemy.UnderAttack = true
+        self.Enemy.HP = self.Enemy.HP - 12
+        BattleUIHPSliderShow(self.Enemy)
+        BattleUIDamageNumber(self.Enemy.Model, 12)
         return false
     end
 
     if self.PlayerState == StateSkill then
-        return  self:AnimatorPlayEnd("Skill01",true,function() CSDestroyGameObject(effect) end)
+        return  self:AnimatorPlayEnd("Skill01",true)
     end
 end
 
 
 -- 玩家释放技能
 function Character:PlayerSkillAttack2()
-    local effect = nil
+
     self:Log("PlayerSkillAttack2")
     if self.PlayerState == StateIdle then
         --EnemyHP = EnemyHP - SkillDamage
@@ -257,17 +249,21 @@ function Character:PlayerSkillAttack2()
         self.Animator:SetTrigger("sp2")
         self.PlayerState = StateSkill
         if self.Name == "Human" then
-            effect = CSLoadAndInstantiatePrefabGameObject(AssetEffectPath..self.Name.."_EF",AssetEffectPath..self.Name.."_EF/Skill02")
-            effect.transform.localPosition = self.Model.transform.localPosition
+            CreateBattleEffect(self,"Skill02")
         end
+        self.Enemy.UnderAttack = true
+        self.Enemy.HP = self.Enemy.HP - 13
+        BattleUIHPSliderShow(self.Enemy)
+        BattleUIDamageNumber(self.Enemy.Model, 13)
         return false
     end
 
     if self.PlayerState == StateSkill then
-        return  self:AnimatorPlayEnd("Skill02",true,function() CSDestroyGameObject(effect) end)
+        return  self:AnimatorPlayEnd("Skill02",true)
     end
 end
 
+---------------------------------------被攻击-----------------------------------------
 
 -- 玩家受到攻击
 function Character:PlayerHit()
@@ -278,56 +274,57 @@ function Character:PlayerHit()
             self.PlayerState = StateHit
             self.Animator:SetTrigger("hit")
             self:Log("玩家 受到攻击, hp "..self.HP)
-        else
-            self:Log("玩家 死了")
-            self.Animator:SetTrigger("dead")
-            self.PlayerState = StateDead
+        --else
+        --    self:Log("玩家 死了")
+        --    self.Animator:SetTrigger("dead")
+        --    self.PlayerState = StateDead
         end
         return false
     end
     
     if self.PlayerState == StateHit then
         return  self:AnimatorPlayEnd("Hit",true)
-        --if playEnd then
-        --    self.PlayerState = StateIdle
-        --    return true
-        --else
-        --    return false
-        --end
-        
-        --local info = self.Animator:GetCurrentAnimatorStateInfo(0)
-        --if info:IsName("Hit") then
-        --    print("正在被打动画")
-        --    return false
-        --else
-        --    print("hit动画播放完毕")
-        --    self.PlayerState = StateIdle
-        --    return true
-        --end
-    end
-end
-
-
-
--- 玩家死亡
-function Character:PlayerDead()
-    self:Log("PlayerDead")
-    if self.PlayerState == StateIdle then
-        self:Log("玩家 死了")
-            self.Animator:SetTrigger("dead")
-            self.PlayerState = StateDead
-        return false
-    end
-
-    if self.PlayerState == StateDead then
-        return  self:AnimatorPlayEnd("Death",false)
+      
     end
 end
 
 -- 是否被攻击
 function  Character:CheckHit()
+    -- 判断是不是受到攻击的状态
+    if self.UnderAttack == true then
+        if self.PlayerState == StateIdle  then
+            self.UnderAttack = false        --  恢复受到攻击的状态 
+            return true
+        end
+        if self.PlayerState == StateRun  then
+            self.Animator:SetTrigger("stoprun")     -- 如果跑动中，需要先停下来，再受伤
+            self.PlayerState = StateIdle
+            self.UnderAttack = false        --  恢复受到攻击的状态 
+            return true
+        end
+    end
     return false
 end
+
+
+---------------------------------------死亡-----------------------------------------
+-- 玩家死亡
+function Character:PlayerDead()
+    self:Log("PlayerDead")
+    if self.PlayerState ~= StateDead then
+        self:Log("玩家 死了")
+        self.Animator:SetTrigger("dead")
+        self.PlayerState = StateDead
+        return false
+    end
+
+    if self.PlayerState == StateDead then
+        --return  self:AnimatorPlayEnd("Death",false)
+        -- 以后在这里处理复活， 等2秒然后销毁怪物尸体等行为
+    end
+end
+
+
 
 -- 是否死亡
 function  Character:CheckDead()
@@ -336,6 +333,9 @@ function  Character:CheckDead()
     end
     return false
 end
+
+
+---------------------------------------发呆-----------------------------------------
 
 -- 玩家发呆
 function Character:PlayerIdle()
@@ -347,25 +347,29 @@ end
 
 -- 找到附近的敌人
 function Character:FindNearEnemy()
+    self.Log("玩家开始找附近的新敌人")
     if #BattleEnemyList == 0 then
-        self:Log("找不到敌人")
+        self.Log("找不到敌人")
         return 
     end
     
-    local dis = GetVector3Distance(BattleEnemyList[1].Model.transform.localPosition, self.Model.transform.localPosition)  -- 距离
+    local dis = 1000  -- 距离
     local lock = BattleEnemyList[1]  -- 锁定
     for i in ipairs(BattleEnemyList)do
-        local now_dis = GetVector3Distance(BattleEnemyList[1].Model.transform.localPosition, self.Model.transform.localPosition)
-        if now_dis < dis then
-            dis = now_dis
-            lock = BattleEnemyList[i]
-            --print("距离"..dis.."      锁定"..lock.Name)
+        if BattleEnemyList[i].MonsterState ~= StateDead then
+            local now_dis = GetVector3Distance(BattleEnemyList[1].Model.transform.localPosition, self.Model.transform.localPosition)
+            if now_dis < dis then
+                dis = now_dis
+                lock = BattleEnemyList[i]
+                self.Log("距离"..dis.."      锁定"..lock.Name)
+            end
         end
     end
     
     self.Enemy = lock
 end
 
+---------------------------------------输出log-----------------------------------------
 
 -- log
 function Character:Log(str)

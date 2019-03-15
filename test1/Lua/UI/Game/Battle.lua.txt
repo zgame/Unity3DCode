@@ -12,23 +12,6 @@ function StartBattle(lastUI)
     
     -- 加载场景
     
-    -- 加载模型
-    --local monster1 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/Tauren",AssetMonsterPath.."/Tauren")
-    --local monster1 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/1qinglong",AssetMonsterPath.."/1qinglong")
-    --local monster2 = CSLoadAndInstantiatePrefabGameObject(AssetMonsterPath.."/2baihu",AssetMonsterPath.."/2baihu")
-
-
-    --local animator1 = monster1:GetComponent(typeof(CS.UnityEngine.Animator))
-    --local animator1 = monster1:GetComponentInChildren(typeof(CS.UnityEngine.Animator))
-    --MyTimer:after(5, function()         animator1:SetTrigger("attack")        print("attack")    end)
-    --MyTimer:after(10, function()         animator1:SetTrigger("run")        print("run")    end)
-    --MyTimer:after(13, function()         animator1:SetTrigger("stoprun")        print("stoprun")    end)
-    --MyTimer:after(15, function()         animator1:SetTrigger("hit")        print("hit")    end)
-    --MyTimer:after(20, function()         animator1:SetTrigger("sp1")        print("sp1")    end)
-    --MyTimer:after(25, function()         animator1:SetTrigger("sp2")        print("sp2")    end)
-    --MyTimer:after(30, function()         animator1:SetTrigger("dead")        print("dead")    end)
-    
-
     --local animator2 = monster2:GetComponent(typeof(CS.UnityEngine.Animator))
     --MyTimer:after(25, function()         animator2:SetTrigger("attack")        print("attack")    end)
     --MyTimer:after(30, function()         animator2:SetTrigger("sp")        print("sp")    end)
@@ -42,127 +25,10 @@ function StartBattle(lastUI)
     end
 
 
-    --BattleInit("Lua/Battle/btJson/zsw2")
-    --local battleTimer = MyTimer:every(0.5 , function()        BattleUpdate(0.5)   end)
-    --MyTimer:after(5, function()        MyTimer:cancel(battleTimer)    end)
-
-    ----------------------------角色--------------------------------------
-    --
-    ---- 生成中间位置的牛头人
-    --local tauren = Character:New()
-    --tauren:LoadGameObject("Tauren")
-    --tauren.Speed = 2
-    --tauren.AttackRange = 3
-    --tauren:BTRootInit("Lua/Battle/btJson/zsw2")
-    --tauren.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 0)
-    --
-    --
-    ---- 生成最右侧的
-    --local Gnome = Character:New()
-    --Gnome:LoadGameObject("Gnome")
-    --Gnome.Speed = 1.2
-    --Gnome.AttackRange = 6
-    --Gnome:BTRootInit("Lua/Battle/btJson/zsw2")
-    --Gnome.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 4)
-    --
-    ---- 生成最左侧的
-    --local Bloodelf = Character:New()
-    --Bloodelf:LoadGameObject("Bloodelf")
-    --Bloodelf.Speed = 1.3
-    --Bloodelf.AttackRange = 5
-    --Bloodelf:BTRootInit("Lua/Battle/btJson/zsw2")
-    --Bloodelf.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, -4)
-    --
-    ---- 生成左二
-    --local Dwarf = Character:New()
-    --Dwarf:LoadGameObject("Dwarf")
-    --Dwarf.Speed = 1.1
-    --Dwarf.AttackRange = 2
-    --Dwarf:BTRootInit("Lua/Battle/btJson/zsw2")
-    --Dwarf.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, -2)
-    --
-    ---- 生成右二
-    --local Human = Character:New()
-    --Human:LoadGameObject("Human")
-    --Human.Speed = 1.6
-    --Human.AttackRange = 3
-    --Human:BTRootInit("Lua/Battle/btJson/zsw2")
-    --Human.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 2)
-    --
-
-    ---------------------------相机------------------------------
-    ---- 设定相机跟踪中间位置的角色
-    --local camera = CSFindGameObject("CMFollowCenter")
-    --if camera then
-    --    print("设定跟踪相机"..camera.name)
-    --    local followCamera = camera:GetComponent(typeof(CS.Cinemachine.CinemachineVirtualCamera))
-    --    followCamera.Follow = tauren.Model.transform       -- 绑定到中间位置的角色上面去
-    --end
-    --
-    --local camera2 = CSFindGameObject("CMFreeLook")
-    --if camera2 then
-    --    print("设定玩家控制旋转角度相机"..camera2.name)
-    --    local freelookCamera = camera2:GetComponent(typeof(CS.Cinemachine.CinemachineFreeLook))
-    --    freelookCamera.LookAt = tauren.Model.transform       -- 绑定到中间位置的角色上面去
-    --    freelookCamera.Follow = tauren.Model.transform       -- 绑定到中间位置的角色上面去
-    --end
-    --
-    --local camera3 = CSFindGameObject("CMDollyTrack")
-    --if camera3 then
-    --    print("自动旋转角度相机"..camera3.name)
-    --    local dollyCamera = camera3:GetComponent(typeof(CS.Cinemachine.CinemachineVirtualCamera))
-    --    dollyCamera.LookAt = tauren.Model.transform       -- 绑定到中间位置的角色上面去
-    --    local dolly = CSFindGameObject("Dolly")
-    --    dolly.transform.localPosition = CS.UnityEngine.Vector3(0, 0, 35)
-    --end
-
-    ----------------------------------------------------------------
-    
-    --DOtween = CS.DG.Tweening.DOTween
-    --
-    --local tween = tauren.Model.transform:DOMoveX(1,3)
-    --tween:OnComplete(){
-    --    print("move callback")
-    --}
-
-    ---------------------------敌人------------------------------
-    ---- 生成右二
-    --local mon1 = Monster:New()
-    --mon1:LoadGameObject("Goutouren01")
-    --mon1.Speed = 1.6
-    --mon1.AttackRange = 3
-    --mon1:BTRootInit("Lua/Battle/btJson/zsw2")
-    --mon1.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, 1)
-    --
-    ---- 生成右二
-    --local mon2 = Monster:New()
-    --mon2:LoadGameObject("Goutouren02")
-    --mon2.Speed = 1.6
-    --mon2.AttackRange = 3
-    --mon2:BTRootInit("Lua/Battle/btJson/zsw2")
-    --mon2.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, -1)
-    --
-    ---- 生成右二
-    --local mon3 = Monster:New()
-    --mon3:LoadGameObject("Yurenfashi")
-    --mon3.Speed = 1.6
-    --mon3.AttackRange = 3
-    --mon3:BTRootInit("Lua/Battle/btJson/zsw2")
-    --mon3.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, 3)
-    --
-    ---- 生成右二
-    --local mon4 = Monster:New()
-    --mon4:LoadGameObject("Yurenzhanshi")
-    --mon4.Speed = 1.6
-    --mon4.AttackRange = 3
-    --mon4:BTRootInit("Lua/Battle/btJson/zsw2")
-    --mon4.Model.transform.localPosition = CS.UnityEngine.Vector3(-80, 0, -3)
-
-
-    
+   
     -- battle run
     local BattleBTRoot = BattleInit("Lua/Battle/btJson/BattleRun")
-    local BattleBTTimer = MyTimer:every(0.5 , function()        BattleUpdate(0.5, BattleBTRoot )   end)
+    local BattleBTTimer = MyTimer:every(BattleAILoopTimer , function()        BattleUpdate(BattleAILoopTimer, BattleBTRoot )   end)
 
    
 end
@@ -172,17 +38,22 @@ end
 function BattleUIDamageNumber(parent,damage)
     local damageNumber = CSLoadAndInstantiatePrefabUI(AssetUIBattlePath,AssetUIBattlePath.."/DamageNumber")
     damageNumber:GetComponent(typeof(CS.UnityEngine.UI.Text)).text = ""..damage
-
+    local range = 20
+    local rand_x = math.random(-range , range)
+    local rand_y = math.random(-range , range)
+    
     local mScreen= CS.UnityEngine.Camera.main:WorldToScreenPoint(parent.transform.position + CS.UnityEngine.Vector3(0,5,0))
     damageNumber:GetComponent(typeof(CS.UnityEngine.RectTransform)).position = mScreen
     
     -- 动画效果
-    local position = damageNumber:GetComponent(typeof(CS.UnityEngine.RectTransform)).position
-    local tween = damageNumber.transform:DOMove(CS.UnityEngine.Vector3(position.x  , position.y  + 30 , position.z ),0.5)
-    tween:SetEase(CS.DG.Tweening.Ease.OutQuad)       -- 设定移动方式
+    local position = mScreen -- damageNumber:GetComponent(typeof(CS.UnityEngine.RectTransform)).position
+    damageNumber.transform.localPosition = damageNumber.transform.localPosition + CS.UnityEngine.Vector3(rand_x,rand_y,0)
+    local tween = damageNumber.transform:DOMove(CS.UnityEngine.Vector3(position.x + rand_x , position.y  + 30  + rand_y, position.z ),0.5)
+    tween:SetEase(CS.DG.Tweening.Ease.OutCirc)       -- 设定移动方式
+    --tween:SetEase(CS.DG.Tweening.Ease.OutQuad)       -- 设定移动方式
     
     -- 1.5秒之后销毁
-    MyTimer:after(1.5, function() CSDestroyGameObject(damageNumber) end)
+    MyTimer:after(1, function() CSDestroyGameObject(damageNumber) end)
 end
 
 
@@ -193,21 +64,27 @@ function CreateBattleUIHPSlider(parentCharacter)
 
     parentCharacter.HPSlider = hpSlider
     BattleUIHPSliderPosition(parentCharacter)
-    --local mScreen= CS.UnityEngine.Camera.main:WorldToScreenPoint(parentCharacter.Model.transform.position + CS.UnityEngine.Vector3(0,0,0))
-    --hpSlider:GetComponentInChildren(typeof(CS.UnityEngine.RectTransform)).position = mScreen
-    
-    ---- 动画效果
-    --local position = hpSlider:GetComponent(typeof(CS.UnityEngine.RectTransform)).position
-    --local tween = hpSlider.transform:DOMove(CS.UnityEngine.Vector3(position.x  , position.y  + 30 , position.z ),0.5)
-    --tween:SetEase(CS.DG.Tweening.Ease.OutQuad)       -- 设定移动方式
-    --
-    ---- 1.5秒之后销毁
-    --MyTimer:after(1.5, function() CSDestroyGameObject(hpSlider) end)
-    --return hpSlider
+
 end
 
 -- 更新血条位置
 function BattleUIHPSliderPosition(parentCharacter)
     local mScreen= CS.UnityEngine.Camera.main:WorldToScreenPoint(parentCharacter.Model.transform.position + CS.UnityEngine.Vector3(0,3,0))
     parentCharacter.HPSlider:GetComponentInChildren(typeof(CS.UnityEngine.RectTransform)).position = mScreen
+end
+
+-- 更新血条血量
+function BattleUIHPSliderShow(parentCharacter)
+    if parentCharacter.HPSlider then
+        parentCharacter.HPSlider:GetComponentInChildren(typeof(CS.UnityEngine.UI.Slider)).value = parentCharacter.HP/parentCharacter.MaxHP
+    end
+end
+
+
+-- 特效
+function CreateBattleEffect(character,type)
+    local effect = CSLoadAndInstantiatePrefabGameObject(AssetEffectPath..character.Name.."_EF",AssetEffectPath..character.Name.."_EF/"..type)
+    effect.transform.localPosition = character.Model.transform.localPosition
+    -- 3秒之后销毁
+    MyTimer:after(3, function() CSDestroyGameObject(effect) end)
 end

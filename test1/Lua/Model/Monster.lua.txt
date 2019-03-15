@@ -18,6 +18,7 @@ function Monster:New()
         Enable = false,   -- 激活敌人
         MonsterState = StateIdle,   -- 当前状态
         Enemy = nil,     -- 敌人
+        UnderAttack = false,   -- 是否被攻击
 
         HP = 100,
         MaxHP = 100,
@@ -25,7 +26,7 @@ function Monster:New()
         Distance = 40,      -- 敌人距离
         AttackRange = 1,    -- 攻击范围距离
 
-
+        HPSlider = nil,    -- 血条
 
     }
     setmetatable(c, self)
@@ -36,7 +37,7 @@ end
 -- AI行为树开始
 function Monster:BTRootInit(file)
     self.BattleBTRoot = BattleCharacterInit(file, self)
-    self.BattleBTTimer = MyTimer:every(0.5 , function()        BattleCharacterUpdate(0.5,self, self.BattleBTRoot, self.Name)   end)
+    self.BattleBTTimer = MyTimer:every(BattleAICharacterLoopTimer , function()        BattleCharacterUpdate(BattleAICharacterLoopTimer,self, self.BattleBTRoot, self.Name)   end)
     --MyTimer:after(5, function()        MyTimer:cancel(self.BattleBTTimer)    end)
 end
 
@@ -109,6 +110,15 @@ end
 
 -- 敌人是否死亡
 function Monster:CheckEnemyLive()
+    BattleUIHPSliderPosition(self)
+    
+    if self.Enemy == nil and #BattleEnemyList == 0 then
+        return false  -- 没有活着的敌人
+    end
+    if self.Enemy ~= nil and self.Enemy.PlayerState == StateDead then
+        self:FindNearEnemy()
+    end
+    
     return true
     --if EnemyType == nil then
     --    self:Log("没有敌人，不用攻击")
@@ -162,20 +172,13 @@ function Monster:PlayerRun()
     end
 
     if self.MonsterState == StateRun then
-        --self.Distance = self.Distance - self.Speed
         self:Log(self.Name .. "跑步ing，距离:" .. self.Distance)
-
-        --self.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, self.Model.transform.localPosition.z + 1);
-
+        
         if self.Distance > self.AttackRange then
-        --    self.MonsterState = StateIdle
-        --    self:Log(self.Name .. "跑到目的地")
-        --    self.Animator:SetTrigger("stoprun")
-        --else
             -- doTween 来移动角色
-            BattleUIHPSliderPosition(self)
             
-            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x + self.Speed , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z ),0.5)
+            
+            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x + self.Speed , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z ),BattleAICharacterLoopTimer)
             tween:SetEase(CS.DG.Tweening.Ease.Linear)       -- 设定平均移动方式
 
         end
@@ -186,7 +189,7 @@ function Monster:PlayerRun()
 end
 
 
--- 玩家普通攻击
+-- 怪物普通攻击
 function Monster:PlayerAttack()
     self:Log("PlayerAttack   "..self.MonsterState)
 
@@ -198,6 +201,12 @@ function Monster:PlayerAttack()
         self.Animator:SetTrigger("attack")
         self.MonsterState = StateAttack
         --effect =    CSLoadAndInstantiatePrefabGameObject(AssetEffectPath.."/"..self.name,AssetEffectPath.."/"..self.name.."Attack")
+        self.Enemy.UnderAttack = true
+        self.Enemy.HP = self.Enemy.HP - 11
+        BattleUIHPSliderShow(self.Enemy)
+        BattleUIDamageNumber(self.Enemy.Model, 11)
+
+        
         return false
     end
 
@@ -209,7 +218,7 @@ function Monster:PlayerAttack()
 end
 
 
--- 玩家释放技能
+-- 怪物释放技能
 function Monster:PlayerSkillAttack()
     self:PlayerAttack()
     print("Monster: PlayerSkillAttack")
@@ -227,7 +236,7 @@ function Monster:PlayerSkillAttack()
 end
 --
 --
--- 玩家释放技能
+-- 怪物释放技能2
 function Monster:PlayerSkillAttack2()
     self:PlayerAttack()
     print(" Monster:  PlayerSkillAttack2")
@@ -247,24 +256,37 @@ end
 
 -- 是否被攻击
 function  Monster:CheckHit()
+    -- 判断是不是受到攻击的状态
+    if self.UnderAttack == true then
+        if self.MonsterState == StateIdle  then
+            self.UnderAttack = false        --  恢复受到攻击的状态 
+            return true
+        end
+        if self.MonsterState == StateRun  then
+            self.Animator:SetTrigger("stoprun")      -- 如果跑动中，需要先停下来，再受伤
+            self.PlayerState = StateIdle
+            self.UnderAttack = false            --  恢复受到攻击的状态 
+            return true
+        end
+    end
     return false
 end
 
 
 
--- 玩家受到攻击
+-- 怪物受到攻击
 function Monster:PlayerHit()
     --print("PlayerHit")
     if self.MonsterState == StateIdle then
-        self.HP = self.HP - Damage
+        --self.HP = self.HP - Damage
         if self.HP > 0 then
             self.MonsterState = StateHit
             self.Animator:SetTrigger("hit")
-            self:Log("玩家 受到攻击, hp "..self.HP)
-        else
-            self:Log("玩家 死了")
-            self.Animator:SetTrigger("dead")
-            self.MonsterState = StateDead
+            self:Log("怪物 受到攻击, hp "..self.HP)
+        --else
+            --        --    print("怪物 死了")
+            --        --    self.Animator:SetTrigger("dead")
+            --        --    self.MonsterState = StateDead
         end
         return false
     end
@@ -294,6 +316,8 @@ function Monster:PlayerDead()
 
     if self.MonsterState == StateDead then
         --return  self:AnimatorPlayEnd("Death",false)
+        
+        -- 以后在这里处理复活， 等2秒然后销毁怪物尸体等行为
         self:Log(self.Name.."死了")
     end
 end
@@ -318,11 +342,13 @@ function Monster:FindNearEnemy()
     local dis = GetVector3Distance(BattleCharacterList[1].Model.transform.localPosition, self.Model.transform.localPosition)  -- 距离
     local lock = BattleCharacterList[1]  -- 锁定
     for i in ipairs(BattleCharacterList)do
-        local now_dis = GetVector3Distance(BattleCharacterList[i].Model.transform.localPosition, self.Model.transform.localPosition)
-        if now_dis < dis then
-            dis = now_dis
-            lock = BattleCharacterList[i]
-            --print("距离"..dis.."      锁定"..lock.Name)
+        if BattleCharacterList[i].PlayerState ~= StateDead then
+            local now_dis = GetVector3Distance(BattleCharacterList[i].Model.transform.localPosition, self.Model.transform.localPosition)
+            if now_dis < dis then
+                dis = now_dis
+                lock = BattleCharacterList[i]
+                --print("距离"..dis.."      锁定"..lock.Name)
+            end
         end
     end
     self.Enemy = lock
