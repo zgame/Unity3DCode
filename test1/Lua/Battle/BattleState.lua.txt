@@ -64,8 +64,8 @@ DeBufferCriticalDamage = 16    -- 降低暴击伤害
 
 
 
-BattleAreaRunDistance = -50      -- 玩家跑多远进入战场
-BattleAreaEnemyAway = -80                  -- 敌人的生成位置距离
+BattleAreaRunDistance = 50      -- 玩家跑多远进入战场
+BattleAreaEnemyAway = 80                  -- 敌人的生成位置距离
 --BattleAreaRunDistance = 40
 
 

@@ -9,8 +9,8 @@ function BattleCharacterInit(file, character)
         PlayerIdle = function()   return character:PlayerIdle() end,
         CheckDistance = function()   return character:CheckDistance() end,
         PlayerRun = function()   return character:PlayerRun() end,
-        CheckEnemyLive = function()   return character:CheckEnemyLive() end,
-        CheckPlayerAlive = function()   return character:CheckPlayerAlive() end,
+        --CheckEnemyLive = function()   return character:CheckEnemyLive() end,
+        --CheckPlayerAlive = function()   return character:CheckPlayerAlive() end,
         EnemyBorn = EnemyBorn,
         CheckEnemyNotExist = function()   return character:CheckEnemyNotExist() end,
         

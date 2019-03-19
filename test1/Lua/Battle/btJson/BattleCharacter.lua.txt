@@ -1,7 +1,7 @@
 
 
 local BattleCharacter = {
-  custom_nodes = {} --[[table: 00000000004b4b20]],
+  custom_nodes = {} --[[table: 0000000000354ae0]],
   description = "",
   display = {
     camera_x = 920.5899999961257,
@@ -9,7 +9,7 @@ local BattleCharacter = {
     camera_z = 0.5,
     x = -960,
     y = 36
-  } --[[table: 00000000004b4aa0]],
+  } --[[table: 0000000000354a60]],
   id = "2169dcca-f074-47f1-bec5-bfd5feefb37b",
   nodes = {
     ["1cd89c96-43fc-4890-b1e8-223245fd4343"] = {
@@ -17,222 +17,222 @@ local BattleCharacter = {
       display = {
         x = -240,
         y = -648
-      } --[[table: 00000000004b4960]],
+      } --[[table: 0000000000354820]],
       id = "1cd89c96-43fc-4890-b1e8-223245fd4343",
       name = "BTRunAction",
       properties = {
         operation = "PlayerDead",
         precondition = "CheckDead"
-      } --[[table: 00000000004b4920]],
+      } --[[table: 00000000003547e0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b48e0]],
+    } --[[table: 00000000003547a0]],
     ["7cd15318-6cd4-491c-84c3-ddc391c34d04"] = {
       children = {
         "1cd89c96-43fc-4890-b1e8-223245fd4343",
         "ec17302e-d44c-48a9-8d29-d6b070cd07cd",
         "b86e6749-d196-47a3-88d2-fc45510336ee"
-      } --[[table: 00000000004b4a60]],
+      } --[[table: 0000000000354920]],
       description = "",
       display = {
         x = -600,
         y = 36
-      } --[[table: 00000000004b4a20]],
+      } --[[table: 00000000003548e0]],
       id = "7cd15318-6cd4-491c-84c3-ddc391c34d04",
       name = "BTPrioritySelector",
       properties = {
         precondition = ""
-      } --[[table: 00000000004b49e0]],
+      } --[[table: 00000000003548a0]],
       title = "BTPrioritySelector"
-    } --[[table: 00000000004b49a0]],
+    } --[[table: 0000000000354860]],
     ["9c82ffa4-6727-47ca-8854-08e0f90e4ddc"] = {
       children = {
         "a7cdc9d2-5e27-47d3-a485-9999aba7bcb6",
         "30ed4cfe-b88d-4db3-aa3f-f7548503f5ea"
-      } --[[table: 000000000049bd00]],
+      } --[[table: 000000000033bd00]],
       description = "",
       display = {
         x = 288,
         y = -372
-      } --[[table: 000000000049bcc0]],
+      } --[[table: 000000000033bcc0]],
       id = "9c82ffa4-6727-47ca-8854-08e0f90e4ddc",
       name = "BTSequence",
       properties = {
         precondition = "CheckEnemyNotExist"
-      } --[[table: 000000000049bc40]],
+      } --[[table: 000000000033bc40]],
       title = "BTSequence无敌人"
-    } --[[table: 000000000049bbc0]],
+    } --[[table: 000000000033bbc0]],
     ["30ed4cfe-b88d-4db3-aa3f-f7548503f5ea"] = {
       description = "",
       display = {
         x = 672,
         y = -300
-      } --[[table: 000000000049be00]],
+      } --[[table: 000000000033be00]],
       id = "30ed4cfe-b88d-4db3-aa3f-f7548503f5ea",
       name = "BTWaitAction",
       properties = {
         key = 0.20000000000000001,
         precondition = ""
-      } --[[table: 000000000049bdc0]],
+      } --[[table: 000000000033bdc0]],
       title = "等待<key>时间,敌人出现"
-    } --[[table: 000000000049bd40]],
+    } --[[table: 000000000033bd40]],
     ["70e562ef-21c9-4df7-8a1c-377886606a89"] = {
       description = "这里可以增加boss放技能逃跑",
       display = {
         x = 768,
         y = 636
-      } --[[table: 00000000004b47a0]],
+      } --[[table: 0000000000354660]],
       id = "70e562ef-21c9-4df7-8a1c-377886606a89",
       name = "BTRunAction",
       properties = {
         operation = "RunAway",
         precondition = "GetTrue"
-      } --[[table: 00000000004b4760]],
+      } --[[table: 0000000000354620]],
       title = "执行<operation>函数，跑远（预留）"
-    } --[[table: 00000000004b4720]],
+    } --[[table: 00000000003545e0]],
     ["98b0b233-a5a3-4d02-8af3-31472fc6748d"] = {
       description = "技能伤害",
       display = {
         x = 972,
         y = 288
-      } --[[table: 00000000004b4260]],
+      } --[[table: 0000000000354260]],
       id = "98b0b233-a5a3-4d02-8af3-31472fc6748d",
       name = "BTRunAction",
       properties = {
         operation = "PlayerSkillAttack",
         precondition = ""
-      } --[[table: 00000000004b41e0]],
+      } --[[table: 00000000003541e0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b41a0]],
+    } --[[table: 00000000003541a0]],
     ["30475607-b84f-43d8-8c24-a23fba820a5a"] = {
       children = {
         "cec6c4a4-78e2-4756-8ed3-5b5a95aeb4b7",
         "ab9eb718-0b68-4604-82a2-6719588d2c58",
         "70e562ef-21c9-4df7-8a1c-377886606a89"
-      } --[[table: 00000000004b4460]],
+      } --[[table: 0000000000354460]],
       description = "",
       display = {
         x = 252,
         y = 228
-      } --[[table: 00000000004b4420]],
+      } --[[table: 0000000000354420]],
       id = "30475607-b84f-43d8-8c24-a23fba820a5a",
       name = "BTPrioritySelector",
       properties = {
-        precondition = "CheckEnemyLive"
-      } --[[table: 00000000004b43e0]],
+        precondition = ""
+      } --[[table: 00000000003543e0]],
       title = "BTPrioritySelector有敌人进攻"
-    } --[[table: 00000000004b4360]],
+    } --[[table: 0000000000354360]],
     ["a7cdc9d2-5e27-47d3-a485-9999aba7bcb6"] = {
       description = "",
       display = {
         x = 660,
         y = -432
-      } --[[table: 000000000049bb80]],
+      } --[[table: 000000000033bb80]],
       id = "a7cdc9d2-5e27-47d3-a485-9999aba7bcb6",
       name = "BTRunAction",
       properties = {
         operation = "PlayerIdle",
         precondition = ""
-      } --[[table: 000000000049bb40]],
+      } --[[table: 000000000033bb40]],
       title = "执行<operation>函数"
-    } --[[table: 000000000049bac0]],
+    } --[[table: 000000000033bac0]],
     ["ab9eb718-0b68-4604-82a2-6719588d2c58"] = {
       children = {
         "ee0eab42-43a6-4e5a-b826-f4dd9132bc85",
         "98b0b233-a5a3-4d02-8af3-31472fc6748d",
         "f5464fdf-f94a-45fb-862b-63ed086516cc"
-      } --[[table: 00000000004b45a0]],
+      } --[[table: 00000000003545a0]],
       description = "",
       display = {
         x = 600,
         y = 240
-      } --[[table: 00000000004b4560]],
+      } --[[table: 0000000000354560]],
       id = "ab9eb718-0b68-4604-82a2-6719588d2c58",
       name = "BTSequence",
       properties = {
         precondition = ""
-      } --[[table: 00000000004b4520]],
+      } --[[table: 0000000000354520]],
       title = "BTSequence攻击"
-    } --[[table: 00000000004b44a0]],
+    } --[[table: 00000000003544a0]],
     ["b86e6749-d196-47a3-88d2-fc45510336ee"] = {
       children = {
         "9c82ffa4-6727-47ca-8854-08e0f90e4ddc",
         "30475607-b84f-43d8-8c24-a23fba820a5a"
-      } --[[table: 00000000004b46e0]],
+      } --[[table: 0000000000354a20]],
       description = "",
       display = {
         x = -132,
         y = 36
-      } --[[table: 00000000004b46a0]],
+      } --[[table: 00000000003549e0]],
       id = "b86e6749-d196-47a3-88d2-fc45510336ee",
       name = "BTPrioritySelector",
       properties = {
-        precondition = "CheckPlayerAlive"
-      } --[[table: 00000000004b4620]],
+        precondition = ""
+      } --[[table: 00000000003549a0]],
       title = "BTPrioritySelector"
-    } --[[table: 00000000004b45e0]],
+    } --[[table: 0000000000354960]],
     ["cec6c4a4-78e2-4756-8ed3-5b5a95aeb4b7"] = {
       description = "",
       display = {
-        x = 624,
-        y = -84
-      } --[[table: 00000000004b40a0]],
+        x = 768,
+        y = -72
+      } --[[table: 00000000003540a0]],
       id = "cec6c4a4-78e2-4756-8ed3-5b5a95aeb4b7",
       name = "BTRunAction",
       properties = {
         operation = "PlayerRun",
         precondition = "CheckDistance"
-      } --[[table: 00000000004b4060]],
+      } --[[table: 0000000000354060]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b4020]],
+    } --[[table: 0000000000354020]],
     ["ec17302e-d44c-48a9-8d29-d6b070cd07cd"] = {
       description = "调试用，玩家打人同时也被打",
       display = {
         x = -204,
         y = -396
-      } --[[table: 00000000004b4320]],
+      } --[[table: 0000000000354320]],
       id = "ec17302e-d44c-48a9-8d29-d6b070cd07cd",
       name = "BTRunAction",
       properties = {
         operation = "PlayerHit",
         precondition = "CheckHit"
-      } --[[table: 00000000004b42e0]],
+      } --[[table: 00000000003542e0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b42a0]],
+    } --[[table: 00000000003542a0]],
     ["ee0eab42-43a6-4e5a-b826-f4dd9132bc85"] = {
       description = "",
       display = {
         x = 960,
         y = 180
-      } --[[table: 00000000004b4160]],
+      } --[[table: 0000000000354160]],
       id = "ee0eab42-43a6-4e5a-b826-f4dd9132bc85",
       name = "BTRunAction",
       properties = {
         operation = "PlayerAttack",
         precondition = ""
-      } --[[table: 00000000004b4120]],
+      } --[[table: 0000000000354120]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b40e0]],
+    } --[[table: 00000000003540e0]],
     ["f5464fdf-f94a-45fb-862b-63ed086516cc"] = {
       description = "",
       display = {
         x = 972,
         y = 384
-      } --[[table: 00000000004b48a0]],
+      } --[[table: 0000000000354760]],
       id = "f5464fdf-f94a-45fb-862b-63ed086516cc",
       name = "BTRunAction",
       properties = {
         operation = "PlayerSkillAttack2",
         precondition = ""
-      } --[[table: 00000000004b4820]],
+      } --[[table: 00000000003546e0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004b47e0]]
-  } --[[table: 000000000049ba80]],
-  properties = {} --[[table: 000000000049ba40]],
+    } --[[table: 00000000003546a0]]
+  } --[[table: 000000000033ba80]],
+  properties = {} --[[table: 000000000033ba40]],
   root = "7cd15318-6cd4-491c-84c3-ddc391c34d04",
   scope = "tree",
   title = "zsw_Character",
   version = "0.3.0"
-} --[[table: 000000000049ba00]] 
+} --[[table: 000000000033ba00]] 
 
 
 

@@ -7,83 +7,21 @@ Character = class("Character",CommonCharacter)
 
 -- 加载模型和动画
 function Character:LoadGameObject(name)
-    self.Name = name
-    self.Model = CSLoadAndInstantiatePrefabGameObject(AssetCharacterPath.."/"..name,AssetCharacterPath.."/"..name)
-    --local animator1 = monster1:GetComponent(typeof(CS.UnityEngine.Animator))
-    self.Animator =  self.Model:GetComponentInChildren(typeof(CS.UnityEngine.Animator))
+    self.super.LoadGameObject(self,name, AssetCharacterPath)
 end
 
 
 -- 有没有敌人
 function Character:CheckEnemyNotExist()
-    
-    if #BattleEnemyList == 0 then
-        self:Log("没有敌人")
-        return true
-    else
-        self:Log("敌人存在")
-        return false
-    end
+    return self.super.CheckEnemyNotExist(self,BattleEnemyList)
 end
 
 
-
--- 敌人是否活着
-function Character:CheckEnemyLive()
-    BattleUIHPSliderPosition(self)
-
-    if self.Enemy == nil then
-        if #BattleEnemyList == 0 then
-            self:Log("没有活着的敌人")
-            return false  -- 没有活着的敌人
-        else
-            self:Log("没有目标，开始寻找新的目标")
-            self:FindNearEnemy()
-        end
-
-    end
-    if self.Enemy ~= nil and self.Enemy.PlayerState == StateDead then
-        self:Log("目标敌人已死，开始寻找新的敌人目标")
-        self:FindNearEnemy()
-    end
-
-    return true
-end
 
 
 -- 往目的地跑过去
 function Character:PlayerRun()
-
-    if self.PlayerState == StateIdle then
-        self.PlayerState = StateRun
-        self.Animator:SetTrigger("run")
-    end
-
-    if self.PlayerState == StateRun then
-        self:Log(self.Name .. "跑步ing，距离:" .. self.Distance)
-        
-        if self.Distance > self.AttackRange then
-            
-            -- doTween 来移动角色
-            local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x - self.Speed , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z ),BattleAICharacterLoopTimer)
-
-            local ran = math.random(5)
-            if ran == 1 then
-                tween:SetEase(CS.DG.Tweening.Ease.InOutCubic)       -- 设定移动方式
-            elseif ran == 2 then
-                tween:SetEase(CS.DG.Tweening.Ease.OutSine)       -- 设定移动方式
-            elseif ran == 3 then
-                tween:SetEase(CS.DG.Tweening.Ease.InSine)       -- 设定移动方式
-            elseif ran == 4 then
-                tween:SetEase(CS.DG.Tweening.Ease.InQuad)       -- 设定移动方式
-            elseif ran == 5 then
-                tween:SetEase(CS.DG.Tweening.Ease.OutQuad)       -- 设定移动方式
-            end
-        end
-    end
-
-    return false
-    
+    return self.super.PlayerRun(self, self.Speed)
 end
 
 ---------------------------------------攻击-----------------------------------------
@@ -192,23 +130,4 @@ end
 function Character:FindNearEnemy()
     self.Log("玩家开始找附近的新敌人")
     self.super.FindNearEnemy(self,BattleEnemyList)
-    --if #BattleEnemyList == 0 then
-    --    self.Log("找不到敌人")
-    --    return 
-    --end
-    --
-    --local dis = 1000  -- 距离
-    --local lock = BattleEnemyList[1]  -- 锁定
-    --for i in ipairs(BattleEnemyList)do
-    --    if BattleEnemyList[i].PlayerState ~= StateDead then
-    --        local now_dis = GetVector3Distance(BattleEnemyList[1].Model.transform.localPosition, self.Model.transform.localPosition)
-    --        if now_dis < dis then
-    --            dis = now_dis
-    --            lock = BattleEnemyList[i]
-    --            self.Log("距离"..dis.."      锁定"..lock.Name)
-    --        end
-    --    end
-    --end
-    --
-    --self.Enemy = lock
 end

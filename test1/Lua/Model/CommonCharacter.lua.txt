@@ -44,6 +44,18 @@ function CommonCharacter:BTRootStop()
 end
 
 
+
+-- 加载模型和动画
+function CommonCharacter:LoadGameObject(name, path)
+    self.Name = name
+    self.Model = CSLoadAndInstantiatePrefabGameObject(path.."/"..name,path.."/"..name)
+    --local animator1 = monster1:GetComponent(typeof(CS.UnityEngine.Animator))
+    self.Animator =  self.Model:GetComponentInChildren(typeof(CS.UnityEngine.Animator))
+
+end
+
+
+
 -- 检查动画是否播放完毕
 function CommonCharacter:AnimatorPlayEnd(name, returnIdle,endFunc)
     local info = self.Animator:GetCurrentAnimatorStateInfo(0)
@@ -64,26 +76,15 @@ function CommonCharacter:AnimatorPlayEnd(name, returnIdle,endFunc)
     end
 end
 
-
-
--- 玩家是否已经死亡
-
-function CommonCharacter:CheckPlayerAlive()
-    if self.PlayerState == StateDead then
-        self:Log("玩家已经死亡")
-        return false
-    else
-        self:Log("玩家活着")
-        return true
-    end
-end
-
-
-
 -----------------------------------跑------------------------
 
 -- 距离的判断
 function CommonCharacter:CheckDistance()
+    -- 如果角色正在攻击，那么不判断距离
+    if self.PlayerState == StateAttack or self.PlayerState == StateSkill then
+        return false
+    end
+    
     -- 更新一下距离
     if self.Enemy then
         self.Distance = GetVector3Distance(self.Enemy.Model.transform.localPosition, self.Model.transform.localPosition)
@@ -101,6 +102,49 @@ function CommonCharacter:CheckDistance()
         self.Animator:SetTrigger("stoprun")
         return false
     end
+end
+
+
+-- 往目的地跑过去
+function CommonCharacter:PlayerRun(speed)
+
+    if self.PlayerState == StateIdle then
+        self.PlayerState = StateRun
+        self.Animator:SetTrigger("run")
+    end
+
+    if self.PlayerState == StateRun then
+        self:Log(self.Name .. "跑步ing，距离:" .. self.Distance)
+
+        if self.Distance > self.AttackRange then
+
+            -- doTween 来移动角色
+            print(self.Model.transform.forward)
+            print(CS.UnityEngine.Vector3.forward)
+            --local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x + speed * self.Model.transform.forward , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z + speed * self.Model.transform.forward),BattleAICharacterLoopTimer)
+            local tween = self.Model.transform:DOMove(self.Model.transform.localPosition + speed * self.Model.transform.forward ,BattleAICharacterLoopTimer)
+
+            local ran = math.random(5)
+            if ran == 1 then
+                tween:SetEase(CS.DG.Tweening.Ease.InOutCubic)       -- 设定移动方式
+            elseif ran == 2 then
+                tween:SetEase(CS.DG.Tweening.Ease.OutSine)       -- 设定移动方式
+            elseif ran == 3 then
+                tween:SetEase(CS.DG.Tweening.Ease.InSine)       -- 设定移动方式
+            elseif ran == 4 then
+                tween:SetEase(CS.DG.Tweening.Ease.InQuad)       -- 设定移动方式
+            elseif ran == 5 then
+                tween:SetEase(CS.DG.Tweening.Ease.OutQuad)       -- 设定移动方式
+            end
+
+
+            self.Model.transform:LookAt(self.Enemy.Model.transform)         -- 朝向改变
+            --self.Model.transform:LookAt(CS.UnityEngine.Vector3.zero)         -- 朝向改变
+        end
+    end
+
+    return false
+
 end
 
 
@@ -153,7 +197,6 @@ end
 ---------------------------------------死亡-----------------------------------------
 
 
-
 -- 是否死亡
 function  CommonCharacter:CheckDead()
     if self.HP <= 0 then
@@ -161,7 +204,6 @@ function  CommonCharacter:CheckDead()
     end
     return false
 end
-
 
 ---------------------------------------发呆-----------------------------------------
 
@@ -189,12 +231,51 @@ function CommonCharacter:FindNearEnemy(BattleEnemyList)
             if now_dis < dis then
                 dis = now_dis
                 lock = BattleEnemyList[i]
+               
                 self.Log("距离"..dis.."      锁定"..lock.Name)
             end
         end
     end
 
     self.Enemy = lock
+end
+
+---------------------------------------------------------------------
+
+-- 有没有敌人
+function CommonCharacter:CheckEnemyNotExist(BattleEnemyList)
+    BattleUIHPSliderPosition(self)
+    if self.PlayerState == StateAttack or self.PlayerState == StateSkill then
+        -- 如果正在攻击， 那么不判断敌人
+        return false
+    end
+    
+    
+    if self.Enable  then
+        -- 激活，那么就能发现敌人
+        if #BattleEnemyList == 0 then
+            -- 能发现敌人，但是敌人列表为空，也是发呆
+            return true     
+        else
+            -- 能发现敌人，且有敌人
+            if self.Enemy == nil then
+                -- 没有目标
+                self:Log("没有目标，开始寻找新的目标")
+                self:FindNearEnemy()
+            else
+                -- 有目标
+                if self.Enemy.PlayerState == StateDead then
+                    self:Log("目标敌人已死，开始寻找新的敌人目标")
+                    self:FindNearEnemy()
+                end
+            end
+        end
+        return false
+    else
+        -- 没激活，不能发现敌人, 继续发呆
+        return true
+    end
+    
 end
 
 

@@ -74,8 +74,9 @@ local function BattleCreatePlayer()
             character:LoadGameObject(name)
             character.Speed = speed
             character.AttackRange = attackRange
+            character.Enable = true         -- 激活玩家角色
             character:BTRootInit(ai)
-            character.Model.transform.localPosition = CS.UnityEngine.Vector3(0, 0, offsetZ)
+            character.Model.transform.localPosition = CS.UnityEngine.Vector3(offsetZ, 0, 0)
 
             CreateBattleUIHPSlider(character)        -- 血条
             
@@ -85,16 +86,16 @@ local function BattleCreatePlayer()
 
         local character = nil
         -- 生成最左侧的
-        _battleCreateCharacter("Bloodelf","Lua/Battle/btJson/BattleCharacter" ,2.1,13, -4 )
+        _battleCreateCharacter("Bloodelf","Lua/Battle/btJson/BattleCharacter" ,2.1,10, -4 )
         -- 生成左二
-        _battleCreateCharacter("Dwarf","Lua/Battle/btJson/BattleCharacter" ,2.2,10, -2 )
+        _battleCreateCharacter("Dwarf","Lua/Battle/btJson/BattleCharacter" ,2.2,4, -2 )
         -- 生成中间位置
-        _battleCreateCharacter("Tauren","Lua/Battle/btJson/BattleCharacter" ,2.5,10, 0 )
+        _battleCreateCharacter("Tauren","Lua/Battle/btJson/BattleCharacter" ,2.5,4, 0 )
         
         -- 生成右二
-        character = _battleCreateCharacter("Human","Lua/Battle/btJson/BattleCharacter" ,2.3,10, 2 )
+        character = _battleCreateCharacter("Human","Lua/Battle/btJson/BattleCharacter" ,2.3,4, 2 )
         -- 生成最右侧的
-         _battleCreateCharacter("Gnome","Lua/Battle/btJson/BattleCharacter" ,2,12, 4 )
+         _battleCreateCharacter("Gnome","Lua/Battle/btJson/BattleCharacter" ,2,10, 4 )
         
         character.Debug = true
 
@@ -120,16 +121,18 @@ local function BattleCreateEnemy()
             mon.Speed = speed
             mon.AttackRange = attackRange
             mon:BTRootInit(ai)
-            mon.Model.transform.localPosition = CS.UnityEngine.Vector3(BattleAreaEnemyAway, 0, offsetZ)
+            local rand_x = math.random(-10,10)
+            local rand_z = math.random(-10,10)
+            mon.Model.transform.localPosition = CS.UnityEngine.Vector3( rand_x + offsetZ , 0, BattleAreaEnemyAway  + rand_z)
             --mon.Debug = true
             CreateBattleUIHPSlider(mon)        -- 血条
             table.insert(BattleEnemyList, mon)
             return mon
         end
-        _battleCreateMonster("Goutouren01","Lua/Battle/btJson/BattleMonster" ,1,10, 1 )
-        _battleCreateMonster("Goutouren02","Lua/Battle/btJson/BattleMonster" ,1,10, -1 )
-        _battleCreateMonster("Yurenfashi","Lua/Battle/btJson/BattleMonster" ,1.5,10, 3 )
-        local mon = _battleCreateMonster("Yurenzhanshi","Lua/Battle/btJson/BattleMonster" ,1.5,10, -3 )
+        _battleCreateMonster("Goutouren01","Lua/Battle/btJson/BattleMonster" ,0.2,4, 1 )
+        _battleCreateMonster("Goutouren02","Lua/Battle/btJson/BattleMonster" ,0.2,4, -1 )
+        _battleCreateMonster("Yurenfashi","Lua/Battle/btJson/BattleMonster" ,0.5,4, 3 )
+        local mon = _battleCreateMonster("Yurenzhanshi","Lua/Battle/btJson/BattleMonster" ,0.5,4, -3 )
         --mon.Debug = true
     else
         -- 敌人没有全部消灭
@@ -146,7 +149,7 @@ end
 local function BattlePlayerRun()
     BattleRunLog("BattlePlayerRun")
 
-    if BattleGetCharacter().Model.transform.localPosition.x < BattleAreaRunDistance then
+    if BattleGetCharacter().Model.transform.localPosition.z > BattleAreaRunDistance then
         -- 跑到战斗区域了
         BattleRunLog("进入战斗区域")
         return true
@@ -170,7 +173,7 @@ local function BattleEnemyAttack()
         BattleEnemyList[i]:FindNearEnemy()
     end
     for i in ipairs(BattleCharacterList)do
-        BattleCharacterList[i].Enable = true   -- 激活所有玩家
+        --BattleCharacterList[i].Enable = true   -- 激活所有玩家
         -- 开始寻找敌人攻击
         BattleCharacterList[i]:FindNearEnemy()
     end

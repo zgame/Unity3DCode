@@ -87,7 +87,7 @@
       "title": "BTPrioritySelector有敌人进攻",
       "description": "",
       "properties": {
-        "precondition": "CheckEnemyLive"
+        "precondition": ""
       },
       "display": {
         "x": 408,
@@ -155,7 +155,7 @@
       },
       "display": {
         "x": 24,
-        "y": 672
+        "y": 636
       },
       "children": [
         "cfa2138c-db68-4278-aab2-a7097419c1ff",
