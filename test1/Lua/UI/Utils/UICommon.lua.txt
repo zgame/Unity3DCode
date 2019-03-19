@@ -57,6 +57,7 @@ end
 function CSDestroyGameObject(obj)
     if obj ~= nil then
         CS.UnityEngine.GameObject.Destroy (obj)
+        obj = nil
     end
 end
 

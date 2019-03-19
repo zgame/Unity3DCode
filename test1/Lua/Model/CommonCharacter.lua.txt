@@ -1,0 +1,208 @@
+
+
+--------------------------------------------------------------------------------------
+--- 玩家的角色
+--------------------------------------------------------------------------------------
+CommonCharacter = class("CommonCharacter")
+function CommonCharacter:ctor()
+
+    self.Name = ""
+    self.Type = 0 -- 职业类型
+    self.BattleBTRoot = nil -- AI行为树
+    self.BattleBTTimer = nil -- AI行为树的定时器
+
+    self.Debug = false  -- 调试输出
+    self.Model = nil -- 模型object
+    self.Animator = nil -- 动画控制器
+
+    self.Enable = false -- 激活玩家角色
+    self.PlayerState = StateIdle-- 当前状态
+    self.Enemy = nil     -- 敌人
+    self.UnderAttack = false -- 是否被攻击
+
+    self.HP = 100
+    self.MaxHP = 100
+    self.Speed = 1 -- 移动速度
+    self.Distance = 100     -- 敌人距离
+    self.AttackRange = 1-- 攻击范围距离
+
+
+    self.HPSlider = nil -- 血条
+   
+end
+
+-- AI行为树开始
+function CommonCharacter:BTRootInit(file)
+    self.BattleBTRoot = BattleCharacterInit(file, self)
+    self.BattleBTTimer = MyTimer:every(BattleAICharacterLoopTimer , function()        BattleCharacterUpdate(BattleAICharacterLoopTimer,self,self.BattleBTRoot, self.Name)   end)
+    --MyTimer:after(5, function()        MyTimer:cancel(self.BattleBTTimer)    end)
+end
+
+-- AI行为树停止
+function CommonCharacter:BTRootStop()
+    MyTimer:cancel(self.BattleBTTimer)
+end
+
+
+-- 检查动画是否播放完毕
+function CommonCharacter:AnimatorPlayEnd(name, returnIdle,endFunc)
+    local info = self.Animator:GetCurrentAnimatorStateInfo(0)
+    --print(info:IsName("Attack"))
+    --print(info.normalizedTime)
+    if info:IsName(name) then
+        self:Log("正在播放动画："..name)
+        return false
+    else
+        self:Log("动画播放完毕"..name)
+        if returnIdle then
+            self.PlayerState = StateIdle
+        end
+        if endFunc~= nil then
+            endFunc()       -- 结束函数
+        end
+        return true
+    end
+end
+
+
+
+-- 玩家是否已经死亡
+
+function CommonCharacter:CheckPlayerAlive()
+    if self.PlayerState == StateDead then
+        self:Log("玩家已经死亡")
+        return false
+    else
+        self:Log("玩家活着")
+        return true
+    end
+end
+
+
+
+-----------------------------------跑------------------------
+
+-- 距离的判断
+function CommonCharacter:CheckDistance()
+    -- 更新一下距离
+    if self.Enemy then
+        self.Distance = GetVector3Distance(self.Enemy.Model.transform.localPosition, self.Model.transform.localPosition)
+    end
+    
+    if self.Distance > self.AttackRange then
+        self.Log("敌人距离好远， 我要跑过去".. self.Distance)
+        return true    -- 距离还远, 需要跑过去
+    else
+        self:Log("敌人距离近了， 可以揍他了".. self.Distance)
+        if self.PlayerState == StateRun then
+            self.PlayerState = StateIdle
+        end
+        --self:Log(self.Name .. "跑到目的地")
+        self.Animator:SetTrigger("stoprun")
+        return false
+    end
+end
+
+
+---------------------------------------被攻击-----------------------------------------
+
+-- 玩家受到攻击
+function CommonCharacter:PlayerHit()
+    self:Log("PlayerHit")
+    if self.PlayerState == StateIdle then
+        --self.HP = self.HP - Damage
+        if self.HP > 0 then
+            self.PlayerState = StateHit
+            self.Animator:SetTrigger("hit")
+            self:Log("玩家 受到攻击, hp "..self.HP)
+        --else
+        --    self:Log("玩家 死了")
+        --    self.Animator:SetTrigger("dead")
+        --    self.PlayerState = StateDead
+        end
+        return false
+    end
+    
+    if self.PlayerState == StateHit then
+        return  self:AnimatorPlayEnd("Hit",true, function()
+            self.UnderAttack = false        --  恢复受到攻击的状态   
+        end)
+      
+    end
+end
+
+-- 是否被攻击
+function  CommonCharacter:CheckHit()
+    -- 判断是不是受到攻击的状态 ， 这里要注意， 在攻击的时候，是不能打断的， 所以攻击状态下，不产生状态变化
+    if self.UnderAttack == true then
+        if self.PlayerState == StateIdle  or self.PlayerState == StateHit then
+            -- 这里是受到攻击， 还有受到攻击时候的判断， 都是受机状态
+            return true
+        end
+        if self.PlayerState == StateRun  then
+            self.Animator:SetTrigger("stoprun")     -- 如果跑动中，需要先停下来，再受伤
+            self.PlayerState = StateIdle
+            self.UnderAttack = false        --  恢复受到攻击的状态 
+            return true
+        end
+    end
+    return false
+end
+
+
+---------------------------------------死亡-----------------------------------------
+
+
+
+-- 是否死亡
+function  CommonCharacter:CheckDead()
+    if self.HP <= 0 then
+        return true
+    end
+    return false
+end
+
+
+---------------------------------------发呆-----------------------------------------
+
+-- 玩家发呆
+function CommonCharacter:PlayerIdle()
+    self:Log("玩家发呆一下")
+    self.PlayerState = StateIdle
+    return true
+end
+
+
+
+-- 找到附近的敌人
+function CommonCharacter:FindNearEnemy(BattleEnemyList)
+    if #BattleEnemyList == 0 then
+        self.Log("找不到敌人")
+        return
+    end
+
+    local dis = 1000  -- 距离
+    local lock = BattleEnemyList[1]  -- 锁定
+    for i in ipairs(BattleEnemyList)do
+        if BattleEnemyList[i].PlayerState ~= StateDead then
+            local now_dis = GetVector3Distance(BattleEnemyList[1].Model.transform.localPosition, self.Model.transform.localPosition)
+            if now_dis < dis then
+                dis = now_dis
+                lock = BattleEnemyList[i]
+                self.Log("距离"..dis.."      锁定"..lock.Name)
+            end
+        end
+    end
+
+    self.Enemy = lock
+end
+
+
+---------------------------------------输出log-----------------------------------------
+
+-- log
+function CommonCharacter:Log(str)
+    if self.Debug then
+        print(str)
+    end
+end

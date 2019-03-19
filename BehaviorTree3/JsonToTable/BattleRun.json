@@ -26,7 +26,8 @@
         "3d338846-edee-4849-9428-aa4f627e18dd",
         "ae3a89a5-1b7f-457e-b44b-0478a3d7d202",
         "f16a0da0-5cba-45d2-9d82-ee16c1c795ee",
-        "407df5d3-5bc9-425d-b754-e0862341a518"
+        "407df5d3-5bc9-425d-b754-e0862341a518",
+        "a23a6c29-2435-46c9-901e-b53ee6298c8c"
       ]
     },
     "72d0bc28-5108-45ce-9bf0-4b1f89589168": {
@@ -126,11 +127,25 @@
         "x": 420,
         "y": 216
       }
+    },
+    "a23a6c29-2435-46c9-901e-b53ee6298c8c": {
+      "id": "a23a6c29-2435-46c9-901e-b53ee6298c8c",
+      "name": "BTWaitAction",
+      "title": "等待<key>时间",
+      "description": "",
+      "properties": {
+        "key": 5,
+        "precondition": ""
+      },
+      "display": {
+        "x": 420,
+        "y": 336
+      }
     }
   },
   "display": {
-    "camera_x": 645,
-    "camera_y": 547.5,
+    "camera_x": 565,
+    "camera_y": 341.5,
     "camera_z": 1,
     "x": -252,
     "y": -72

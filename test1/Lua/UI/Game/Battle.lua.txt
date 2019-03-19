@@ -49,8 +49,9 @@ function BattleUIDamageNumber(parent,damage)
     local position = mScreen -- damageNumber:GetComponent(typeof(CS.UnityEngine.RectTransform)).position
     damageNumber.transform.localPosition = damageNumber.transform.localPosition + CS.UnityEngine.Vector3(rand_x,rand_y,0)
     local tween = damageNumber.transform:DOMove(CS.UnityEngine.Vector3(position.x + rand_x , position.y  + 30  + rand_y, position.z ),0.5)
-    tween:SetEase(CS.DG.Tweening.Ease.OutCirc)       -- 设定移动方式
-    --tween:SetEase(CS.DG.Tweening.Ease.OutQuad)       -- 设定移动方式
+    --tween:SetEase(CS.DG.Tweening.Ease.OutCirc)       -- 设定移动方式
+    tween:SetEase(CS.DG.Tweening.Ease.OutBack)       -- 设定移动方式
+    --tween:SetEase(CS.DG.Tweening.Ease.OutBounce)       -- 设定移动方式
     
     -- 1.5秒之后销毁
     MyTimer:after(1, function() CSDestroyGameObject(damageNumber) end)

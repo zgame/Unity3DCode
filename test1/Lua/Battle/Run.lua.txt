@@ -70,7 +70,7 @@ local function BattleCreatePlayer()
     if #BattleCharacterList == 0 then
         BattleRunLog("BattleCreatePlayer")
         local function _battleCreateCharacter(name, ai, speed, attackRange, offsetZ)
-            local character = Character:New()
+            local character = Character:new()
             character:LoadGameObject(name)
             character.Speed = speed
             character.AttackRange = attackRange
@@ -89,12 +89,13 @@ local function BattleCreatePlayer()
         -- 生成左二
         _battleCreateCharacter("Dwarf","Lua/Battle/btJson/BattleCharacter" ,2.2,10, -2 )
         -- 生成中间位置
-         _battleCreateCharacter("Tauren","Lua/Battle/btJson/BattleCharacter" ,2.5,10, 0 )
+        _battleCreateCharacter("Tauren","Lua/Battle/btJson/BattleCharacter" ,2.5,10, 0 )
         
         -- 生成右二
-        _battleCreateCharacter("Human","Lua/Battle/btJson/BattleCharacter" ,2.3,10, 2 )
+        character = _battleCreateCharacter("Human","Lua/Battle/btJson/BattleCharacter" ,2.3,10, 2 )
         -- 生成最右侧的
-        character = _battleCreateCharacter("Gnome","Lua/Battle/btJson/BattleCharacter" ,2,12, 4 )
+         _battleCreateCharacter("Gnome","Lua/Battle/btJson/BattleCharacter" ,2,12, 4 )
+        
         character.Debug = true
 
         BattleCamera()  -- 生成相机
@@ -114,7 +115,7 @@ local function BattleCreateEnemy()
         -- 生成敌人私有分支函数
         local function _battleCreateMonster(name,ai,speed,attackRange, offsetZ)
             --local enemyAway = -80  -- 敌人的生成位置距离
-            local mon = Monster:New()
+            local mon = Monster:new()
             mon:LoadGameObject(name)
             mon.Speed = speed
             mon.AttackRange = attackRange

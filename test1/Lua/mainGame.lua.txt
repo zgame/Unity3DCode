@@ -7,12 +7,6 @@ require("Lua/Const/protocol_cs")
 require("Lua/Const/protocol_gs")
 require("Lua/Const/protocol_ls")
 
--- 加载数据定义
-
-require("Lua/Model/Player")
-require("Lua/Model/User")
-require("Lua/Model/Character")
-require("Lua/Model/Monster")
 
 
 -- 加载全局通用函数
@@ -23,6 +17,20 @@ cs_coroutine = (require 'Lua/XLua/cs_coroutine')
 MySerpent = require("Lua/Common/serpent")
 local Timer = require("Lua/Common/timer")
 MyTimer = Timer()
+
+
+-- 加载数据定义
+
+require("Lua/Model/Player")
+require("Lua/Model/User")
+require("Lua/Model/CommonCharacter")
+require("Lua/Model/Character")
+require("Lua/Model/Monster")
+
+
+-- 加载全局变量
+require("Lua/mainGlobal")
+
 
 -- 加载战斗逻辑
 require("Lua/Battle/BehaviorTree3/BTInit")
@@ -59,8 +67,6 @@ require("Lua/UI/Example/ScrollViewHorizontal")
 require("Lua/UI/Example/TableView")
 
 
--- 加载全局变量
-require("Lua/mainGlobal")
 
 -- 进入游戏
 --Start()

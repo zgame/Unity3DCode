@@ -3,51 +3,7 @@
 --------------------------------------------------------------------------------------
 --- 玩家的角色
 --------------------------------------------------------------------------------------
-
-Character = {}
-function Character:New()
-    c = {
-        Name = "",      
-        Type = 0 ,     -- 职业类型
-        BattleBTRoot = nil,  -- AI行为树
-        BattleBTTimer = nil,  -- AI行为树的定时器
-        
-        Debug = false,  -- 调试输出
-        Model = nil,   -- 模型object
-        Animator = nil,  -- 动画控制器
-
-        Enable = false,   -- 激活玩家角色
-        PlayerState = StateIdle,   -- 当前状态
-        Enemy = nil,     -- 敌人
-        UnderAttack = false,   -- 是否被攻击
-        
-        HP = 100,
-        MaxHP = 100,
-        Speed = 1,          -- 移动速度
-        Distance = 100,      -- 敌人距离
-        AttackRange = 1,    -- 攻击范围距离
-
-
-        HPSlider = nil,    -- 血条
-        
-        
-    }
-    setmetatable(c, self)
-    self.__index = self
-    return c
-end
-
--- AI行为树开始
-function Character:BTRootInit(file)
-    self.BattleBTRoot = BattleCharacterInit(file, self)
-    self.BattleBTTimer = MyTimer:every(BattleAICharacterLoopTimer , function()        BattleCharacterUpdate(BattleAICharacterLoopTimer,self,self.BattleBTRoot, self.Name)   end)
-    --MyTimer:after(5, function()        MyTimer:cancel(self.BattleBTTimer)    end)
-end
-
--- AI行为树停止
-function Character:BTRootStop()
-    MyTimer:cancel(self.BattleBTTimer)
-end
+Character = class("Character",CommonCharacter)
 
 -- 加载模型和动画
 function Character:LoadGameObject(name)
@@ -56,44 +12,6 @@ function Character:LoadGameObject(name)
     --local animator1 = monster1:GetComponent(typeof(CS.UnityEngine.Animator))
     self.Animator =  self.Model:GetComponentInChildren(typeof(CS.UnityEngine.Animator))
 end
-
--- 检查动画是否播放完毕
-function Character:AnimatorPlayEnd(name, returnIdle,endFunc)
-    local info = self.Animator:GetCurrentAnimatorStateInfo(0)
-    --print(info:IsName("Attack"))
-    --print(info.normalizedTime)
-    if info:IsName(name) then
-        self:Log("正在播放动画："..name)
-        return false
-    else
-        self:Log("动画播放完毕"..name)
-        if returnIdle then
-            self.PlayerState = StateIdle
-        end
-        if endFunc~= nil then
-            endFunc()       -- 结束函数
-        end
-        return true
-    end
-end
-
---------------------------------------------------------------------------
-
-
-
-
--- 玩家是否已经死亡
-
-function Character:CheckPlayerAlive()
-    if self.PlayerState == StateDead then
-        self:Log("玩家已经死亡")
-        return false
-    else
-        self:Log("玩家活着")
-        return true
-    end
-end
-
 
 
 -- 有没有敌人
@@ -113,40 +31,25 @@ end
 -- 敌人是否活着
 function Character:CheckEnemyLive()
     BattleUIHPSliderPosition(self)
-    
-    if self.Enemy == nil and #BattleEnemyList == 0 then
-        return false  -- 没有活着的敌人
+
+    if self.Enemy == nil then
+        if #BattleEnemyList == 0 then
+            self:Log("没有活着的敌人")
+            return false  -- 没有活着的敌人
+        else
+            self:Log("没有目标，开始寻找新的目标")
+            self:FindNearEnemy()
+        end
+
     end
-    if self.Enemy ~= nil and self.Enemy.MonsterState == StateDead then
+    if self.Enemy ~= nil and self.Enemy.PlayerState == StateDead then
+        self:Log("目标敌人已死，开始寻找新的敌人目标")
         self:FindNearEnemy()
     end
+
     return true
 end
 
-
-
------------------------------------跑------------------------
-
--- 距离的判断
-function Character:CheckDistance()
-    -- 更新一下距离
-    if self.Enemy then
-        self.Distance = GetVector3Distance(self.Enemy.Model.transform.localPosition, self.Model.transform.localPosition)
-    end
-    
-    if self.Distance > self.AttackRange then
-        self.Log("敌人距离好远， 我要跑过去".. self.Distance)
-        return true    -- 距离还远, 需要跑过去
-    else
-        self:Log("敌人距离近了， 可以揍他了".. self.Distance)
-        if self.PlayerState == StateRun then
-            self.PlayerState = StateIdle
-        end
-        --self:Log(self.Name .. "跑到目的地")
-        self.Animator:SetTrigger("stoprun")
-        return false
-    end
-end
 
 -- 往目的地跑过去
 function Character:PlayerRun()
@@ -263,48 +166,6 @@ function Character:PlayerSkillAttack2()
     end
 end
 
----------------------------------------被攻击-----------------------------------------
-
--- 玩家受到攻击
-function Character:PlayerHit()
-    self:Log("PlayerHit")
-    if self.PlayerState == StateIdle then
-        self.HP = self.HP - Damage
-        if self.HP > 0 then
-            self.PlayerState = StateHit
-            self.Animator:SetTrigger("hit")
-            self:Log("玩家 受到攻击, hp "..self.HP)
-        --else
-        --    self:Log("玩家 死了")
-        --    self.Animator:SetTrigger("dead")
-        --    self.PlayerState = StateDead
-        end
-        return false
-    end
-    
-    if self.PlayerState == StateHit then
-        return  self:AnimatorPlayEnd("Hit",true)
-      
-    end
-end
-
--- 是否被攻击
-function  Character:CheckHit()
-    -- 判断是不是受到攻击的状态
-    if self.UnderAttack == true then
-        if self.PlayerState == StateIdle  then
-            self.UnderAttack = false        --  恢复受到攻击的状态 
-            return true
-        end
-        if self.PlayerState == StateRun  then
-            self.Animator:SetTrigger("stoprun")     -- 如果跑动中，需要先停下来，再受伤
-            self.PlayerState = StateIdle
-            self.UnderAttack = false        --  恢复受到攻击的状态 
-            return true
-        end
-    end
-    return false
-end
 
 
 ---------------------------------------死亡-----------------------------------------
@@ -326,54 +187,28 @@ end
 
 
 
--- 是否死亡
-function  Character:CheckDead()
-    if self.HP <= 0 then
-        return true
-    end
-    return false
-end
-
-
----------------------------------------发呆-----------------------------------------
-
--- 玩家发呆
-function Character:PlayerIdle()
-    self:Log("玩家发呆一下，马上敌人就出来了")
-    self.PlayerState = StateIdle
-    return true
-end
-
 
 -- 找到附近的敌人
 function Character:FindNearEnemy()
     self.Log("玩家开始找附近的新敌人")
-    if #BattleEnemyList == 0 then
-        self.Log("找不到敌人")
-        return 
-    end
-    
-    local dis = 1000  -- 距离
-    local lock = BattleEnemyList[1]  -- 锁定
-    for i in ipairs(BattleEnemyList)do
-        if BattleEnemyList[i].MonsterState ~= StateDead then
-            local now_dis = GetVector3Distance(BattleEnemyList[1].Model.transform.localPosition, self.Model.transform.localPosition)
-            if now_dis < dis then
-                dis = now_dis
-                lock = BattleEnemyList[i]
-                self.Log("距离"..dis.."      锁定"..lock.Name)
-            end
-        end
-    end
-    
-    self.Enemy = lock
-end
-
----------------------------------------输出log-----------------------------------------
-
--- log
-function Character:Log(str)
-    if self.Debug then
-        print(str)
-    end
+    self.super.FindNearEnemy(self,BattleEnemyList)
+    --if #BattleEnemyList == 0 then
+    --    self.Log("找不到敌人")
+    --    return 
+    --end
+    --
+    --local dis = 1000  -- 距离
+    --local lock = BattleEnemyList[1]  -- 锁定
+    --for i in ipairs(BattleEnemyList)do
+    --    if BattleEnemyList[i].PlayerState ~= StateDead then
+    --        local now_dis = GetVector3Distance(BattleEnemyList[1].Model.transform.localPosition, self.Model.transform.localPosition)
+    --        if now_dis < dis then
+    --            dis = now_dis
+    --            lock = BattleEnemyList[i]
+    --            self.Log("距离"..dis.."      锁定"..lock.Name)
+    --        end
+    --    end
+    --end
+    --
+    --self.Enemy = lock
 end

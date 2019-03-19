@@ -24,3 +24,7 @@ end
 function Character:showHp()
     print("hp"..self.hp)
 end
+
+function Character:showHpC()
+    print("hpc"..self.hp)
+end
