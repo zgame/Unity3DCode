@@ -88,8 +88,8 @@ function CommonCharacter:CheckDistance()
     
     -- 更新一下距离
     if self.Enemy then
-        --self.Distance = GetVector3Distance(self.Enemy.Model.transform.position + BattlePosition[self.EnemyPosition] , self.Model.transform.position)
-        self.Distance = GetVector3Distance(self.Enemy.Model.transform.position  , self.Model.transform.position)
+        self.Distance = GetVector3Distance(self.Enemy.Model.transform.position + BattlePosition[self.EnemyPosition] , self.Model.transform.position)
+        --self.Distance = GetVector3Distance(self.Enemy.Model.transform.position  , self.Model.transform.position)
 
         if self.Distance > self.AttackRange then
             self:Log("敌人距离好远， 我要跑过去".. self.Distance)
@@ -122,7 +122,7 @@ end
 
 -- 往目的地跑过去
 function CommonCharacter:PlayerRun()
-    self:Log("commonCharacter:PlayerRun  "..self.PlayerState .."    "..tostring(self.UnderAttack).."  ")
+    self:Log("commonCharacter:PlayerRun  "..self.PlayerState .."    "..self.EnemyPosition.."  ")
     if self.PlayerState == StateIdle then
         self.Animator:SetTrigger("run")
         self.PlayerState = StateRun
@@ -135,8 +135,8 @@ function CommonCharacter:PlayerRun()
         if self.Distance > self.AttackRange then
 
             --self.Model.transform:LookAt(self.Enemy.Model.transform)         -- 朝向改变
-            --self.Model.transform:LookAt(self.Enemy.Model.transform.position +  BattlePosition[self.EnemyPosition])         -- 朝向改变
-            self.Model.transform:LookAt(self.Enemy.Model.transform.position )         -- 朝向改变
+            self.Model.transform:LookAt(self.Enemy.Model.transform.position +  BattlePosition[self.EnemyPosition])         -- 朝向改变
+            --self.Model.transform:LookAt(self.Enemy.Model.transform.position )         -- 朝向改变
             -- doTween 来移动角色
             --local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x + speed * self.Model.transform.forward , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z + speed * self.Model.transform.forward),BattleAICharacterLoopTimer)
             local tween = self.Model.transform:DOMove(self.Model.transform.localPosition + self.Speed * self.Model.transform.forward ,BattleAICharacterLoopTimer)
@@ -248,6 +248,7 @@ function CommonCharacter:FindNearEnemy(BattleEnemyList)
             if now_dis < dis then
                 dis = now_dis
                 lock = BattleEnemyList[i]
+                --self.EnemyPosition = 1
                 --self:Log("距离"..dis.."      锁定"..lock.Name)
             end
         end
@@ -300,7 +301,7 @@ end
 -- 查找队伍中是否有跟我站位重复的，如果有， 那么我改个位置 
 function CommonCharacter:FindSamePosition(MyTeamList)
     for i in ipairs(MyTeamList) do
-        if MyTeamList[i].Enemy == self.Enemy and MyTeamList[i].EnemyPosition == self.EnemyPosition then
+        if MyTeamList[i] ~= self and MyTeamList[i].Enemy == self.Enemy and MyTeamList[i].EnemyPosition == self.EnemyPosition then
             -- 跟我是同一个敌人, 位置也一样
             self.EnemyPosition = self.EnemyPosition + 1
             if self.EnemyPosition > 8 then

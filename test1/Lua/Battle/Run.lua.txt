@@ -122,8 +122,8 @@ local function BattleCreateEnemy()
             mon.Speed = speed
             mon.AttackRange = attackRange
             mon:BTRootInit(ai)
-            local rand_x = math.random(-20,20)
-            local rand_z = math.random(-20,20)
+            local rand_x = math.random(-10,10)
+            local rand_z = math.random(-10,10)
             mon.Model.transform.localPosition = CS.UnityEngine.Vector3( rand_x + offsetX, 0, BattleAreaEnemyAway  + rand_z)
             --mon.Debug = true
             CreateBattleUIHPSlider(mon)        -- 血条
@@ -198,6 +198,12 @@ local function BattleWin()
     
     -- 重置玩家角色的一些数值
     
+    -- 恢复满玩家的血量，还有复活，更新血条显示
+    for i in ipairs(BattleCharacterList) do
+        BattleCharacterList[i].HP = BattleCharacterList[i].MaxHP
+        BattleCharacterList[i].playerState = StateIdle
+        BattleUIHPSliderShow(BattleCharacterList[i])
+    end
     
     -- 生成下一关数据
     BattleAreaRunDistance = BattleAreaRunDistance + BattleAreaEnemyAwayAddNext
