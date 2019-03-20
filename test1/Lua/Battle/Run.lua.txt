@@ -88,12 +88,12 @@ local function BattleCreatePlayer()
         -- 生成最左侧的
         _battleCreateCharacter("Bloodelf","Lua/Battle/btJson/BattleCharacter" ,2.1,10, -4 )
         -- 生成左二
-        _battleCreateCharacter("Dwarf","Lua/Battle/btJson/BattleCharacter" ,2.2,4, -2 )
+        _battleCreateCharacter("Dwarf","Lua/Battle/btJson/BattleCharacter" ,2.2,5, -2 )
         -- 生成中间位置
-        character =_battleCreateCharacter("Tauren","Lua/Battle/btJson/BattleCharacter" ,2.5,4, 0 )
+        character =_battleCreateCharacter("Tauren","Lua/Battle/btJson/BattleCharacter" ,2.5,5, 0 )
         
         -- 生成右二
-         _battleCreateCharacter("Human","Lua/Battle/btJson/BattleCharacter" ,2.3,4, 2 )
+         _battleCreateCharacter("Human","Lua/Battle/btJson/BattleCharacter" ,2.3,5, 2 )
         -- 生成最右侧的
          _battleCreateCharacter("Gnome","Lua/Battle/btJson/BattleCharacter" ,2,10, 4 )
         
@@ -113,26 +113,27 @@ end
 local function BattleCreateEnemy()
     if #BattleEnemyList == 0 then
         BattleRunLog("BattleCreateEnemy")
+
         -- 生成敌人私有分支函数
-        local function _battleCreateMonster(name,ai,speed,attackRange, offsetZ)
+        local function _battleCreateMonster(name, ai, speed, attackRange, offsetX)
             --local enemyAway = -80  -- 敌人的生成位置距离
             local mon = Monster:new()
             mon:LoadGameObject(name)
             mon.Speed = speed
             mon.AttackRange = attackRange
             mon:BTRootInit(ai)
-            local rand_x = math.random(-10,10)
-            local rand_z = math.random(-10,10)
-            mon.Model.transform.localPosition = CS.UnityEngine.Vector3( rand_x + offsetZ , 0, BattleAreaEnemyAway  + rand_z)
+            local rand_x = math.random(-20,20)
+            local rand_z = math.random(-20,20)
+            mon.Model.transform.localPosition = CS.UnityEngine.Vector3( rand_x + offsetX, 0, BattleAreaEnemyAway  + rand_z)
             --mon.Debug = true
             CreateBattleUIHPSlider(mon)        -- 血条
             table.insert(BattleEnemyList, mon)
             return mon
         end
-        _battleCreateMonster("Goutouren01","Lua/Battle/btJson/BattleMonster" ,0.2,4, 1 )
-        _battleCreateMonster("Goutouren02","Lua/Battle/btJson/BattleMonster" ,0.2,4, -1 )
-        _battleCreateMonster("Yurenfashi","Lua/Battle/btJson/BattleMonster" ,0.5,4, 3 )
-        local mon = _battleCreateMonster("Yurenzhanshi","Lua/Battle/btJson/BattleMonster" ,0.5,4, -3 )
+        _battleCreateMonster("Goutouren01","Lua/Battle/btJson/BattleMonster" ,0.2,5, 1 )
+        _battleCreateMonster("Goutouren02","Lua/Battle/btJson/BattleMonster" ,0.2,5, -1 )
+        _battleCreateMonster("Yurenfashi","Lua/Battle/btJson/BattleMonster" ,0.5,5, 3 )
+        local mon = _battleCreateMonster("Yurenzhanshi","Lua/Battle/btJson/BattleMonster" ,0.5,5, -3 )
         --mon.Debug = true
     else
         -- 敌人没有全部消灭
@@ -197,6 +198,10 @@ local function BattleWin()
     
     -- 重置玩家角色的一些数值
     
+    
+    -- 生成下一关数据
+    BattleAreaRunDistance = BattleAreaRunDistance + BattleAreaEnemyAwayAddNext
+    BattleAreaEnemyAway = BattleAreaEnemyAway + BattleAreaEnemyAwayAddNext
     return true
 end
 

@@ -88,39 +88,45 @@ function CommonCharacter:CheckDistance()
     
     -- 更新一下距离
     if self.Enemy then
-        self.Distance = GetVector3Distance(self.Enemy.Model.transform.position + BattlePosition[self.EnemyPosition] , self.Model.transform.position)
-    end
+        --self.Distance = GetVector3Distance(self.Enemy.Model.transform.position + BattlePosition[self.EnemyPosition] , self.Model.transform.position)
+        self.Distance = GetVector3Distance(self.Enemy.Model.transform.position  , self.Model.transform.position)
 
-    if self.Distance > self.AttackRange then
-        self:Log("敌人距离好远， 我要跑过去".. self.Distance)
-        return true    -- 距离还远, 需要跑过去
-    else
+        if self.Distance > self.AttackRange then
+            self:Log("敌人距离好远， 我要跑过去".. self.Distance)
+            return true    -- 距离还远, 需要跑过去
+        else
 
-        --local myTeamDistance = 
-        --if 我方距离太近 then
-        --    self:Log("我方距离太近".. self.Distance)
-        --    return true    -- 距离太近
-        --else
+            --local myTeamDistance = 
+            --if 我方距离太近 then
+            --    self:Log("我方距离太近".. self.Distance)
+            --    return true    -- 距离太近
+            --else
             self:Log("敌人距离近了， 可以揍他了".. self.Distance)
+            self.Model.transform:LookAt(self.Enemy.Model.transform)     -- 开始脸看着对方，要攻击了
             if self.PlayerState == StateRun then
+                --self.Animator:SetTrigger("stoprun")
                 self.PlayerState = StateIdle
+                --self.Animator:SetTrigger("run")
             end
             --self:Log(self.Name .. "跑到目的地")
-            self.Animator:SetTrigger("stoprun")
-            self.Model.transform:LookAt(self.Enemy.Model.transform)     -- 开始脸看着对方，要攻击了
-            return false
-        --end
-        
+
+            --end
+
+        end
     end
+    return false
+
+
 end
 
 
 -- 往目的地跑过去
-function CommonCharacter:PlayerRun(speed)
-    self:Log("commonCharacter:PlayerRun"..self.PlayerState)
+function CommonCharacter:PlayerRun()
+    self:Log("commonCharacter:PlayerRun  "..self.PlayerState .."    "..tostring(self.UnderAttack).."  ")
     if self.PlayerState == StateIdle then
-        self.PlayerState = StateRun
         self.Animator:SetTrigger("run")
+        self.PlayerState = StateRun
+        return false
     end
 
     if self.PlayerState == StateRun then
@@ -129,10 +135,11 @@ function CommonCharacter:PlayerRun(speed)
         if self.Distance > self.AttackRange then
 
             --self.Model.transform:LookAt(self.Enemy.Model.transform)         -- 朝向改变
-            self.Model.transform:LookAt(self.Enemy.Model.transform.position +  BattlePosition[self.EnemyPosition])         -- 朝向改变
+            --self.Model.transform:LookAt(self.Enemy.Model.transform.position +  BattlePosition[self.EnemyPosition])         -- 朝向改变
+            self.Model.transform:LookAt(self.Enemy.Model.transform.position )         -- 朝向改变
             -- doTween 来移动角色
             --local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x + speed * self.Model.transform.forward , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z + speed * self.Model.transform.forward),BattleAICharacterLoopTimer)
-            local tween = self.Model.transform:DOMove(self.Model.transform.localPosition + speed * self.Model.transform.forward ,BattleAICharacterLoopTimer)
+            local tween = self.Model.transform:DOMove(self.Model.transform.localPosition + self.Speed * self.Model.transform.forward ,BattleAICharacterLoopTimer)
 
             local ran = math.random(5)
             if ran == 1 then
@@ -163,7 +170,7 @@ function CommonCharacter:PlayerHit()
     self:Log("PlayerHit")
     if self.PlayerState == StateIdle then
         --self.HP = self.HP - Damage
-        if self.HP > 0 then
+        --if self.HP > 0 then
             self.PlayerState = StateHit
             self.Animator:SetTrigger("hit")
             self:Log("玩家 受到攻击, hp "..self.HP)
@@ -171,12 +178,13 @@ function CommonCharacter:PlayerHit()
         --    self:Log("玩家 死了")
         --    self.Animator:SetTrigger("dead")
         --    self.PlayerState = StateDead
-        end
+        --end
         return false
     end
     
     if self.PlayerState == StateHit then
         return  self:AnimatorPlayEnd("Hit",true, function()
+            self.PlayerState = StateIdle
             self.UnderAttack = false        --  恢复受到攻击的状态   
         end)
       
@@ -191,12 +199,13 @@ function  CommonCharacter:CheckHit()
             -- 这里是受到攻击， 还有受到攻击时候的判断， 都是受机状态
             return true
         end
-        if self.PlayerState == StateRun  then
-            self.Animator:SetTrigger("stoprun")     -- 如果跑动中，需要先停下来，再受伤
-            self.PlayerState = StateIdle
-            self.UnderAttack = false        --  恢复受到攻击的状态 
-            return true
-        end
+        --if self.PlayerState == StateRun  then
+        --    self:Log("跑动的时候被打了， 那么停止跑动吧")
+        --    self.Animator:SetTrigger("stoprun")     -- 如果跑动中，需要先停下来，再受伤
+        --    self.PlayerState = StateIdle
+        --    --self.UnderAttack = false        --  恢复受到攻击的状态 
+        --    return true
+        --end
     end
     return false
 end
@@ -271,6 +280,7 @@ function CommonCharacter:CheckEnemyNotExist(BattleEnemyList)
             --    self:Log("没有目标，开始寻找新的目标")
                 --self.super.FindNearEnemy(self,BattleEnemyList)
                 self:FindNearEnemy()
+            return false
             --else
             --    -- 有目标
             --    if self.Enemy.PlayerState == StateDead then
@@ -279,7 +289,7 @@ function CommonCharacter:CheckEnemyNotExist(BattleEnemyList)
             --    end
             --end
         end
-        return false
+       
     else
         -- 没激活，不能发现敌人, 继续发呆
         return true

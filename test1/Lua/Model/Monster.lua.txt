@@ -22,11 +22,11 @@ end
 
 
 
-
--- 往目的地跑过去
-function Monster:PlayerRun()
-    return self.super.PlayerRun(self,self.Speed)
-end
+--
+---- 往目的地跑过去
+--function Monster:PlayerRun()
+--    return self.super.PlayerRun(self,self.Speed)
+--end
 
 
 -- 怪物普通攻击
