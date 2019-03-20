@@ -18,6 +18,7 @@ function CommonCharacter:ctor()
     self.Enable = false -- 激活玩家角色
     self.PlayerState = StateIdle-- 当前状态
     self.Enemy = nil     -- 敌人
+    self.EnemyPosition = 1     -- 敌人周围的位置编号
     self.UnderAttack = false -- 是否被攻击
 
     self.HP = 100
@@ -87,27 +88,36 @@ function CommonCharacter:CheckDistance()
     
     -- 更新一下距离
     if self.Enemy then
-        self.Distance = GetVector3Distance(self.Enemy.Model.transform.localPosition, self.Model.transform.localPosition)
+        self.Distance = GetVector3Distance(self.Enemy.Model.transform.position + BattlePosition[self.EnemyPosition] , self.Model.transform.position)
     end
-    
+
     if self.Distance > self.AttackRange then
-        self.Log("敌人距离好远， 我要跑过去".. self.Distance)
+        self:Log("敌人距离好远， 我要跑过去".. self.Distance)
         return true    -- 距离还远, 需要跑过去
     else
-        self:Log("敌人距离近了， 可以揍他了".. self.Distance)
-        if self.PlayerState == StateRun then
-            self.PlayerState = StateIdle
-        end
-        --self:Log(self.Name .. "跑到目的地")
-        self.Animator:SetTrigger("stoprun")
-        return false
+
+        --local myTeamDistance = 
+        --if 我方距离太近 then
+        --    self:Log("我方距离太近".. self.Distance)
+        --    return true    -- 距离太近
+        --else
+            self:Log("敌人距离近了， 可以揍他了".. self.Distance)
+            if self.PlayerState == StateRun then
+                self.PlayerState = StateIdle
+            end
+            --self:Log(self.Name .. "跑到目的地")
+            self.Animator:SetTrigger("stoprun")
+            self.Model.transform:LookAt(self.Enemy.Model.transform)     -- 开始脸看着对方，要攻击了
+            return false
+        --end
+        
     end
 end
 
 
 -- 往目的地跑过去
 function CommonCharacter:PlayerRun(speed)
-
+    self:Log("commonCharacter:PlayerRun"..self.PlayerState)
     if self.PlayerState == StateIdle then
         self.PlayerState = StateRun
         self.Animator:SetTrigger("run")
@@ -118,9 +128,9 @@ function CommonCharacter:PlayerRun(speed)
 
         if self.Distance > self.AttackRange then
 
+            --self.Model.transform:LookAt(self.Enemy.Model.transform)         -- 朝向改变
+            self.Model.transform:LookAt(self.Enemy.Model.transform.position +  BattlePosition[self.EnemyPosition])         -- 朝向改变
             -- doTween 来移动角色
-            print(self.Model.transform.forward)
-            print(CS.UnityEngine.Vector3.forward)
             --local tween = self.Model.transform:DOMove(CS.UnityEngine.Vector3(self.Model.transform.localPosition.x + speed * self.Model.transform.forward , self.Model.transform.localPosition.y, self.Model.transform.localPosition.z + speed * self.Model.transform.forward),BattleAICharacterLoopTimer)
             local tween = self.Model.transform:DOMove(self.Model.transform.localPosition + speed * self.Model.transform.forward ,BattleAICharacterLoopTimer)
 
@@ -136,10 +146,8 @@ function CommonCharacter:PlayerRun(speed)
             elseif ran == 5 then
                 tween:SetEase(CS.DG.Tweening.Ease.OutQuad)       -- 设定移动方式
             end
-
-
-            self.Model.transform:LookAt(self.Enemy.Model.transform)         -- 朝向改变
-            --self.Model.transform:LookAt(CS.UnityEngine.Vector3.zero)         -- 朝向改变
+            
+            
         end
     end
 
@@ -214,33 +222,33 @@ function CommonCharacter:PlayerIdle()
     return true
 end
 
-
+------------------------------------------寻敌---------------------------
 
 -- 找到附近的敌人
 function CommonCharacter:FindNearEnemy(BattleEnemyList)
     if #BattleEnemyList == 0 then
-        self.Log("找不到敌人")
+        self:Log("找不到敌人")
         return
     end
-
+    
     local dis = 1000  -- 距离
     local lock = BattleEnemyList[1]  -- 锁定
     for i in ipairs(BattleEnemyList)do
         if BattleEnemyList[i].PlayerState ~= StateDead then
-            local now_dis = GetVector3Distance(BattleEnemyList[1].Model.transform.localPosition, self.Model.transform.localPosition)
+            local now_dis = GetVector3Distance(BattleEnemyList[i].Model.transform.localPosition, self.Model.transform.localPosition)
             if now_dis < dis then
                 dis = now_dis
                 lock = BattleEnemyList[i]
-               
-                self.Log("距离"..dis.."      锁定"..lock.Name)
+                --self:Log("距离"..dis.."      锁定"..lock.Name)
             end
         end
     end
 
     self.Enemy = lock
+    self:FindSamePosition()
 end
 
----------------------------------------------------------------------
+
 
 -- 有没有敌人
 function CommonCharacter:CheckEnemyNotExist(BattleEnemyList)
@@ -258,17 +266,18 @@ function CommonCharacter:CheckEnemyNotExist(BattleEnemyList)
             return true     
         else
             -- 能发现敌人，且有敌人
-            if self.Enemy == nil then
-                -- 没有目标
-                self:Log("没有目标，开始寻找新的目标")
+            --if self.Enemy == nil then
+            --    -- 没有目标
+            --    self:Log("没有目标，开始寻找新的目标")
+                --self.super.FindNearEnemy(self,BattleEnemyList)
                 self:FindNearEnemy()
-            else
-                -- 有目标
-                if self.Enemy.PlayerState == StateDead then
-                    self:Log("目标敌人已死，开始寻找新的敌人目标")
-                    self:FindNearEnemy()
-                end
-            end
+            --else
+            --    -- 有目标
+            --    if self.Enemy.PlayerState == StateDead then
+            --        self:Log("目标敌人已死，开始寻找新的敌人目标")
+            --        self:FindNearEnemy()
+            --    end
+            --end
         end
         return false
     else
@@ -276,6 +285,19 @@ function CommonCharacter:CheckEnemyNotExist(BattleEnemyList)
         return true
     end
     
+end
+
+-- 查找队伍中是否有跟我站位重复的，如果有， 那么我改个位置 
+function CommonCharacter:FindSamePosition(MyTeamList)
+    for i in ipairs(MyTeamList) do
+        if MyTeamList[i].Enemy == self.Enemy and MyTeamList[i].EnemyPosition == self.EnemyPosition then
+            -- 跟我是同一个敌人, 位置也一样
+            self.EnemyPosition = self.EnemyPosition + 1
+            if self.EnemyPosition > 8 then
+                self.EnemyPosition = self.EnemyPosition - 8 
+            end
+        end
+    end
 end
 
 

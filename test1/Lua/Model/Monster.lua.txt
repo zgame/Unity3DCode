@@ -118,3 +118,7 @@ function Monster:FindNearEnemy()
     self.super.FindNearEnemy(self,BattleCharacterList)
 end
 
+-- 查找位置重复
+function Monster:FindSamePosition()
+    self.super.FindSamePosition(self,BattleEnemyList)
+end 

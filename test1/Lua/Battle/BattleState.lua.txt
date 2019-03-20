@@ -1,9 +1,9 @@
 
--- 战斗逻辑循环时间控制
+--- 战斗逻辑循环时间控制
 BattleAILoopTimer = 0.2
 BattleAICharacterLoopTimer = 0.2
 
--- 游戏状态
+--- 游戏状态
 
 StateIdle = 1       -- 待机
 StateRun = 2        -- 跑
@@ -24,12 +24,12 @@ StateDead = 6       -- 死亡
 --EnemyMaxHP = 100
 --HP = 100
 --MaxHP = 100
-Damage = 2          -- 普通伤害
-SkillDamage = 10    -- 技能伤害
-ReHp = 50      -- 回血
+--Damage = 2          -- 普通伤害
+--SkillDamage = 10    -- 技能伤害
+--ReHp = 50      -- 回血
 
 
--- Buffer
+--- Buffer
 BufferSpeed = 1    -- 移动加速
 BufferAttack = 2    -- 增加攻击
 BufferDefence = 3    -- 增加防御
@@ -41,7 +41,7 @@ BufferCriticalDamage = 8    -- 增加暴击伤害
 
 
 
--- DeBuffer
+--- DeBuffer
 DeBufferFreeze = 1  -- 冰冻
 DeBufferBurn = 2    -- 灼烧
 DeBufferBlood = 3    -- 流血
@@ -63,18 +63,24 @@ DeBufferCriticalDamage = 16    -- 降低暴击伤害
 
 
 
-
+--- 战场距离
 BattleAreaRunDistance = 50      -- 玩家跑多远进入战场
 BattleAreaEnemyAway = 80                  -- 敌人的生成位置距离
 --BattleAreaRunDistance = 40
 
+--- 站位偏移 
+local BattlePositionOffset = 2
+BattlePosition = {}
+BattlePosition[1] = CS.UnityEngine.Vector3(-BattlePositionOffset, 0, - BattlePositionOffset)
+BattlePosition[2] = CS.UnityEngine.Vector3(-BattlePositionOffset, 0,  BattlePositionOffset)
+BattlePosition[3] = CS.UnityEngine.Vector3(BattlePositionOffset, 0, - BattlePositionOffset)
+BattlePosition[4] = CS.UnityEngine.Vector3(BattlePositionOffset, 0, BattlePositionOffset)
+BattlePosition[5] = CS.UnityEngine.Vector3(0, 0, - BattlePositionOffset)
+BattlePosition[6] = CS.UnityEngine.Vector3(0, 0,  BattlePositionOffset)
+BattlePosition[7] = CS.UnityEngine.Vector3(BattlePositionOffset, 0, 0)
+BattlePosition[8] = CS.UnityEngine.Vector3(BattlePositionOffset, 0, 0)
 
 
-
-
-
--- Run多少回合
---RunTurn = 60
 
 
 

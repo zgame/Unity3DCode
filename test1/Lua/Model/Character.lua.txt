@@ -44,7 +44,6 @@ function Character:PlayerAttack()
         BattleUIHPSliderShow(self.Enemy)
         BattleUIDamageNumber(self.Enemy.Model, 11)        
 
-        
         return false
     end
     
@@ -128,6 +127,11 @@ end
 
 -- 找到附近的敌人
 function Character:FindNearEnemy()
-    self.Log("玩家开始找附近的新敌人")
+    --self:Log("玩家开始找附近的新敌人")
     self.super.FindNearEnemy(self,BattleEnemyList)
 end
+
+-- 查找位置重复
+function Character:FindSamePosition()
+    self.super.FindSamePosition(self,BattleCharacterList)
+end 
