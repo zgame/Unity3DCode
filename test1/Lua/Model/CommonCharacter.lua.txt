@@ -49,7 +49,7 @@ end
 -- 加载模型和动画
 function CommonCharacter:LoadGameObject(name, path)
     self.Name = name
-    self.Model = CSLoadAndInstantiatePrefabGameObject(path.."/"..name,path.."/"..name)
+    self.Model = CSLoadAndInstantiatePrefabGameObject(path..name,path..name)
     --local animator1 = monster1:GetComponent(typeof(CS.UnityEngine.Animator))
     self.Animator =  self.Model:GetComponentInChildren(typeof(CS.UnityEngine.Animator))
 

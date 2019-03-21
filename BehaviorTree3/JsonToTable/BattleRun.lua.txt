@@ -1,75 +1,90 @@
 
 
 local BattleRun = {
-  custom_nodes = {} --[[table: 00000000004ecd10]],
+  custom_nodes = {} --[[table: 000000000051be70]],
   description = "",
   display = {
-    camera_x = 565,
-    camera_y = 341.5,
+    camera_x = 426,
+    camera_y = 555.5,
     camera_z = 1,
     x = -252,
     y = -72
-  } --[[table: 00000000004eccd0]],
+  } --[[table: 000000000051be30]],
   id = "dea2400a-a4a7-4bb0-86ee-2e57e585062e",
   nodes = {
+    ["2c7cceec-3f5e-4099-98eb-f34e38e9335b"] = {
+      description = "",
+      display = {
+        x = 420,
+        y = -432
+      } --[[table: 000000000051bdf0]],
+      id = "2c7cceec-3f5e-4099-98eb-f34e38e9335b",
+      name = "BTRunAction",
+      properties = {
+        operation = "BattleCreateScene",
+        precondition = ""
+      } --[[table: 000000000051bd70]],
+      title = "执行<operation>函数"
+    } --[[table: 000000000051bd30]],
     ["3d338846-edee-4849-9428-aa4f627e18dd"] = {
       description = "",
       display = {
         x = 420,
         y = -48
-      } --[[table: 00000000004ec8d0]],
+      } --[[table: 000000000051b930]],
       id = "3d338846-edee-4849-9428-aa4f627e18dd",
       name = "BTRunAction",
       properties = {
         operation = "BattleStartAttackRing",
         precondition = ""
-      } --[[table: 00000000004ec850]],
+      } --[[table: 000000000051b8b0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ec810]],
+    } --[[table: 000000000051b870]],
     ["39e37fd7-1450-49ed-8014-7f12ef4f77e5"] = {
       description = "",
       display = {
         x = 420,
         y = -228
-      } --[[table: 00000000004dfb10]],
+      } --[[table: 000000000050fb10]],
       id = "39e37fd7-1450-49ed-8014-7f12ef4f77e5",
       name = "BTRunAction",
       properties = {
         operation = "BattleCreateEnemy",
         precondition = ""
-      } --[[table: 00000000004dfa90]],
+      } --[[table: 000000000050fa90]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004dfa50]],
+    } --[[table: 000000000050fa50]],
     ["72d0bc28-5108-45ce-9bf0-4b1f89589168"] = {
       description = "",
       display = {
         x = 420,
         y = -312
-      } --[[table: 00000000004dfa10]],
+      } --[[table: 000000000050fa10]],
       id = "72d0bc28-5108-45ce-9bf0-4b1f89589168",
       name = "BTRunAction",
       properties = {
         operation = "BattleCreatePlayer",
         precondition = ""
-      } --[[table: 00000000004df990]],
+      } --[[table: 000000000050f990]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004df910]],
+    } --[[table: 000000000050f910]],
     ["407df5d3-5bc9-425d-b754-e0862341a518"] = {
       description = "",
       display = {
         x = 420,
         y = 216
-      } --[[table: 00000000004ecb90]],
+      } --[[table: 000000000051bbf0]],
       id = "407df5d3-5bc9-425d-b754-e0862341a518",
       name = "BTRunAction",
       properties = {
         operation = "BattleWin",
         precondition = ""
-      } --[[table: 00000000004ecb50]],
+      } --[[table: 000000000051bbb0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ecb10]],
+    } --[[table: 000000000051bb70]],
     ["021309de-0612-40eb-8d0f-40613731e0a4"] = {
       children = {
+        "2c7cceec-3f5e-4099-98eb-f34e38e9335b",
         "72d0bc28-5108-45ce-9bf0-4b1f89589168",
         "39e37fd7-1450-49ed-8014-7f12ef4f77e5",
         "043098b4-770f-4017-a30c-527abe55fee8",
@@ -78,82 +93,82 @@ local BattleRun = {
         "f16a0da0-5cba-45d2-9d82-ee16c1c795ee",
         "407df5d3-5bc9-425d-b754-e0862341a518",
         "a23a6c29-2435-46c9-901e-b53ee6298c8c"
-      } --[[table: 00000000004df8d0]],
+      } --[[table: 000000000050f8d0]],
       description = "",
       display = {
         x = -48,
         y = -72
-      } --[[table: 00000000004df890]],
+      } --[[table: 000000000050f890]],
       id = "021309de-0612-40eb-8d0f-40613731e0a4",
       name = "BTSequence",
       properties = {
         precondition = ""
-      } --[[table: 00000000004df850]],
+      } --[[table: 000000000050f850]],
       title = "BTSequence"
-    } --[[table: 00000000004df810]],
+    } --[[table: 000000000050f810]],
     ["043098b4-770f-4017-a30c-527abe55fee8"] = {
       description = "",
       display = {
         x = 420,
         y = -144
-      } --[[table: 00000000004ec7d0]],
+      } --[[table: 000000000051b830]],
       id = "043098b4-770f-4017-a30c-527abe55fee8",
       name = "BTRunAction",
       properties = {
         operation = "BattlePlayerRun",
         precondition = ""
-      } --[[table: 00000000004dfb90]],
+      } --[[table: 000000000050fb90]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004dfb50]],
+    } --[[table: 000000000050fb50]],
     ["a23a6c29-2435-46c9-901e-b53ee6298c8c"] = {
       description = "",
       display = {
         x = 420,
         y = 336
-      } --[[table: 00000000004ecc90]],
+      } --[[table: 000000000051bcf0]],
       id = "a23a6c29-2435-46c9-901e-b53ee6298c8c",
       name = "BTWaitAction",
       properties = {
         key = 5,
         precondition = ""
-      } --[[table: 00000000004ecc50]],
+      } --[[table: 000000000051bcb0]],
       title = "等待<key>时间"
-    } --[[table: 00000000004ecbd0]],
+    } --[[table: 000000000051bc30]],
     ["ae3a89a5-1b7f-457e-b44b-0478a3d7d202"] = {
       description = "",
       display = {
         x = 420,
         y = 36
-      } --[[table: 00000000004ec9d0]],
+      } --[[table: 000000000051ba30]],
       id = "ae3a89a5-1b7f-457e-b44b-0478a3d7d202",
       name = "BTRunAction",
       properties = {
         operation = "BattleEnemyAttack",
         precondition = ""
-      } --[[table: 00000000004ec950]],
+      } --[[table: 000000000051b9b0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004ec910]],
+    } --[[table: 000000000051b970]],
     ["f16a0da0-5cba-45d2-9d82-ee16c1c795ee"] = {
       description = "",
       display = {
         x = 420,
         y = 120
-      } --[[table: 00000000004ecad0]],
+      } --[[table: 000000000051bb30]],
       id = "f16a0da0-5cba-45d2-9d82-ee16c1c795ee",
       name = "BTRunAction",
       properties = {
         operation = "BattleEnemyAllDead",
         precondition = ""
-      } --[[table: 00000000004eca50]],
+      } --[[table: 000000000051bab0]],
       title = "执行<operation>函数"
-    } --[[table: 00000000004eca10]]
-  } --[[table: 00000000004df7d0]],
-  properties = {} --[[table: 00000000004df790]],
+    } --[[table: 000000000051ba70]]
+  } --[[table: 000000000050f7d0]],
+  properties = {} --[[table: 000000000050f790]],
   root = "021309de-0612-40eb-8d0f-40613731e0a4",
   scope = "tree",
   title = "zsw_BattleRun",
   version = "0.3.0"
-} --[[table: 00000000004df750]] 
+} --[[table: 000000000050f750]] 
 
 
 

@@ -34,7 +34,7 @@ function ShowMessageBoxOKCancel(msg,callBack)
     --if UI == nil then
     okCallBack = callBack
         -- 加载界面prefab
-        UI = CSLoadAndInstantiatePrefabUI(AssetUICommonPath, AssetUICommonPath.."/MessageBoxOKCancel");
+        UI = CSLoadAndInstantiatePrefabUI(AssetUICommonPath, AssetUICommonPath.."/".."MessageBoxOKCancel");
 
     local txt = UI.transform:Find("Panel/Text")
     txt:GetComponent(typeof(CS.UnityEngine.UI.Text)).text = msg

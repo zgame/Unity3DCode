@@ -31,7 +31,7 @@ function Start()
     MySocket:SendConnect("172.16.140.131",8123)
     
     -- 加载界面prefab
-    MyEnterGameUI = CSLoadAndInstantiatePrefabUI(AssetUIGamePath,AssetUIGamePath.."/EnterGame")
+    MyEnterGameUI = CSLoadAndInstantiatePrefabUI(AssetUIGamePath,AssetUIGamePath.."/".."EnterGame")
    
     CSGetComponentInChildrenButtonEventCall(MyEnterGameUI, ButtonEvent)                                         -- 用组件类型找按钮，绑定事件，适合只有一个按钮的情况
     

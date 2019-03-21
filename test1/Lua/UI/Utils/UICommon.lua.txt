@@ -5,7 +5,7 @@ function CSLoadAndInstantiatePrefabUI(bundleName, prefabName)
     -- 这里要注意一下： 
     -- 第一个参数是bundle manifest里面bundle的名字（一般有目录）
     -- 第二个参数是asset 里面的目录
-    local obj = CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetPath.. prefabName ..".prefab","MainCanvas",true)
+    local obj = CS.ReadBundles.LoadAndInstantiateGameObject(bundleName, AssetPath..prefabName ..".prefab","MainCanvas",true)
     obj:GetComponent(typeof(CS.UnityEngine.RectTransform)).offsetMin = CS.UnityEngine.Vector2.zero
     obj:GetComponent(typeof(CS.UnityEngine.RectTransform)).offsetMax = CS.UnityEngine.Vector2.zero
     obj.transform.localScale = CS.UnityEngine.Vector3.one;

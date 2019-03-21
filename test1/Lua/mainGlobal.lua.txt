@@ -7,10 +7,11 @@ AssetUIGamePath = "UI/Prefab/Game"
 AssetUIExamplePath = "UI/Prefab/Example"
 AssetUIBattlePath = "UI/Prefab/Battle"
 
-AssetCharacterPath = "Model/Prefab/Character"
-AssetMonsterPath = "Model/Prefab/Monster"
+AssetCharacterPath = "Model/Prefab/Character/"
+AssetMonsterPath = "Model/Prefab/Monster/"
 
 AssetEffectPath = "Model/Prefab/Effect/"
+AssetScenePath = "Model/Prefab/Scene/"
 
 -------------------------玩家数据---------------------------
 MyToken = 1     -- 给服务器发的token

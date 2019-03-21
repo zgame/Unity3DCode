@@ -8,7 +8,7 @@ local BattleUI = nil    -- 进入游戏的界面句柄
 function StartBattle(lastUI)
 
     -- 加载界面prefab
-    BattleUI = CSLoadAndInstantiatePrefabUI(AssetUIGamePath,AssetUIGamePath.."/Battle")
+    BattleUI = CSLoadAndInstantiatePrefabUI(AssetUIGamePath,AssetUIGamePath.."/".."Battle")
     
     -- 加载场景
     
@@ -36,7 +36,7 @@ end
 
 -- 伤害数字
 function BattleUIDamageNumber(parent,damage)
-    local damageNumber = CSLoadAndInstantiatePrefabUI(AssetUIBattlePath,AssetUIBattlePath.."/DamageNumber")
+    local damageNumber = CSLoadAndInstantiatePrefabUI(AssetUIBattlePath,AssetUIBattlePath.."/".."DamageNumber")
     damageNumber:GetComponent(typeof(CS.UnityEngine.UI.Text)).text = ""..damage
     local range = 20
     local rand_x = math.random(-range , range)
@@ -60,7 +60,7 @@ end
 
 -- 血条
 function CreateBattleUIHPSlider(parentCharacter)
-    local hpSlider = CSLoadAndInstantiatePrefabUI(AssetUIBattlePath,AssetUIBattlePath.."/HPSlider")
+    local hpSlider = CSLoadAndInstantiatePrefabUI(AssetUIBattlePath,AssetUIBattlePath.."/".."HPSlider")
     hpSlider:GetComponentInChildren(typeof(CS.UnityEngine.UI.Slider)).value = parentCharacter.HP/ parentCharacter.MaxHP
 
     parentCharacter.HPSlider = hpSlider
