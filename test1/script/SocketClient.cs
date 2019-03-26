@@ -279,14 +279,10 @@ public class SocketClient
     {
         try
         {
-
-//#if THREAD_SAFE || HOTFIX_ENABLE
-//            lock (ReadBundles.luaenv.luaEnvLock)
-//#endif
-//            {
-                FDelegateNetWorkReceive f = ReadBundles.luaenv.Global.Get<FDelegateNetWorkReceive>("GoCallLuaNetWorkReceive");
-                f(header.MainCMDID, header.SubCMDID, dataBuffer,System.Text.Encoding.Default.GetString(msgBuffer));
-//            }
+//            这里要注意一下，因为c# socket为异步回调多线程，所以要求线程安全， 不然会crash
+//            在Unity-player setting-Scripting Define Symbols 增加THREAD_SAFE
+            FDelegateNetWorkReceive f = ReadBundles.luaenv.Global.Get<FDelegateNetWorkReceive>("GoCallLuaNetWorkReceive");
+            f(header.MainCMDID, header.SubCMDID, dataBuffer, System.Text.Encoding.Default.GetString(msgBuffer));
         }
         catch (Exception e)
         {

@@ -69,12 +69,12 @@ require("Lua/UI/Example/TableView")
 
 
 -- 进入游戏
---Start()
-StartBattle()
+Start()
+--StartBattle()
 
 
 --关闭下载界面, 销毁掉download界面
---local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')
---CSDestroyGameObject(DownLoadBundleFilePanelObject)       -- 销毁
+local DownLoadBundleFilePanelObject = CSFindGameObject('MainCanvas/DownLoadBundleFilePanel')
+CSDestroyGameObject(DownLoadBundleFilePanelObject)       -- 销毁
 
 --DownLoadBundleFilePanelObject:SetActive(false)        -- 隐藏
