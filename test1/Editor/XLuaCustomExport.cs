@@ -57,4 +57,11 @@ public static class XLuaCustomExport
 
 //        typeof(Cinemachine.CinemachineVirtualCamera),
     };
+	[LuaCallCSharp]
+    [ReflectionUse]
+    public static List<Type> ngui_lua_call_cs_list = new List<Type>()
+    {
+		 typeof(UIEventListener),
+		 typeof(UISprite),
+	}
 }
