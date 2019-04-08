@@ -63,5 +63,5 @@ public static class XLuaCustomExport
     {
 		 typeof(UIEventListener),
 		 typeof(UISprite),
-	}
+	};
 }
